@@ -13,41 +13,22 @@ export default function QuestionnairePage() {
   const router = useRouter();
   const [stepIndex, setStepIndex] = useState(0);
   const [data, setData] = useState<Partial<QuestionnaireData>>({
-  identite: {
-    prenom: "",
-    nom: "",
-    dateNaissance: "",
-    dateDeces: "",
-    lieuNaissance: "",
-    lieuDeces: "",
-  },
-  style: null,
-  caractere: {
-    adjectifs: [],
-  },
-  valeurs: {
-    selected: [],
-  },
-  liens: {
-    personnes: "",
-  },
-  talents: {},
-  gouts: {},
-  message: {
-    hasMessage: false,
-    texte: "",
-  },
-  medias: [],
-  liensWeb: [],
-});
-
+    identite: {},
+    style: null,
+    caractere: { adjectifs: [] },
+    valeurs: { selected: [] },
+    liens: { personnes: '' },
+    talents: {},
+    gouts: {},
+    message: { hasMessage: false },
+    medias: [],
+    liensWeb: [],
   });
 
   const currentStep = steps[stepIndex];
   const isFirstStep = stepIndex === 0;
   const isLastStep = stepIndex === steps.length - 1;
 
-  // Charger les données depuis localStorage au montage
   useEffect(() => {
     const saved = localStorage.getItem('questionnaire-memoire');
     if (saved) {
@@ -92,23 +73,18 @@ export default function QuestionnairePage() {
   };
 
   const handleSave = () => {
-    // Sauvegarder dans localStorage pour persistance
     localStorage.setItem('questionnaire-memoire', JSON.stringify(data));
     alert('Vos réponses ont été sauvegardées.');
   };
 
   const handleSubmit = () => {
-    // Sauvegarder les données
     handleSave();
-    
-    // Rediriger vers la page d'aperçu
     router.push('/apercu');
   };
 
   return (
     <main className="min-h-screen py-12 px-4 bg-memoir-bg">
       <div className="max-w-4xl mx-auto">
-        {/* En-tête */}
         <div className="text-center mb-8">
           <Link 
             href="/"
@@ -125,15 +101,12 @@ export default function QuestionnairePage() {
           </p>
         </div>
 
-        {/* Barre de progression */}
         <Progress current={stepIndex} total={steps.length} />
 
-        {/* Étape courante */}
         <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12 mb-8">
           <Step step={currentStep} data={data} onChange={handleChange} />
         </div>
 
-        {/* Navigation */}
         <div className="flex items-center justify-between gap-4">
           <button
             onClick={handlePrevious}
@@ -172,7 +145,6 @@ export default function QuestionnairePage() {
           )}
         </div>
 
-        {/* Indication de sauvegarde */}
         <p className="text-center text-memoir-blue/50 text-sm mt-6">
           Vos réponses sont automatiquement sauvegardées dans votre navigateur
         </p>
