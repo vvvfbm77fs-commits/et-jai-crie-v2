@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///Users/alineweber/Desktop/et-jai-crie/app/page.tsx"],"sourcesContent":["export default function Home() {\n  return (\n    <main style={{ padding: \"40px\" }}>\n      <h1>Et j’ai crié – Mémoire</h1>\n      <p>Bienvenue dans le questionnaire.</p>\n    </main>\n  );\n}\n"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE,8OAAC;QAAK,OAAO;YAAE,SAAS;QAAO;;0BAC7B,8OAAC;0BAAG;;;;;;0BACJ,8OAAC;0BAAE;;;;;;;;;;;;AAGT"}}]
+}

@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-serif: 'Crimson Text', Georgia, serif;
+    --font-calli: 'Cormorant Garamond', Georgia, serif;
+  }
+  
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+  
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+  
+  .font-calli {
+    font-family: var(--font-calli);
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-memoir-bg text-memoir-blue;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-memoir-gold text-white px-6 py-3 rounded-lg hover:bg-memoir-gold/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium;
+  }
+  
+  .btn-secondary {
+    @apply border-2 border-memoir-gold text-memoir-gold px-6 py-3 rounded-lg hover:bg-memoir-gold/5 transition-colors font-medium;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border-2 border-memoir-blue/20 rounded-lg focus:border-memoir-gold focus:outline-none bg-white;
+  }
+  
+  .checkbox-item {
+    @apply flex items-center space-x-3 p-3 border-2 border-memoir-blue/10 rounded-lg hover:border-memoir-gold/50 cursor-pointer transition-colors;
+  }
+  
+  .checkbox-item input:checked + label {
+    @apply font-semibold;
+  }
+}
