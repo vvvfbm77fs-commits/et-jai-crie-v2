@@ -6,11 +6,8 @@ import Link from 'next/link';
 import { ArrowLeft, Sparkles, Edit, Globe, RefreshCw } from 'lucide-react';
 import PhotoGallery from '@/components/PhotoGallery';
 import ConsentModal from '@/components/ConsentModal';
-import LayoutSelector from '@/components/LayoutSelector';
-import BlockOrderEditor from '@/components/BlockOrderEditor';
 import { getPhoto, blobToURL } from '@/lib/indexedDB';
 import { TEMPLATES, getTemplate } from '@/lib/templates';
-import { BlockType } from '@/lib/layouts';
 
 export default function AperçuPage() {
   const router = useRouter();
@@ -25,8 +22,6 @@ export default function AperçuPage() {
   const [showConsentModal, setShowConsentModal] = useState(false);
   const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
   const [galleryMediasWithUrls, setGalleryMediasWithUrls] = useState<any[]>([]);
-  const [selectedLayout, setSelectedLayout] = useState<string>('classic');
-  const [blockOrder, setBlockOrder] = useState<BlockType[]>(['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links']);
 
   useEffect(() => {
     const saved = localStorage.getItem('questionnaire-memoire');
@@ -39,12 +34,6 @@ export default function AperçuPage() {
         }
         if (parsed.photoFilter) {
           setPhotoFilter(parsed.photoFilter);
-        }
-        if (parsed.layout) {
-          setSelectedLayout(parsed.layout);
-        }
-        if (parsed.blockOrder) {
-          setBlockOrder(parsed.blockOrder);
         }
         if (parsed.texteGenere) {
           setTexteGenere(parsed.texteGenere);
@@ -361,20 +350,6 @@ export default function AperçuPage() {
     setData(updated);
   };
 
-  const handleLayoutChange = (layoutId: string) => {
-    setSelectedLayout(layoutId);
-    const updated = { ...data, layout: layoutId };
-    localStorage.setItem('questionnaire-memoire', JSON.stringify(updated));
-    setData(updated);
-  };
-
-  const handleBlockOrderChange = (newOrder: BlockType[]) => {
-    setBlockOrder(newOrder);
-    const updated = { ...data, blockOrder: newOrder };
-    localStorage.setItem('questionnaire-memoire', JSON.stringify(updated));
-    setData(updated);
-  };
-
   const handlePublish = () => {
     setShowConsentModal(true);
   };
@@ -390,8 +365,6 @@ export default function AperçuPage() {
         publishedAt: new Date().toISOString(),
         status: 'published',
         template: selectedTemplate,
-        layout: selectedLayout,
-        blockOrder: blockOrder,
         photoFilter: photoFilter,
         texteGenere: texteGenere,
       };
@@ -448,16 +421,6 @@ export default function AperçuPage() {
             </button>
           ))}
         </div>
-
-        <LayoutSelector 
-          selectedLayout={selectedLayout}
-          onLayoutChange={handleLayoutChange}
-        />
-
-        <BlockOrderEditor
-          blocks={blockOrder}
-          onOrderChange={handleBlockOrderChange}
-        />
 
         <div 
           className="rounded-2xl shadow-2xl p-8 md:p-12 mb-8"
