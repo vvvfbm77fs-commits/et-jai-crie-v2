@@ -13,16 +13,34 @@ export default function QuestionnairePage() {
   const router = useRouter();
   const [stepIndex, setStepIndex] = useState(0);
   const [data, setData] = useState<Partial<QuestionnaireData>>({
-    identite: {},
-    style: null,
-    caractere: { adjectifs: [] },
-    valeurs: { selected: [] },
-    liens: { personnes: '' },
-    talents: {},
-    gouts: {},
-    message: { hasMessage: false },
-    medias: [],
-    liensWeb: [],
+  identite: {
+    prenom: "",
+    nom: "",
+    dateNaissance: "",
+    dateDeces: "",
+    lieuNaissance: "",
+    lieuDeces: "",
+  },
+  style: null,
+  caractere: {
+    adjectifs: [],
+  },
+  valeurs: {
+    selected: [],
+  },
+  liens: {
+    personnes: "",
+  },
+  talents: {},
+  gouts: {},
+  message: {
+    hasMessage: false,
+    texte: "",
+  },
+  medias: [],
+  liensWeb: [],
+});
+
   });
 
   const currentStep = steps[stepIndex];
