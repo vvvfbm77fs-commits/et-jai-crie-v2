@@ -11,7 +11,7 @@ Application Next.js pour créer des textes de mémoire avec dignité et humanit�
 - **Questionnaire complet en 9 étapes** : Identité, style, caractère, valeurs, liens, talents, réalisations, goûts, message
 - **3 styles d'écriture** : Sobre/factuel, Narratif/humain, Poétique/sensible
 - **Sauvegarde automatique** : Les réponses sont sauvegardées dans le navigateur
-- **Interface soignée** : Design épuré avec palette de couleurs douce (beige, marron, noir)
+- **Interface soignée** : Design épuré avec palette de couleurs douce (beige, marron, bleu, noir)
 - **Navigation fluide** : Progression par étapes avec barre de progression visuelle
 - **Responsive** : Fonctionne sur mobile, tablette et desktop
 

@@ -1,47 +1,35 @@
-// Définition de la structure des données du mémorial
+// Définition de la structure des données du questionnaire
 
-export type TemplateStyle = 'bleu-dore' | 'noir-argent' | 'lumineux';
-
-export interface Media {
-  id: string;
-  type: 'image' | 'video' | 'audio';
-  url: string;
-  nom?: string;
-  description?: string;
-  date?: string;
-}
-
-export interface Lien {
-  id: string;
-  url: string;
-  titre?: string;
-  description?: string;
-}
-
-export interface MemorialData {
+export interface QuestionnaireData {
   // Bloc A - Repères essentiels
   identite: {
     prenom: string;
     nom?: string;
-    genre?: 'Elle' | 'Il' | 'Sans genre spécifié';
     dateNaissance?: string;
     dateDeces?: string;
     lieuNaissance?: string;
     lieuSymbolique?: string;
-    photoProfilId?: string; // ID de la photo de profil dans IndexedDB
+    pronom?: 'il' | 'elle' | 'iel' | 'prenom';
+  };
+
+  // Nouveau - Type d'hommage
+  typeHommage?: 'personnel' | 'professionnel' | 'mixte';
+
+  // Nouveau - Lien avec la personne
+  lienPersonne?: {
+    type: 'pere-mere' | 'fils-fille' | 'frere-soeur' | 'conjoint' | 'ami' | 'collegue' | 'autre' | 'inconnu';
+    precisionAutre?: string;
+  };
+
+  // Nouveau - Mode contributeur
+  modeContributeur?: {
+    mode: 'solo' | 'multi';
+    quiContribue?: string[]; // Array pour checkbox multiple
+    quiContribueLibre?: string; // Champ libre si "Autre"
   };
 
   // Bloc B - Style d'écriture
   style: 'sobre' | 'narratif' | 'poetique' | null;
-
-  // Template visuel choisi
-  template?: TemplateStyle;
-
-  // Filtre photo choisi pour la galerie
-  photoFilter?: 'original' | 'noir-blanc' | 'sepia' | 'adouci';
-
-  // Texte généré (peut être modifié manuellement)
-  texteGenere?: string;
 
   // Bloc C - Caractère
   caractere: {
@@ -73,8 +61,6 @@ export interface MemorialData {
   // Bloc H - Goûts et signes de vie
   gouts: {
     musique?: string;
-    musiqueFile?: File | null;
-    musiqueFileId?: string; // ID du fichier MP3 dans IndexedDB
     phrase?: string;
     lieu?: string;
     habitude?: string;
@@ -86,18 +72,20 @@ export interface MemorialData {
     hasMessage: boolean;
     type?: 'text' | 'audio' | 'video';
     content?: string;
-    file?: File | null;
   };
 
-  // Nouveau - Galerie média
-  medias: Media[];
+  // Médias et liens
+  medias?: any[];
+  liensWeb?: any[];
+  };
 
-  // Nouveau - Liens web
-  liensWeb: Lien[];
+export interface Media {
+  id: string;
+  url: string;
+  type: 'image' | 'video';
+  caption?: string;
+  nom?: string;
 }
-
-// Ancien nom gardé pour compatibilité
-export type QuestionnaireData = MemorialData;
 
 export interface Question {
   id: string;
@@ -113,7 +101,7 @@ export interface Step {
   id: string;
   title: string;
   description?: string;
-  type?: 'default' | 'style-picker' | 'media-gallery' | 'links-manager';
+  type?: 'default' | 'style-picker';
   questions?: Question[];
 }
 
@@ -185,5 +173,6 @@ export const STYLE_EXEMPLES = [
     id: 'poetique',
     titre: 'Poétique / Sensible',
     texte: 'Il avançait doucement, laissant derrière lui des gestes simples et des traces discrètes. Ce qui demeure aujourd\'hui, ce sont ces présences invisibles qui continuent de nous accompagner.',
+  
   },
 ];

@@ -1,11 +1,10 @@
 'use client';
 
-import { Step as StepType } from '@/lib/schema';
+import { useState } from 'react';
+import { Step as StepType, Question as QuestionType } from '@/lib/schema';
 import Question from './Question';
 import StylePicker from './StylePicker';
-import MediaUploader from './MediaUploader';
-import LinkManager from './LinkManager';
-import ProfilePhotoUploader from './ProfilePhotoUploader';
+import AlertModal from './AlertModal';
 
 interface StepProps {
   step: StepType;
@@ -13,44 +12,187 @@ interface StepProps {
   onChange: (field: string, value: any) => void;
 }
 
-// Fonction pour adapter les textes selon le genre
-function adaptText(text: string, genre?: string): string {
-  if (!genre || genre === 'Sans genre spécifié') {
-    return text
-      .replace(/\bAvait-elle\b/gi, 'Avait-elle')
-      .replace(/\bdont elle était\b/gi, 'dont cette personne était')
-      .replace(/\bqui la\b/gi, 'qui la')
-      .replace(/\bCe qui l'animait/gi, 'Ce qui animait cette personne');
-  }
-  
-  if (genre === 'Il') {
-    return text
-      .replace(/\bAvait-elle\b/gi, 'Avait-il')
-      .replace(/\bdont elle était\b/gi, 'dont il était')
-      .replace(/\bqui la\b/gi, 'qui le')
-      .replace(/\bCe qui animait cette personne/gi, 'Ce qui l\'animait')
-      .replace(/\bella\b/gi, 'le')
-      .replace(/\bfière\b/gi, 'fier')
-      .replace(/\bdéfinissaient\b/gi, 'définissaient');
-  }
-  
-  // Genre === 'Elle' : on garde le texte tel quel
-  return text;
-}
-
 export default function Step({ step, data, onChange }: StepProps) {
-  const genre = data.identite?.genre;
-  
+  const [showInconnuAlert, setShowInconnuAlert] = useState(false);
+
+  // Récupérer les infos pour personnalisation
+  const prenom = data.identite?.prenom || 'cette personne';
+  const pronom = data.identite?.pronom;
+  const lienType = data.lienPersonne?.type;
+  const modeContributeur = data.modeContributeur?.mode;
+  const isSolo = modeContributeur?.includes('seul·e');
+  const isMulti = modeContributeur?.includes('autres personnes');
+
+  // Fonction pour obtenir le possessif selon le lien
+  const getPossessif = () => {
+    if (!lienType) return '';
+    
+    if (lienType.includes('Père')) return 'votre père';
+    if (lienType.includes('Mère')) return 'votre mère';
+    if (lienType.includes('Fils')) return 'votre fils';
+    if (lienType.includes('Fille')) return 'votre fille';
+    if (lienType.includes('Frère')) return 'votre frère';
+    if (lienType.includes('Sœur')) return 'votre sœur';
+    if (lienType.includes('Conjoint')) return 'votre conjoint·e';
+    if (lienType.includes('Conjointe')) return 'votre conjointe';
+    if (lienType.includes('Partenaire')) return 'votre partenaire';
+    if (lienType.includes('Parent')) return 'votre parent';
+    if (lienType.includes('Enfant')) return 'votre enfant';
+    if (lienType.includes('Fratrie')) return 'cette personne';
+    if (lienType.includes('Ami')) return isMulti ? 'cette personne' : 'votre ami·e';
+    if (lienType.includes('Amie')) return isMulti ? 'cette personne' : 'votre amie';
+    if (lienType.includes('Collègue')) return 'cette personne';
+    if (lienType.includes('Associé')) return 'cette personne';
+    if (lienType.includes('connu personnellement')) return 'cette personne';
+    
+    return prenom;
+  };
+
+  // Fonction pour adapter le titre et la description
+  const getAdaptedTitleAndDescription = () => {
+    const possessif = getPossessif();
+    const majPossessif = possessif.charAt(0).toUpperCase() + possessif.slice(1);
+    
+    let title = step.title;
+    let description = step.description;
+
+    // Adapter selon l'étape
+    if (step.id === 'caractere') {
+      title = `Caractère et tempérament`;
+      if (isMulti) {
+        description = `Comment était ${possessif} ? Quels mots correspondent le mieux ?`;
+      } else if (lienType?.includes('connu personnellement')) {
+        description = `Comment décririez-vous cette personne ?`;
+      } else {
+        description = `Parlez-nous de ${possessif}. Quels mots correspondent le mieux ?`;
+      }
+    }
+
+    if (step.id === 'valeurs') {
+      title = `Valeurs`;
+      if (lienType?.includes('connu personnellement')) {
+        description = `Quelles valeurs semblaient importantes pour cette personne ?`;
+      } else {
+        description = `Quelles valeurs tenaient à cœur à ${possessif} ?`;
+      }
+    }
+
+    if (step.id === 'talents') {
+      if (lienType?.includes('connu personnellement')) {
+        description = `Ce qui animait cette personne, ce qu'elle maîtrisait`;
+      } else {
+        description = `Ce qui animait ${possessif}, ce qu'${pronom === 'Elle' ? 'elle' : 'il'} maîtrisait`;
+      }
+    }
+
+    if (step.id === 'realisation') {
+      if (lienType?.includes('connu personnellement')) {
+        description = `Un accomplissement dont cette personne était fière`;
+      } else {
+        description = `Un accomplissement dont ${possessif} était ${pronom === 'Elle' ? 'fière' : 'fier'}`;
+      }
+    }
+
+    if (step.id === 'gouts') {
+      if (lienType?.includes('connu personnellement')) {
+        description = `Les goûts et préférences de cette personne`;
+      } else {
+        description = `Les petites choses qui définissaient ${possessif}`;
+      }
+    }
+
+    return { title, description };
+  };
+
+  // Fonction pour adapter les options de lien selon le pronom
+  const getAdaptedQuestions = () => {
+    if (step.id === 'lienPersonne') {
+      let lienOptions: string[] = [];
+
+      if (pronom === 'Il') {
+        lienOptions = [
+          'Père',
+          'Fils',
+          'Frère',
+          'Conjoint / Partenaire',
+          'Ami',
+          'Collègue / Associé',
+          'Autre',
+          'Je ne l\'ai pas connu personnellement'
+        ];
+      } else if (pronom === 'Elle') {
+        lienOptions = [
+          'Mère',
+          'Fille',
+          'Sœur',
+          'Conjointe / Partenaire',
+          'Amie',
+          'Collègue / Associée',
+          'Autre',
+          'Je ne l\'ai pas connu personnellement'
+        ];
+      } else {
+        lienOptions = [
+          'Parent',
+          'Enfant',
+          'Fratrie',
+          'Partenaire',
+          'Ami·e',
+          'Collègue / Associé·e',
+          'Autre',
+          'Je ne l\'ai pas connu personnellement'
+        ];
+      }
+
+      return step.questions?.map((q) => {
+        if (q.id === 'type') {
+          return { ...q, options: lienOptions };
+        }
+        return q;
+      });
+    }
+
+    // Pour l'étape mode contributeur, masquer les questions selon le mode
+    if (step.id === 'modeContributeur') {
+      return step.questions?.filter((q) => {
+        if (q.id === 'mode') return true;
+        if (isSolo && (q.id === 'quiContribue' || q.id === 'quiContribueLibre')) {
+          return false;
+        }
+        return true;
+      });
+    }
+
+    return step.questions;
+  };
+
+  const adaptedQuestions = getAdaptedQuestions();
+  const { title, description } = getAdaptedTitleAndDescription();
+
+  // Gérer le changement avec détection de "Je ne l'ai pas connu"
+  const handleQuestionChange = (field: string, value: any) => {
+    if (step.id === 'lienPersonne' && field === 'lienPersonne.type') {
+      if (value?.includes('Je ne l\'ai pas connu')) {
+        setShowInconnuAlert(true);
+      }
+    }
+    onChange(field, value);
+  };
+
   return (
     <div className="w-full max-w-3xl mx-auto">
+      <AlertModal
+        isOpen={showInconnuAlert}
+        onClose={() => setShowInconnuAlert(false)}
+        type="inconnu"
+      />
+
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-memoir-blue mb-3">
-          {step.title}
+        <h2 className="text-3xl font-serif font-bold text-memoir-dark mb-3">
+          {title}
         </h2>
-        {step.description && (
-          <p className="text-memoir-blue/70 text-lg">
-            {adaptText(step.description, genre)}
-          </p>
+        {description && (
+          <p className="text-memoir-dark/70 text-lg">{description}</p>
         )}
       </div>
 
@@ -59,36 +201,15 @@ export default function Step({ step, data, onChange }: StepProps) {
           value={data.style}
           onChange={(value) => onChange('style', value)}
         />
-      ) : step.type === 'profile-photo' ? (
-        <ProfilePhotoUploader
-          photoId={data.identite?.photoProfilId}
-          onPhotoChange={(photoId) => onChange('identite.photoProfilId', photoId)}
-          memorialId={typeof window !== 'undefined' ? `temp-${Date.now()}` : 'temp'}
-        />
-      ) : step.type === 'media-gallery' ? (
-        <MediaUploader
-          value={data.medias || []}
-          onChange={(value) => onChange('medias', value)}
-          type="all"
-        />
-      ) : step.type === 'links-manager' ? (
-        <LinkManager
-          value={data.liensWeb || []}
-          onChange={(value) => onChange('liensWeb', value)}
-        />
       ) : (
         <div className="space-y-6">
-          {step.questions?.map((question) => (
+          {adaptedQuestions?.map((question) => (
             <Question
               key={question.id}
-              question={{
-                ...question,
-                label: adaptText(question.label, genre),
-                placeholder: question.placeholder ? adaptText(question.placeholder, genre) : undefined,
-              }}
+              question={question}
               value={data[step.id]?.[question.id]}
               onChange={(value) =>
-                onChange(`${step.id}.${question.id}`, value)
+                handleQuestionChange(`${step.id}.${question.id}`, value)
               }
             />
           ))}

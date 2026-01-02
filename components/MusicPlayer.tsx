@@ -71,6 +71,8 @@ export default function MusicPlayer({
     return () => audio.removeEventListener('ended', handleEnded);
   }, []);
 
+  const isLightBg = bgColor === '#F5EFE7' || bgColor === '#FDFBF8';
+
   return (
     <>
       {/* Notification auto-play */}
@@ -80,12 +82,21 @@ export default function MusicPlayer({
           style={{ maxWidth: '90%', width: '400px' }}
         >
           <div 
-            className="rounded-xl shadow-2xl p-4 border"
+            className="rounded-xl shadow-2xl p-4 border relative"
             style={{ 
-              backgroundColor: bgColor === '#FFFFFF' ? '#fff' : 'rgba(255,255,255,0.95)',
-              borderColor: accentColor 
+              backgroundColor: bgColor,
+              borderColor: accentColor,
+              backdropFilter: 'blur(10px)'
             }}
           >
+            <button
+              onClick={handleDismissNotification}
+              className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center hover:opacity-70 transition-opacity"
+              style={{ color: textColor, opacity: 0.5 }}
+            >
+              ✕
+            </button>
+
             <div className="flex items-center gap-3 mb-3">
               <MusicIcon className="w-5 h-5" style={{ color: accentColor }} />
               <p className="font-medium" style={{ color: textColor }}>
@@ -93,25 +104,24 @@ export default function MusicPlayer({
               </p>
             </div>
             {title && (
-              <p className="text-sm mb-3 opacity-70" style={{ color: textColor }}>
+              <p className="text-sm mb-3" style={{ color: textColor, opacity: 0.7 }}>
                 {title}
               </p>
             )}
             <div className="flex gap-2">
               <button
                 onClick={handlePlayNotification}
-                className="flex-1 px-4 py-2 rounded-lg font-medium transition-colors"
-                style={{ backgroundColor: accentColor, color: '#fff' }}
+                className="flex-1 px-4 py-2 rounded-lg font-medium transition-colors hover:opacity-90"
+                style={{ backgroundColor: accentColor, color: isLightBg ? '#1a365d' : '#fff' }}
               >
                 Écouter
               </button>
               <button
                 onClick={handleDismissNotification}
-                className="px-4 py-2 rounded-lg font-medium transition-colors"
+                className="px-4 py-2 rounded-lg font-medium transition-colors hover:opacity-70"
                 style={{ 
-                  border: `1px solid ${accentColor}40`,
-                  color: textColor,
-                  opacity: 0.7
+                  border: `1px solid ${accentColor}`,
+                  color: textColor
                 }}
               >
                 Plus tard
@@ -123,10 +133,10 @@ export default function MusicPlayer({
 
       {/* Lecteur audio */}
       <div 
-        className="rounded-lg p-4 border"
+        className="rounded-lg p-4"
         style={{ 
-          backgroundColor: bgColor === '#FFFFFF' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.03)',
-          borderColor: `${accentColor}30`
+          backgroundColor: isLightBg ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.1)',
+          border: `1px solid ${accentColor}30`
         }}
       >
         <audio ref={audioRef} src={audioUrl} preload="metadata" />
