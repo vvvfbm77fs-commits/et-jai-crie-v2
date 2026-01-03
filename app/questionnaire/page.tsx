@@ -41,23 +41,29 @@ export default function QuestionnairePage() {
     }
   }, []);
 
-  const handleChange = (field: string, value: any) => {
-    setData((prev) => {
-      const keys = field.split('.');
-      if (keys.length === 1) {
-        return { ...prev, [field]: value };
-      }
-      
+const handleChange = (field: string, value: any) => {
+  setData((prev) => {
+    const keys = field.split('.');
+    let newData;
+    
+    if (keys.length === 1) {
+      newData = { ...prev, [field]: value };
+    } else {
       const [parent, child] = keys;
-      return {
+      newData = {
         ...prev,
         [parent]: {
           ...(prev[parent as keyof QuestionnaireData] as any),
           [child]: value,
         },
       };
-    });
-  };
+    }
+    
+    // Sauvegarde automatique à chaque changement
+    localStorage.setItem('questionnaire-memoire', JSON.stringify(newData));
+    return newData;
+  });
+};
 
   const handleNext = () => {
     if (!isLastStep) {
@@ -92,13 +98,17 @@ export default function QuestionnairePage() {
       <div className="max-w-4xl mx-auto">
         {/* En-tête */}
         <div className="text-center mb-8">
-          <Link 
-            href="/"
-            className="inline-flex items-center gap-2 text-memoir-gold hover:text-memoir-gold/80 transition-colors mb-4"
-          >
-            <Home className="w-5 h-5" />
-            <span className="text-sm font-medium">Retour à l'accueil</span>
-          </Link>
+     <button
+  onClick={() => {
+    if (confirm('Voulez-vous vraiment quitter ? Vos modifications non sauvegardées seront perdues.')) {
+      router.push('/');
+    }
+  }}
+  className="inline-flex items-center gap-2 text-memoir-gold hover:text-memoir-gold/80 transition-colors mb-4"
+>
+  <Home className="w-5 h-5" />
+  <span className="text-sm font-medium">Retour à l'accueil</span>
+</button>
           <h1 className="text-4xl md:text-5xl font-bold text-memoir-blue mb-4">
             Et j'ai crié – Mémoire
           </h1>
@@ -115,44 +125,45 @@ export default function QuestionnairePage() {
           <Step step={currentStep} data={data} onChange={handleChange} />
         </div>
 
-        {/* Navigation */}
-        <div className="flex items-center justify-between gap-4">
-          <button
-            onClick={handlePrevious}
-            disabled={isFirstStep}
-            className="btn-secondary flex items-center gap-2"
-          >
-            <ChevronLeft className="w-5 h-5" />
-            Précédent
-          </button>
+    {/* Navigation */}
+<div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 md:gap-4">
+  <button
+    onClick={handlePrevious}
+    disabled={isFirstStep}
+    className="btn-secondary flex items-center justify-center gap-2 order-1 md:order-1"
+  >
+    <ChevronLeft className="w-5 h-5" />
+    <span className="hidden sm:inline">Précédent</span>
+    <span className="sm:hidden">Préc.</span>
+  </button>
 
-          <button
-            onClick={handleSave}
-            className="btn-secondary flex items-center gap-2"
-            title="Sauvegarder la progression"
-          >
-            <Save className="w-5 h-5" />
-            Sauvegarder
-          </button>
+  <button
+    onClick={handleSave}
+    className="btn-secondary flex items-center justify-center gap-2 order-3 md:order-2"
+    title="Sauvegarder la progression"
+  >
+    <Save className="w-5 h-5" />
+    <span>Sauvegarder</span>
+  </button>
 
-          {isLastStep ? (
-            <button
-              onClick={handleSubmit}
-              className="btn-primary flex items-center gap-2"
-            >
-              Terminer
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          ) : (
-            <button
-              onClick={handleNext}
-              className="btn-primary flex items-center gap-2"
-            >
-              Suivant
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          )}
-        </div>
+  {isLastStep ? (
+    <button
+      onClick={handleSubmit}
+      className="btn-primary flex items-center justify-center gap-2 order-2 md:order-3"
+    >
+      <span>Terminer</span>
+      <ChevronRight className="w-5 h-5" />
+    </button>
+  ) : (
+    <button
+      onClick={handleNext}
+      className="btn-primary flex items-center justify-center gap-2 order-2 md:order-3"
+    >
+      <span>Suivant</span>
+      <ChevronRight className="w-5 h-5" />
+    </button>
+  )}
+</div>
 
         {/* Indication de sauvegarde */}
         <p className="text-center text-memoir-blue/50 text-sm mt-6">
