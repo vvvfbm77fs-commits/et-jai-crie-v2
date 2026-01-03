@@ -1,11 +1,11 @@
 'use client';
-
+import { slugify } from '@/lib/slugify';
+import { supabase } from '@/lib/supabase';
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Home, Share2 } from 'lucide-react';
 import Footer from '@/components/Footer';
-// ✅ NOUVEAUX IMPORTS POUR LES LAYOUTS
 import MemorialLayout from '@/components/MemorialLayout';
 import {
   ProfileBlock,
@@ -16,7 +16,6 @@ import {
   CandleBlock,
   LinksBlock,
 } from '@/components/memorial-blocks';
-// ✅ FIN DES NOUVEAUX IMPORTS
 import { getPhoto, blobToURL } from '@/lib/indexedDB';
 import { getTemplate } from '@/lib/templates';
 import { BlockType } from '@/lib/layouts';
@@ -35,31 +34,55 @@ export default function MemorialPage() {
       router.push('/');
       return;
     }
+    const decodedId = decodeURIComponent(String(id));
 
-    const saved = localStorage.getItem('memorial-' + id);
-    if (saved) {
-      try {
-        const data = JSON.parse(saved);
-        setMemorial(data);
-        
-        if (data.identite?.photoProfilId) {
-          loadProfilePhoto(data.identite.photoProfilId);
-        }
-        
-        if (data.medias && data.medias.length > 0) {
-          loadGalleryMedias(data.medias);
-        }
-        
-        if (data.gouts?.musiqueFileId) {
-          loadAudio(data.gouts.musiqueFileId);
-        }
-      } catch (e) {
-        console.error('Erreur');
-        router.push('/');
-      }
-    } else {
-      router.push('/');
+// Récupérer le mémorial depuis Supabase
+const fetchMemorial = async () => {
+  try {
+    const { data: memorial, error } = await supabase
+      .from('memoriaux')
+      .select('*')
+      .eq('slug', decodedId)
+      .maybeSingle(); // 👈 essentiel
+
+    if (error) {
+      console.error('Erreur Supabase:', error);
+      return;
     }
+
+    if (!memorial) {
+      console.warn('Mémorial non trouvé pour le slug:', id);
+      router.push('/');
+      return;
+    }
+
+    // memorial = ligne Supabase
+// memorial.data = tes vraies données (questionnaire)
+const payload = memorial.data ?? memorial;
+
+// 👉 on met dans le state le "vrai" objet de données
+setMemorial(payload);
+
+if (payload.identite?.photoProfilId) {
+  loadProfilePhoto(payload.identite.photoProfilId);
+}
+
+if (payload.medias && payload.medias.length > 0) {
+  loadGalleryMedias(payload.medias);
+}
+
+if (payload.gouts?.musiqueFileId) {
+  loadAudio(payload.gouts.musiqueFileId);
+}
+
+  } catch (e) {
+    console.error('Erreur fetchMemorial:', e);
+    router.push('/');
+  }
+};
+
+
+    fetchMemorial();
   }, [params, router]);
 
   const loadProfilePhoto = async (photoId: string) => {
@@ -132,7 +155,6 @@ export default function MemorialPage() {
   const finalLayout = layout || 'classic';
   const finalBlockOrder: BlockType[] = blockOrder || ['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links'];
 
-  // ✅ NOUVEAU : Préparer les blocs pour MemorialLayout
   const blocks = {
     profile: (
       <ProfileBlock
@@ -217,7 +239,6 @@ export default function MemorialPage() {
             </button>
           </div>
 
-          {/* ✅ NOUVEAU : Utilisation de MemorialLayout */}
           <MemorialLayout
             layout={finalLayout}
             blockOrder={finalBlockOrder}

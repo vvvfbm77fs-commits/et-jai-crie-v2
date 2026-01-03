@@ -1,5 +1,6 @@
 'use client';
-
+import { slugify } from '@/lib/slugify';
+import { supabase } from '@/lib/supabase';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -40,7 +41,7 @@ export default function AperçuPage() {
   const [blockOrder, setBlockOrder] = useState<BlockType[]>(['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links']);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [createdUrls, setCreatedUrls] = useState<string[]>([]);
-  const [generationError, setGenerationError] = useState<string>(''); // ← AJOUTÉ pour gérer les erreurs
+  const [generationError, setGenerationError] = useState<string>('');
 
 
   useEffect(() => {
@@ -138,12 +139,11 @@ export default function AperçuPage() {
   };
 const generateText = async (dataToUse: any) => {
   setIsGenerating(true);
-  setGenerationError(''); // Réinitialiser l'erreur
+  setGenerationError('');
 
   try {
     const { identite, caractere, valeurs, liens, talents, realisation, gouts, style, message } = dataToUse;
 
-    // Filtre anti-gros mots
     const badWords = ['con', 'connard', 'connasse', 'salaud', 'salope', 'putain', 'merde', 'chier', 'enculé', 'bite', 'couille'];
     const filterBadWords = (text: string) => {
       if (!text || typeof text !== 'string') return text || '';
@@ -155,7 +155,6 @@ const generateText = async (dataToUse: any) => {
       return out;
     };
 
-    // Extraction des données
     const genre = identite?.genre;
     const prenom = identite?.prenom || '';
     const lui = prenom || 'cette personne';
@@ -166,7 +165,6 @@ const generateText = async (dataToUse: any) => {
     const lieuDeces = identite?.lieuDeces || '';
     const lieuSymbolique = identite?.lieuSymbolique || '';
 
-    // Extraction des goûts
     const lieu = gouts?.lieu || '';
     const habitude = gouts?.habitude || '';
     const saison = gouts?.saison || '';
@@ -174,7 +172,6 @@ const generateText = async (dataToUse: any) => {
     const phrase = gouts?.phrase || '';
     const goutsTexte = gouts?.texte || '';
 
-    // Extraction des autres données
     const adjectifs = caractere?.adjectifs?.join(', ') || '';
     const anecdote = caractere?.anecdote || '';
     const valeursListe = valeurs?.selected?.join(', ') || '';
@@ -187,7 +184,6 @@ const generateText = async (dataToUse: any) => {
     const realisationText = typeof realisation === 'string' ? realisation : realisation?.text || '';
     const messagePerso = message ? filterBadWords(message) : '';
 
-    // Définition de tonalite
     const toneMap: Record<string, string> = {
       'poetique': 'sensible et littéraire, avec des images poétiques',
       'narratif': 'narratif et vivant, avec des anecdotes concrètes',
@@ -195,7 +191,6 @@ const generateText = async (dataToUse: any) => {
     };
     const tonalite = toneMap[style] || 'sobre et respectueux';
 
-    // Construction du prompt (tu peux utiliser generateMistralPrompt(dataToUse) plus tard)
     const prompt = `Tu es un écrivain français spécialisé dans les textes commémoratifs de haute qualité littéraire.
 
 IDENTITÉ : ${prenom} ${nom}
@@ -245,7 +240,6 @@ RÈGLES ABSOLUES :
 
 Génère le texte maintenant :`;
 
-    // Appel API Mistral
     const response = await fetch('/api/generate-memorial', {
       method: 'POST',
       headers: {
@@ -255,11 +249,11 @@ Génère le texte maintenant :`;
     });
 
     if (!response.ok) {
-      throw new Error(GENERATION_MESSAGES.error); // ← MESSAGE HUMANISÉ
+      throw new Error(GENERATION_MESSAGES.error);
     }
 
     const result = await response.json();
-    const texte = result.text || GENERATION_MESSAGES.error; // ← MESSAGE HUMANISÉ
+    const texte = result.text || GENERATION_MESSAGES.error;
 
     setTexteGenere(texte);
     setEditedText(texte);
@@ -269,7 +263,7 @@ Génère le texte maintenant :`;
     setData(updated);
   } catch (error) {
     console.error('Erreur génération:', error);
-    setGenerationError(GENERATION_MESSAGES.error); // ← MESSAGE HUMANISÉ
+    setGenerationError(GENERATION_MESSAGES.error);
   } finally {
     setIsGenerating(false);
   }
@@ -317,27 +311,70 @@ Génère le texte maintenant :`;
     setShowConsentModal(true);
   };
 
-  const handleConfirmPublish = () => {
-    setShowConsentModal(false);
-    setIsPublishing(true);
+const handleConfirmPublish = async () => {
+  console.log('🔵 [DEBUT] handleConfirmPublish appelé');
+  setShowConsentModal(false);
+  setIsPublishing(true);
+
+  try {
+    console.log('🔵 [STEP 1] Extraction des données...');
+    const prenom = data.identite?.prenom || '';
+    const nom = data.identite?.nom || '';
+    console.log('🔵 [STEP 1] Prenom:', prenom, 'Nom:', nom);
+
+    console.log('🔵 [STEP 2] Génération du slug...');
+    const slug = `${slugify(prenom)}-${slugify(nom)}-${Date.now()}`;
+    console.log('🔵 [STEP 2] Slug généré:', slug);
+
+    console.log('🔵 [STEP 3] Vérification de Supabase...');
+    console.log('🔵 [STEP 3] Supabase client:', supabase ? 'OK ✅' : 'ERREUR ❌');
+
+    console.log('🔵 [STEP 4] Préparation des données pour insertion...');
+    const insertData = {
+      prenom,
+      nom,
+      slug,
+      data,
+      texte_genere: texteGenere,
+      status: 'published',
+      published_at: new Date().toISOString(),
+    };
+    console.log('🔵 [STEP 4] Données à insérer:', JSON.stringify(insertData, null, 2));
+
+    console.log('🔵 [STEP 5] Appel Supabase INSERT...');
+    const { data: memorial, error } = await supabase
+      .from('memoriaux')
+      .insert(insertData)
+      .select()
+      .single();
+
+    console.log('🔵 [STEP 6] Résultat Supabase:');
+    console.log('🔵 [STEP 6] Memorial:', memorial);
+    console.log('🔵 [STEP 6] Error:', error);
+
+    if (error) {
+      console.error('🔴 [ERREUR] Supabase error:', error);
+      console.error('🔴 [ERREUR] Error code:', error.code);
+      console.error('🔴 [ERREUR] Error message:', error.message);
+      console.error('🔴 [ERREUR] Error details:', error.details);
+      throw error;
+    }
+
+    console.log('🟢 [SUCCÈS] Memorial créé avec ID:', memorial?.id);
+    console.log('🟢 [SUCCÈS] Redirection vers:', `/memorial/${memorial?.slug}`);
     
-    setTimeout(() => {
-      const memorial = {
-        ...data,
-        id: Date.now().toString(),
-        publishedAt: new Date().toISOString(),
-        status: 'published',
-        template: selectedTemplate,
-        layout: selectedLayout,
-        blockOrder: blockOrder,
-        photoFilter: photoFilter,
-        texteGenere: texteGenere,
-      };
-      
-      localStorage.setItem('memorial-' + memorial.id, JSON.stringify(memorial));
-      router.push('/memorial/' + memorial.id);
-    }, 1500);
-  };
+    router.push(`/memorial/${memorial.slug}`);
+  } catch (error) {
+    console.error('🔴 [CATCH] Erreur complète:', error);
+    console.error('🔴 [CATCH] Type:', typeof error);
+    console.error('🔴 [CATCH] Stack:', (error as Error)?.stack);
+    alert('Erreur lors de la publication. Vérifiez la console (F12) pour plus de détails.');
+  } finally {
+    console.log('🔵 [FIN] Publication terminée');
+    setIsPublishing(false);
+  }
+};
+
 
   if (!data) {
     return (
@@ -487,7 +524,6 @@ Génère le texte maintenant :`;
           onOrderChange={handleBlockOrderChange}
         />
 
-        {/* SECTION APERÇU DU MÉMORIAL */}
         <div 
           className="rounded-2xl shadow-2xl p-8 md:p-12 mb-8"
           style={{ 
@@ -500,11 +536,9 @@ Génère le texte maintenant :`;
               <div className="animate-spin w-12 h-12 border-4 border-t-transparent rounded-full mx-auto mb-4" 
                    style={{ borderColor: currentTemplate.colors.accent, borderTopColor: 'transparent' }}
               />
-              {/* MESSAGE HUMANISÉ PENDANT LA GÉNÉRATION */}
               <p className="opacity-70 text-lg">{GENERATION_MESSAGES.loading}</p>
             </div>
           ) : generationError ? (
-            // AFFICHAGE DE L'ERREUR
             <div className="text-center py-16">
               <div className="p-6 bg-red-50 border-2 border-red-200 rounded-lg text-red-800 mb-6">
                 <p className="font-medium">{generationError}</p>
@@ -517,9 +551,7 @@ Génère le texte maintenant :`;
               </button>
             </div>
           ) : texteGenere ? (
-            // TEXTE GÉNÉRÉ AVEC MESSAGE DE SUCCÈS
             <div>
-              {/* MESSAGE HUMANISÉ APRÈS GÉNÉRATION */}
               <p className="text-center italic opacity-60 mb-6 text-sm">
                 {GENERATION_MESSAGES.success}
               </p>
@@ -533,7 +565,6 @@ Génère le texte maintenant :`;
           ) : null}
         </div>
 
-        {/* BOUTONS D'ACTION */}
         <div className="flex flex-wrap justify-center gap-4">
           <button
             onClick={handleRegenerate}
