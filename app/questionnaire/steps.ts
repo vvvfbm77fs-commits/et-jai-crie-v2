@@ -320,11 +320,12 @@ export const steps: Step[] = [
     ],
   },
 
-  // ÉTAPE 9 - Blagues, humour et conneries
+  // ÉTAPE 9 - Blagues, humour et souvenirs
   {
     id: 'humour',
-    title: 'Blagues, humour et conneries',
-    description: 'Les souvenirs légers et joyeux',
+    title: 'Blagues, humour et souvenirs',
+    description: 'Les souvenirs légers et joyeux (facultatif)',
+    optional: true,
     questions: [
       {
         id: 'blagues',

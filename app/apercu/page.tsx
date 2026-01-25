@@ -203,9 +203,10 @@ const generateText = async (dataToUse: any) => {
     const momentsMarquants = parcours?.moments || '';
     const parcoursPro = parcours?.parcoursProfessionnel || '';
     const engagements = parcours?.engagements || '';
-    const blagues = humour?.blagues || '';
-    const betises = humour?.betises || '';
-    const rires = humour?.rires || '';
+    const humourSkipped = humour?.skip;
+    const blagues = humourSkipped ? '' : humour?.blagues || '';
+    const betises = humourSkipped ? '' : humour?.betises || '';
+    const rires = humourSkipped ? '' : humour?.rires || '';
 
     const genealogieElements = [
       genealogie?.parents ? `Parents : ${genealogie.parents}` : '',

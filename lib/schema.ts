@@ -69,6 +69,7 @@ export interface QuestionnaireData {
     blagues?: string;
     betises?: string;
     rires?: string;
+    skip?: boolean;
   };
 
   // Bloc E - Liens et relations
@@ -136,6 +137,7 @@ export interface Step {
   description?: string;
   type?: 'default' | 'style-picker';
   questions?: Question[];
+  optional?: boolean;
 }
 
 export const ADJECTIFS = [
