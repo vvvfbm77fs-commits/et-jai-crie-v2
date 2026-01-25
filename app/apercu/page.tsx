@@ -178,45 +178,62 @@ const generateText = async (dataToUse: any) => {
     const lieuDeces = identite?.lieuDeces || '';
     const lieuSymbolique = identite?.lieuSymbolique || '';
 
-    const lieu = gouts?.lieu || '';
-    const habitude = gouts?.habitude || '';
-    const saison = gouts?.saison || '';
-    const musique = gouts?.musique || '';
-    const phrase = gouts?.phrase || '';
-    const goutsTexte = gouts?.goutsTexte || gouts?.texte || '';
+    const isSkipped = (section?: { skip?: boolean } | null) =>
+      Boolean(section?.skip);
+
+    const goutsSkipped = isSkipped(gouts);
+    const lieu = goutsSkipped ? '' : gouts?.lieu || '';
+    const habitude = goutsSkipped ? '' : gouts?.habitude || '';
+    const saison = goutsSkipped ? '' : gouts?.saison || '';
+    const musique = goutsSkipped ? '' : gouts?.musique || '';
+    const phrase = goutsSkipped ? '' : gouts?.phrase || '';
+    const goutsTexte = goutsSkipped ? '' : gouts?.goutsTexte || gouts?.texte || '';
 
     const adjectifs = caractere?.adjectifs?.join(', ') || '';
     const anecdote = caractere?.anecdote || '';
     const valeursListe = valeurs?.selected?.join(', ') || '';
     const valeursTexte = valeurs?.valeursTexte || valeurs?.texte || '';
-    const nomsLiens = liens?.noms || liens?.personnes || '';
-    const liensTexte = liens?.liensTexte || liens?.texte || '';
-    const passions = talents?.passions || '';
-    const talent = talents?.talent || '';
-    const talentsTexte = talents?.talentsTexte || talents?.texte || '';
+
+    const liensSkipped = isSkipped(liens);
+    const nomsLiens = liensSkipped ? '' : liens?.noms || liens?.personnes || '';
+    const liensTexte = liensSkipped ? '' : liens?.liensTexte || liens?.texte || '';
+
+    const talentsSkipped = isSkipped(talents);
+    const passions = talentsSkipped ? '' : talents?.passions || '';
+    const talent = talentsSkipped ? '' : talents?.talent || '';
+    const talentsTexte = talentsSkipped ? '' : talents?.talentsTexte || talents?.texte || '';
     const realisationText =
       typeof realisation === 'string'
         ? realisation
         : realisation?.text || parcours?.fiertes || '';
-    const messagePerso = message?.content ? filterBadWords(message.content) : '';
+    const messageSkipped = isSkipped(message);
+    const messagePerso = messageSkipped
+      ? ''
+      : message?.content
+        ? filterBadWords(message.content)
+        : '';
 
-    const momentsMarquants = parcours?.moments || '';
-    const parcoursPro = parcours?.parcoursProfessionnel || '';
-    const engagements = parcours?.engagements || '';
-    const humourSkipped = humour?.skip;
+    const parcoursSkipped = isSkipped(parcours);
+    const momentsMarquants = parcoursSkipped ? '' : parcours?.moments || '';
+    const parcoursPro = parcoursSkipped ? '' : parcours?.parcoursProfessionnel || '';
+    const engagements = parcoursSkipped ? '' : parcours?.engagements || '';
+    const humourSkipped = isSkipped(humour);
     const blagues = humourSkipped ? '' : humour?.blagues || '';
     const betises = humourSkipped ? '' : humour?.betises || '';
     const rires = humourSkipped ? '' : humour?.rires || '';
 
-    const genealogieElements = [
-      genealogie?.parents ? `Parents : ${genealogie.parents}` : '',
-      genealogie?.fratrie ? `Fratrie : ${genealogie.fratrie}` : '',
-      genealogie?.enfants ? `Enfants : ${genealogie.enfants}` : '',
-      genealogie?.partenaires ? `Partenaire(s) : ${genealogie.partenaires}` : '',
-      genealogie?.autres ? `Autres liens : ${genealogie.autres}` : '',
-    ]
-      .filter(Boolean)
-      .join(' | ');
+    const genealogieSkipped = isSkipped(genealogie);
+    const genealogieElements = genealogieSkipped
+      ? ''
+      : [
+          genealogie?.parents ? `Parents : ${genealogie.parents}` : '',
+          genealogie?.fratrie ? `Fratrie : ${genealogie.fratrie}` : '',
+          genealogie?.enfants ? `Enfants : ${genealogie.enfants}` : '',
+          genealogie?.partenaires ? `Partenaire(s) : ${genealogie.partenaires}` : '',
+          genealogie?.autres ? `Autres liens : ${genealogie.autres}` : '',
+        ]
+          .filter(Boolean)
+          .join(' | ');
 
     const toneMap: Record<string, string> = {
       'poetique': 'sensible et littéraire, avec des images poétiques',

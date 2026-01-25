@@ -54,6 +54,7 @@ export interface QuestionnaireData {
     enfants?: string;
     partenaires?: string;
     autres?: string;
+    skip?: boolean;
   };
 
   // Bloc E - Faits marquants, parcours, engagements
@@ -62,6 +63,7 @@ export interface QuestionnaireData {
     parcoursProfessionnel?: string;
     engagements?: string;
     fiertes?: string;
+    skip?: boolean;
   };
 
   // Bloc F - Humour et anecdotes
@@ -77,6 +79,7 @@ export interface QuestionnaireData {
     personnes?: string;
     noms?: string;
     liensTexte?: string;
+    skip?: boolean;
   };
 
   // Bloc F - Talents et passions
@@ -84,6 +87,7 @@ export interface QuestionnaireData {
     talent?: string;
     passions?: string;
     talentsTexte?: string;
+    skip?: boolean;
   };
 
   // Bloc G - Réalisation
@@ -98,6 +102,7 @@ export interface QuestionnaireData {
     habitude?: string;
     saison?: string;
     goutsTexte?: string;
+    skip?: boolean;
   };
 
   // Bloc I - Message libre
@@ -105,12 +110,19 @@ export interface QuestionnaireData {
     hasMessage: boolean;
     type?: 'text' | 'audio' | 'video';
     content?: string;
+    skip?: boolean;
   };
 
   // Médias et liens
   medias?: any[];
   liensWeb?: any[];
+  musiqueAudio?: {
+    skip?: boolean;
   };
+  galerie?: {
+    skip?: boolean;
+  };
+};
 
 export interface Media {
   id: string;

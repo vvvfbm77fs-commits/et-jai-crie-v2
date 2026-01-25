@@ -200,6 +200,7 @@ export const steps: Step[] = [
     id: 'genealogie',
     title: 'Généalogie',
     description: 'Les liens familiaux importants autour de cette personne',
+    optional: true,
     questions: [
       {
         id: 'parents',
@@ -288,6 +289,7 @@ export const steps: Step[] = [
     id: 'parcours',
     title: 'Faits marquants, exploits et parcours de vie',
     description: 'Les événements qui ont marqué sa trajectoire',
+    optional: true,
     questions: [
       {
         id: 'moments',
@@ -356,6 +358,7 @@ export const steps: Step[] = [
     id: 'liens',
     title: 'Liens et relations',
     description: 'Les personnes qui ont compté dans sa vie',
+    optional: true,
     questions: [
       {
         id: 'noms',
@@ -380,6 +383,7 @@ export const steps: Step[] = [
     id: 'talents',
     title: 'Talents et passions',
     description: 'Ce qui animait, ce qui était maîtrisé',
+    optional: true,
     questions: [
       {
         id: 'passions',
@@ -410,6 +414,7 @@ export const steps: Step[] = [
     id: 'gouts',
     title: 'Goûts et signes de vie',
     description: 'Les petites choses qui définissaient',
+    optional: true,
     questions: [
       {
         id: 'musique',
@@ -461,6 +466,7 @@ export const steps: Step[] = [
     id: 'musiqueAudio',
     title: 'Galerie et audio',
     description: 'Ajoutez un fichier audio ou une musique liée au souvenir (facultatif)',
+    optional: true,
     questions: [
       {
         id: 'musiqueFileId',
@@ -478,6 +484,7 @@ export const steps: Step[] = [
     id: 'galerie',
     title: 'Galerie photos',
     description: 'Ajoutez des photos qui illustrent sa vie (facultatif)',
+    optional: true,
     questions: [
       {
         id: 'medias',
@@ -495,6 +502,7 @@ export const steps: Step[] = [
     id: 'message',
     title: 'Message libre',
     description: 'Un dernier mot, si vous le souhaitez',
+    optional: true,
     questions: [
       {
         id: 'hasMessage',
