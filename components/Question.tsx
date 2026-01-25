@@ -2,6 +2,8 @@
 
 import { Question as QuestionType } from '@/lib/schema';
 import AudioUploader from './AudioUploader';
+import ProfilePhotoUploader from './ProfilePhotoUploader';
+import MediaUploader from './MediaUploader';
 import { ADJECTIFS, VALEURS } from '@/lib/schema';
 
 interface QuestionProps {
@@ -127,6 +129,22 @@ export default function Question({ question, value, onChange }: QuestionProps) {
           audioId={value}
           onAudioChange={onChange}
           memorialId="current"
+        />
+      )}
+
+      {type === 'photo' && (
+        <ProfilePhotoUploader
+          photoId={value}
+          onPhotoChange={onChange}
+          memorialId="current"
+        />
+      )}
+
+      {type === 'gallery' && (
+        <MediaUploader
+          value={Array.isArray(value) ? value : []}
+          onChange={onChange}
+          type="image"
         />
       )}
     </div>

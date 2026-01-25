@@ -169,6 +169,11 @@ export default function Step({ step, data, onChange }: StepProps) {
   const adaptedQuestions = getAdaptedQuestions();
   const { title, description } = getAdaptedTitleAndDescription();
 
+  const getValueFromPath = (path: string) => {
+    const keys = path.split('.');
+    return keys.reduce((acc, key) => (acc ? acc[key] : undefined), data as any);
+  };
+
   // Gérer le changement avec détection de "Je ne l'ai pas connu"
   const handleQuestionChange = (field: string, value: any) => {
     if (step.id === 'lienPersonne' && field === 'lienPersonne.type') {
@@ -207,9 +212,9 @@ export default function Step({ step, data, onChange }: StepProps) {
             <Question
               key={question.id}
               question={question}
-              value={data[step.id]?.[question.id]}
+              value={question.path ? getValueFromPath(question.path) : data[step.id]?.[question.id]}
               onChange={(value) =>
-                handleQuestionChange(`${step.id}.${question.id}`, value)
+                handleQuestionChange(question.path ? question.path : `${step.id}.${question.id}`, value)
               }
             />
           ))}
