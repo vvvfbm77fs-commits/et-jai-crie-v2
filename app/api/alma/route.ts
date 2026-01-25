@@ -40,20 +40,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const apiKey = process.env.MISTRAL_API_KEY;
+    const apiKey = process.env.MISTRAL_API_KEY?.trim();
     if (!apiKey) {
       console.error('Clé API Mistral manquante');
       return NextResponse.json(
-        { error: 'Clé API Mistral manquante' },
+        {
+          error:
+            'Clé API Mistral manquante. Ajoutez MISTRAL_API_KEY dans .env.local puis redémarrez le serveur.',
+          missingEnv: ['MISTRAL_API_KEY'],
+        },
         { status: 500 }
       );
     }
 
-    const agentId = process.env.MISTRAL_AGENT_ID;
+    const agentId = process.env.MISTRAL_AGENT_ID?.trim();
     if (!agentId) {
       console.error('Agent ALMA introuvable');
       return NextResponse.json(
-        { error: "L'agent ALMA est introuvable (MISTRAL_AGENT_ID manquant)." },
+        {
+          error:
+            "L'agent ALMA est introuvable (MISTRAL_AGENT_ID manquant). Ajoutez-le dans .env.local puis redémarrez le serveur.",
+          missingEnv: ['MISTRAL_AGENT_ID'],
+        },
         { status: 500 }
       );
     }
