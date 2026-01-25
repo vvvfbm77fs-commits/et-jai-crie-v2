@@ -5,9 +5,11 @@ export interface QuestionnaireData {
   identite: {
     prenom: string;
     nom?: string;
+    photoProfilId?: string;
     dateNaissance?: string;
     dateDeces?: string;
     lieuNaissance?: string;
+    lieuDeces?: string;
     lieuSymbolique?: string;
     pronom?: 'il' | 'elle' | 'iel' | 'prenom';
   };
@@ -35,24 +37,57 @@ export interface QuestionnaireData {
   caractere: {
     adjectifs: string[];
     autre?: string;
+    anecdote?: string;
   };
 
   // Bloc D - Valeurs
   valeurs: {
     selected: string[];
     autre?: string;
+    valeursTexte?: string;
+  };
+
+  // Bloc D bis - Généalogie
+  genealogie?: {
+    parents?: string;
+    fratrie?: string;
+    enfants?: string;
+    partenaires?: string;
+    autres?: string;
+    skip?: boolean;
+  };
+
+  // Bloc E - Faits marquants, parcours, engagements
+  parcours?: {
+    moments?: string;
+    parcoursProfessionnel?: string;
+    engagements?: string;
+    fiertes?: string;
+    skip?: boolean;
+  };
+
+  // Bloc F - Humour et anecdotes
+  humour?: {
+    blagues?: string;
+    betises?: string;
+    rires?: string;
+    skip?: boolean;
   };
 
   // Bloc E - Liens et relations
   liens: {
-    personnes: string;
+    personnes?: string;
     noms?: string;
+    liensTexte?: string;
+    skip?: boolean;
   };
 
   // Bloc F - Talents et passions
   talents: {
     talent?: string;
     passions?: string;
+    talentsTexte?: string;
+    skip?: boolean;
   };
 
   // Bloc G - Réalisation
@@ -61,10 +96,13 @@ export interface QuestionnaireData {
   // Bloc H - Goûts et signes de vie
   gouts: {
     musique?: string;
+    musiqueFileId?: string;
     phrase?: string;
     lieu?: string;
     habitude?: string;
     saison?: string;
+    goutsTexte?: string;
+    skip?: boolean;
   };
 
   // Bloc I - Message libre
@@ -72,12 +110,19 @@ export interface QuestionnaireData {
     hasMessage: boolean;
     type?: 'text' | 'audio' | 'video';
     content?: string;
+    skip?: boolean;
   };
 
   // Médias et liens
   medias?: any[];
   liensWeb?: any[];
+  musiqueAudio?: {
+    skip?: boolean;
   };
+  galerie?: {
+    skip?: boolean;
+  };
+};
 
 export interface Media {
   id: string;
@@ -90,11 +135,12 @@ export interface Media {
 export interface Question {
   id: string;
   label: string;
-  type: 'text' | 'date' | 'textarea' | 'checkbox' | 'radio' | 'select' | 'file';
+  type: 'text' | 'date' | 'textarea' | 'checkbox' | 'radio' | 'select' | 'file' | 'photo' | 'gallery';
   optional?: boolean;
   options?: string[];
   placeholder?: string;
   helper?: string;
+  path?: string;
 }
 
 export interface Step {
@@ -103,6 +149,7 @@ export interface Step {
   description?: string;
   type?: 'default' | 'style-picker';
   questions?: Question[];
+  optional?: boolean;
 }
 
 export const ADJECTIFS = [

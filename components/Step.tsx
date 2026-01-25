@@ -168,6 +168,12 @@ export default function Step({ step, data, onChange }: StepProps) {
 
   const adaptedQuestions = getAdaptedQuestions();
   const { title, description } = getAdaptedTitleAndDescription();
+  const isSkipped = Boolean(data?.[step.id]?.skip);
+
+  const getValueFromPath = (path: string) => {
+    const keys = path.split('.');
+    return keys.reduce((acc, key) => (acc ? acc[key] : undefined), data as any);
+  };
 
   // Gérer le changement avec détection de "Je ne l'ai pas connu"
   const handleQuestionChange = (field: string, value: any) => {
@@ -196,7 +202,25 @@ export default function Step({ step, data, onChange }: StepProps) {
         )}
       </div>
 
-      {step.type === 'style-picker' ? (
+      {step.optional && (
+        <label className="flex items-center gap-2 text-memoir-blue/70 mb-6">
+          <input
+            type="checkbox"
+            checked={isSkipped}
+            onChange={(event) =>
+              onChange(`${step.id}.skip`, event.target.checked)
+            }
+            className="w-4 h-4 text-memoir-gold"
+          />
+          <span>Je préfère passer cette étape</span>
+        </label>
+      )}
+
+      {isSkipped ? (
+        <p className="text-memoir-blue/60 italic">
+          Étape ignorée. Vous pouvez la compléter plus tard si vous le souhaitez.
+        </p>
+      ) : step.type === 'style-picker' ? (
         <StylePicker
           value={data.style}
           onChange={(value) => onChange('style', value)}
@@ -207,9 +231,9 @@ export default function Step({ step, data, onChange }: StepProps) {
             <Question
               key={question.id}
               question={question}
-              value={data[step.id]?.[question.id]}
+              value={question.path ? getValueFromPath(question.path) : data[step.id]?.[question.id]}
               onChange={(value) =>
-                handleQuestionChange(`${step.id}.${question.id}`, value)
+                handleQuestionChange(question.path ? question.path : `${step.id}.${question.id}`, value)
               }
             />
           ))}

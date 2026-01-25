@@ -30,6 +30,23 @@ export const steps: Step[] = [
     ],
   },
 
+  // ÉTAPE - Photo de profil
+  {
+    id: 'photoProfil',
+    title: 'Photo de profil',
+    description: 'Ajoutez une photo pour personnaliser le mémorial (facultatif)',
+    questions: [
+      {
+        id: 'photoProfilId',
+        label: 'Photo de la personne',
+        type: 'photo',
+        optional: true,
+        helper: 'Cette photo sera affichée en haut du mémorial',
+        path: 'identite.photoProfilId',
+      },
+    ],
+  },
+
   // ÉTAPE 1 - Type d'hommage
   {
     id: 'typeHommage',
@@ -87,7 +104,7 @@ export const steps: Step[] = [
   {
     id: 'modeContributeur',
     title: 'Qui crée ce mémorial ?',
-    description: 'Cette information permet d\'adapter le ton du texte et la signature finale.',
+    description: 'Toutes les contributions servent à générer un texte unique à la fin.',
     questions: [
       {
         id: 'mode',
@@ -155,6 +172,13 @@ export const steps: Step[] = [
         helper: 'Facultatif',
       },
       {
+        id: 'lieuDeces',
+        label: 'Lieu de décès',
+        type: 'text',
+        optional: true,
+        placeholder: 'Ville, pays...',
+      },
+      {
         id: 'lieuNaissance',
         label: 'Lieu de naissance',
         type: 'text',
@@ -167,6 +191,51 @@ export const steps: Step[] = [
         type: 'text',
         optional: true,
         placeholder: 'Un lieu qui a compté...',
+      },
+    ],
+  },
+
+  // ÉTAPE 6 - Généalogie
+  {
+    id: 'genealogie',
+    title: 'Généalogie',
+    description: 'Les liens familiaux importants autour de cette personne',
+    optional: true,
+    questions: [
+      {
+        id: 'parents',
+        label: 'Parents',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Prénoms, liens, éléments marquants...',
+      },
+      {
+        id: 'fratrie',
+        label: 'Fratrie',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Frères, sœurs, liens particuliers...',
+      },
+      {
+        id: 'enfants',
+        label: 'Enfants',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Prénoms, relations, souvenirs...',
+      },
+      {
+        id: 'partenaires',
+        label: 'Conjoint·e(s) / Partenaire(s)',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Personnes avec qui il/elle a partagé sa vie...',
+      },
+      {
+        id: 'autres',
+        label: 'Autres liens familiaux',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Grands-parents, petits-enfants, autres...',
       },
     ],
   },
@@ -215,11 +284,81 @@ export const steps: Step[] = [
     ],
   },
 
-  // ÉTAPE 8 - Liens et relations
+  // ÉTAPE 8 - Faits marquants, parcours, engagements
+  {
+    id: 'parcours',
+    title: 'Faits marquants, exploits et parcours de vie',
+    description: 'Les événements qui ont marqué sa trajectoire',
+    optional: true,
+    questions: [
+      {
+        id: 'moments',
+        label: 'Moments marquants de sa vie',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Réussites, épreuves, tournants, accidents...',
+      },
+      {
+        id: 'parcoursProfessionnel',
+        label: 'Parcours professionnel ou carrière',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Études, métier, engagements professionnels...',
+      },
+      {
+        id: 'engagements',
+        label: 'Engagements, combats, passions structurantes',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Militantisme, passions importantes...',
+      },
+      {
+        id: 'fiertes',
+        label: 'Fiertés ou accomplissements majeurs',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Ce dont il/elle était particulièrement fier/fière...',
+      },
+    ],
+  },
+
+  // ÉTAPE 9 - Blagues, humour et souvenirs
+  {
+    id: 'humour',
+    title: 'Blagues, humour et souvenirs',
+    description: 'Les souvenirs légers et joyeux (facultatif)',
+    optional: true,
+    questions: [
+      {
+        id: 'blagues',
+        label: 'Blagues récurrentes ou phrases cultes',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Ses expressions, ses blagues...',
+      },
+      {
+        id: 'betises',
+        label: 'Bêtises ou situations absurdes',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Souvenirs drôles, petites histoires...',
+      },
+      {
+        id: 'rires',
+        label: 'Ce qui faisait rire tout le monde',
+        type: 'textarea',
+        optional: true,
+        placeholder: 'Ce qui rendait cette personne unique...',
+      },
+    ],
+  },
+
+  // ÉTAPE 10 - Liens et relations
   {
     id: 'liens',
     title: 'Liens et relations',
     description: 'Les personnes qui ont compté dans sa vie',
+    optional: true,
     questions: [
       {
         id: 'noms',
@@ -239,11 +378,12 @@ export const steps: Step[] = [
     ],
   },
 
-  // ÉTAPE 9 - Talents et passions
+  // ÉTAPE 11 - Talents et passions
   {
     id: 'talents',
     title: 'Talents et passions',
     description: 'Ce qui animait, ce qui était maîtrisé',
+    optional: true,
     questions: [
       {
         id: 'passions',
@@ -269,27 +409,12 @@ export const steps: Step[] = [
     ],
   },
 
-  // ÉTAPE 10 - Réalisation
-  {
-    id: 'realisation',
-    title: 'Réalisation ou fierté',
-    description: 'Un accomplissement dont il/elle était fier/fière',
-    questions: [
-      {
-        id: 'realisationText',
-        label: 'De quoi était-il/elle particulièrement fier/fière ?',
-        type: 'textarea',
-        optional: true,
-        placeholder: 'Une réalisation, un moment de fierté...',
-      },
-    ],
-  },
-
-  // ÉTAPE 11 - Goûts et signes de vie
+  // ÉTAPE 12 - Goûts et signes de vie
   {
     id: 'gouts',
     title: 'Goûts et signes de vie',
     description: 'Les petites choses qui définissaient',
+    optional: true,
     questions: [
       {
         id: 'musique',
@@ -336,11 +461,48 @@ export const steps: Step[] = [
     ],
   },
 
-  // ÉTAPE 12 - Message libre
+  // ÉTAPE 13 - Musique / audio
+  {
+    id: 'musiqueAudio',
+    title: 'Galerie et audio',
+    description: 'Ajoutez un fichier audio ou une musique liée au souvenir (facultatif)',
+    optional: true,
+    questions: [
+      {
+        id: 'musiqueFileId',
+        label: 'Fichier audio',
+        type: 'file',
+        optional: true,
+        helper: 'MP3, WAV, M4A...',
+        path: 'gouts.musiqueFileId',
+      },
+    ],
+  },
+
+  // ÉTAPE 14 - Galerie photos
+  {
+    id: 'galerie',
+    title: 'Galerie photos',
+    description: 'Ajoutez des photos qui illustrent sa vie (facultatif)',
+    optional: true,
+    questions: [
+      {
+        id: 'medias',
+        label: 'Photos de la galerie',
+        type: 'gallery',
+        optional: true,
+        helper: 'Vous pouvez ajouter jusqu\'à 20 photos. Elles seront affichées sous forme de galerie.',
+        path: 'medias',
+      },
+    ],
+  },
+
+  // ÉTAPE 15 - Message libre
   {
     id: 'message',
     title: 'Message libre',
     description: 'Un dernier mot, si vous le souhaitez',
+    optional: true,
     questions: [
       {
         id: 'hasMessage',

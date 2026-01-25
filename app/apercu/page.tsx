@@ -142,7 +142,20 @@ const generateText = async (dataToUse: any) => {
   setGenerationError('');
 
   try {
-    const { identite, caractere, valeurs, liens, talents, realisation, gouts, style, message } = dataToUse;
+    const {
+      identite,
+      caractere,
+      valeurs,
+      genealogie,
+      parcours,
+      humour,
+      liens,
+      talents,
+      realisation,
+      gouts,
+      style,
+      message,
+    } = dataToUse;
 
     const badWords = ['con', 'connard', 'connasse', 'salaud', 'salope', 'putain', 'merde', 'chier', 'enculé', 'bite', 'couille'];
     const filterBadWords = (text: string) => {
@@ -165,24 +178,62 @@ const generateText = async (dataToUse: any) => {
     const lieuDeces = identite?.lieuDeces || '';
     const lieuSymbolique = identite?.lieuSymbolique || '';
 
-    const lieu = gouts?.lieu || '';
-    const habitude = gouts?.habitude || '';
-    const saison = gouts?.saison || '';
-    const musique = gouts?.musique || '';
-    const phrase = gouts?.phrase || '';
-    const goutsTexte = gouts?.texte || '';
+    const isSkipped = (section?: { skip?: boolean } | null) =>
+      Boolean(section?.skip);
+
+    const goutsSkipped = isSkipped(gouts);
+    const lieu = goutsSkipped ? '' : gouts?.lieu || '';
+    const habitude = goutsSkipped ? '' : gouts?.habitude || '';
+    const saison = goutsSkipped ? '' : gouts?.saison || '';
+    const musique = goutsSkipped ? '' : gouts?.musique || '';
+    const phrase = goutsSkipped ? '' : gouts?.phrase || '';
+    const goutsTexte = goutsSkipped ? '' : gouts?.goutsTexte || gouts?.texte || '';
 
     const adjectifs = caractere?.adjectifs?.join(', ') || '';
     const anecdote = caractere?.anecdote || '';
     const valeursListe = valeurs?.selected?.join(', ') || '';
-    const valeursTexte = valeurs?.texte || '';
-    const nomsLiens = liens?.noms || liens?.personnes || '';
-    const liensTexte = liens?.texte || '';
-    const passions = talents?.passions || '';
-    const talent = talents?.talent || '';
-    const talentsTexte = talents?.texte || '';
-    const realisationText = typeof realisation === 'string' ? realisation : realisation?.text || '';
-    const messagePerso = message ? filterBadWords(message) : '';
+    const valeursTexte = valeurs?.valeursTexte || valeurs?.texte || '';
+
+    const liensSkipped = isSkipped(liens);
+    const nomsLiens = liensSkipped ? '' : liens?.noms || liens?.personnes || '';
+    const liensTexte = liensSkipped ? '' : liens?.liensTexte || liens?.texte || '';
+
+    const talentsSkipped = isSkipped(talents);
+    const passions = talentsSkipped ? '' : talents?.passions || '';
+    const talent = talentsSkipped ? '' : talents?.talent || '';
+    const talentsTexte = talentsSkipped ? '' : talents?.talentsTexte || talents?.texte || '';
+    const realisationText =
+      typeof realisation === 'string'
+        ? realisation
+        : realisation?.text || parcours?.fiertes || '';
+    const messageSkipped = isSkipped(message);
+    const messagePerso = messageSkipped
+      ? ''
+      : message?.content
+        ? filterBadWords(message.content)
+        : '';
+
+    const parcoursSkipped = isSkipped(parcours);
+    const momentsMarquants = parcoursSkipped ? '' : parcours?.moments || '';
+    const parcoursPro = parcoursSkipped ? '' : parcours?.parcoursProfessionnel || '';
+    const engagements = parcoursSkipped ? '' : parcours?.engagements || '';
+    const humourSkipped = isSkipped(humour);
+    const blagues = humourSkipped ? '' : humour?.blagues || '';
+    const betises = humourSkipped ? '' : humour?.betises || '';
+    const rires = humourSkipped ? '' : humour?.rires || '';
+
+    const genealogieSkipped = isSkipped(genealogie);
+    const genealogieElements = genealogieSkipped
+      ? ''
+      : [
+          genealogie?.parents ? `Parents : ${genealogie.parents}` : '',
+          genealogie?.fratrie ? `Fratrie : ${genealogie.fratrie}` : '',
+          genealogie?.enfants ? `Enfants : ${genealogie.enfants}` : '',
+          genealogie?.partenaires ? `Partenaire(s) : ${genealogie.partenaires}` : '',
+          genealogie?.autres ? `Autres liens : ${genealogie.autres}` : '',
+        ]
+          .filter(Boolean)
+          .join(' | ');
 
     const toneMap: Record<string, string> = {
       'poetique': 'sensible et littéraire, avec des images poétiques',
@@ -198,7 +249,7 @@ Naissance : ${dateNaissance}${lieuNaissance ? ` à ${lieuNaissance}` : ''}
 Décès : ${dateDeces}${lieuDeces ? ` à ${lieuDeces}` : ''}
 Lieux importants : ${lieu || lieuSymbolique}
 
-RÉDIGE UN TEXTE EN 5-6 PARAGRAPHES EN SUIVANT CETTE STRUCTURE EXACTE :
+RÉDIGE UN TEXTE EN 6-7 PARAGRAPHES EN SUIVANT CETTE STRUCTURE EXACTE :
 
 §1 - INTRODUCTION
 Nom complet suivi d'un point. Dates et lieux de vie. Ton ${tonalite}.
@@ -212,16 +263,26 @@ Valeurs : ${valeursListe}
 ${valeursTexte ? `>>> DÉVELOPPE IMPÉRATIVEMENT : "${valeursTexte}"` : ''}
 Explique ce qui comptait pour ${lui}.
 
-§4 - LIENS & PASSIONS
+§4 - LIENS & FAMILLE
 Proches : ${nomsLiens}${liensTexte ? ` - ${liensTexte}` : ''}
+${genealogieElements ? `Généalogie : ${genealogieElements}` : ''}
 Passions : ${passions}${talent ? `, ${talent}` : ''}
 ${talentsTexte ? `>>> PRÉCISE OBLIGATOIREMENT : "${talentsTexte}"` : ''}
 Lieux aimés : ${lieu}. Saison préférée : ${saison}${musique ? `. Musique : ${musique}` : ''}
+${goutsTexte ? `Autres goûts : ${goutsTexte}` : ''}
 
-§5 - RÉALISATION & FIERTÉ
-${realisationText ? `>>> TU DOIS ABSOLUMENT MENTIONNER : "${realisationText}"` : 'Ce dont il/elle était fier(e)'}
+§5 - PARCOURS & MOMENTS MARQUANTS
+${momentsMarquants ? `Moments clés : ${momentsMarquants}` : 'Évoque les moments clés de son parcours'}
+${parcoursPro ? `Parcours professionnel : ${parcoursPro}` : ''}
+${engagements ? `Engagements : ${engagements}` : ''}
+${realisationText ? `>>> TU DOIS ABSOLUMENT MENTIONNER : "${realisationText}"` : ''}
 
-§6 - CONCLUSION
+§6 - HUMOUR & SOUVENIRS
+${blagues ? `Blagues / phrases : ${blagues}` : ''}
+${betises ? `Bêtises / situations drôles : ${betises}` : ''}
+${rires ? `Ce qui faisait rire : ${rires}` : ''}
+
+§7 - CONCLUSION
 ${messagePerso ? `Intègre ce message (reformulé si vulgaire) : "${messagePerso}".` : ''}
 Termine sobre, une phrase courte.
 

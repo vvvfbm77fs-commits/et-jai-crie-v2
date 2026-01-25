@@ -58,7 +58,39 @@ npm install
 npm run dev
 ```
 
+Créer un fichier `.env.local` avec vos identifiants Mistral si vous souhaitez activer l'assistant ALMA :
+
+```
+MISTRAL_API_KEY=...
+MISTRAL_AGENT_ID=ag_...
+```
+
 Ouvrir [http://localhost:3000](http://localhost:3000) dans votre navigateur.
+
+## ✅ Pas à pas (VS Code) pour tester ALMA
+
+1. Ouvrir le dossier du projet dans VS Code (File → Open Folder…).
+2. Créer le fichier `.env.local` à la racine et y coller `MISTRAL_API_KEY` et `MISTRAL_AGENT_ID` (voir ci-dessus).
+3. Ouvrir un terminal intégré (Terminal → New Terminal).
+4. Lancer le serveur : `npm run dev`.
+5. Tester l’API ALMA :
+
+```bash
+curl -X POST http://localhost:3000/api/alma \
+  -H "Content-Type: application/json" \
+  -d '{"message":"Bonjour Alma"}'
+```
+
+## 🛠️ Dépannage rapide (erreur 404 sur /api/alma)
+
+- Vérifier que le fichier existe : `app/api/alma/route.ts`.
+- Redémarrer `npm run dev` après avoir ajouté la route.
+- Si le fichier n’existe pas, mettre à jour le projet (`git pull`) puis relancer.
+
+## 🛠️ Dépannage rapide (erreurs 401/500 sur /api/alma)
+
+- Vérifier que `MISTRAL_API_KEY` et `MISTRAL_AGENT_ID` sont bien définis dans `.env.local`.
+- Redémarrer `npm run dev` après avoir modifié `.env.local`.
 
 ## 🛠️ Technologies utilisées
 
@@ -80,6 +112,8 @@ et-jai-crie/
 │   │   ├── page.tsx            # Page du questionnaire
 │   │   └── steps.ts            # Définition des étapes
 │   └── api/
+│       └── alma/
+│           └── route.ts        # API ALMA (Mistral)
 │       └── generate/
 │           └── route.ts        # API de génération (à venir)
 ├── components/

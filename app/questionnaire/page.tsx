@@ -17,6 +17,9 @@ export default function QuestionnairePage() {
     style: null,
     caractere: { adjectifs: [] },
     valeurs: { selected: [] },
+    genealogie: {},
+    parcours: {},
+    humour: {},
     liens: { personnes: '' },
     talents: {},
     gouts: {},
@@ -70,6 +73,30 @@ const handleChange = (field: string, value: any) => {
       setStepIndex((i) => i + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  };
+
+  const handleSkipStep = () => {
+    if (!currentStep.optional || isLastStep) return;
+
+    setData((prev) => {
+      const existingValue = prev[currentStep.id as keyof QuestionnaireData];
+      const base =
+        existingValue && typeof existingValue === 'object'
+          ? (existingValue as Record<string, unknown>)
+          : {};
+      const updated = {
+        ...prev,
+        [currentStep.id]: {
+          ...base,
+          skip: true,
+        },
+      };
+      localStorage.setItem('questionnaire-memoire', JSON.stringify(updated));
+      return updated;
+    });
+
+    setStepIndex((i) => i + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handlePrevious = () => {
@@ -139,12 +166,21 @@ const handleChange = (field: string, value: any) => {
 
   <button
     onClick={handleSave}
-    className="btn-secondary flex items-center justify-center gap-2 order-3 md:order-2"
+    className="btn-secondary flex items-center justify-center gap-2 order-4 md:order-2"
     title="Sauvegarder la progression"
   >
     <Save className="w-5 h-5" />
     <span>Sauvegarder</span>
   </button>
+
+  {currentStep.optional && !isLastStep && (
+    <button
+      onClick={handleSkipStep}
+      className="btn-secondary flex items-center justify-center gap-2 order-2 md:order-2"
+    >
+      Passer cette étape
+    </button>
+  )}
 
   {isLastStep ? (
     <button
@@ -157,7 +193,7 @@ const handleChange = (field: string, value: any) => {
   ) : (
     <button
       onClick={handleNext}
-      className="btn-primary flex items-center justify-center gap-2 order-2 md:order-3"
+      className="btn-primary flex items-center justify-center gap-2 order-3 md:order-3"
     >
       <span>Suivant</span>
       <ChevronRight className="w-5 h-5" />
