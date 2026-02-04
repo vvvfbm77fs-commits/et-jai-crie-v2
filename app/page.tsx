@@ -170,6 +170,101 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section className="bg-white py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-memoir-blue text-3xl md:text-5xl font-serif italic mb-4">Combien ça coûte ?</h2>
+            <p className="text-memoir-blue/60 text-lg">Simple, transparent, adapté à chaque situation.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            {/* Carte Funéraire */}
+            <div className="border border-memoir-gold/20 rounded-2xl p-8 hover:shadow-xl transition-all">
+              <div className="flex justify-center mb-6">
+                <div className="bg-memoir-blue/5 p-4 rounded-full">
+                  <Flower2 className="w-8 h-8 text-memoir-gold" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-serif text-memoir-blue text-center mb-2">Mémorial funéraire</h3>
+              <div className="text-center mb-6">
+                <span className="text-sm text-memoir-blue/60">À partir de</span>
+                <div className="text-4xl font-bold text-memoir-gold">69€</div>
+              </div>
+              <ul className="space-y-3 text-memoir-blue/80 mb-8 border-t border-b border-memoir-gold/10 py-6">
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Conservation 5 ans</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Mémorial privé ou public</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Photos, audios, vidéos</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>QR code numérique inclus</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Options: contributeurs, livre d'or</li>
+              </ul>
+              <Link href="/dashboard/new?context=funeral" className="block w-full text-center bg-memoir-blue text-white py-3 rounded hover:bg-memoir-blue/90 transition-colors">
+                Créer un mémorial
+              </Link>
+            </div>
+
+            {/* Carte Vivant */}
+            <div className="border border-memoir-gold/20 rounded-2xl p-8 hover:shadow-xl transition-all relative overflow-hidden bg-memoir-gold/5">
+              <div className="absolute top-0 right-0 bg-memoir-gold text-white text-xs px-3 py-1 font-medium rounded-bl-lg">NOUVEAU</div>
+              <div className="flex justify-center mb-6">
+                <div className="bg-memoir-blue/5 p-4 rounded-full">
+                  <BookOpen className="w-8 h-8 text-memoir-gold" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-serif text-memoir-blue text-center mb-2">Histoire de vie</h3>
+              <div className="text-center mb-6">
+                <span className="text-sm text-memoir-blue/60">À partir de</span>
+                <div className="text-4xl font-bold text-memoir-gold">89€</div>
+              </div>
+              <ul className="space-y-3 text-memoir-blue/80 mb-8 border-t border-b border-memoir-gold/10 py-6">
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Conservation 5 ans</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Transmission familiale</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Livre audio généré par IA</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Téléchargement PDF</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Options: contributeurs multiples</li>
+              </ul>
+              <Link href="/dashboard/new?context=living_story" className="block w-full text-center bg-memoir-gold text-memoir-blue py-3 rounded hover:bg-memoir-gold/80 transition-colors font-medium">
+                Créer une histoire
+              </Link>
+            </div>
+
+            {/* Carte Objet */}
+            <div className="border border-memoir-gold/20 rounded-2xl p-8 hover:shadow-xl transition-all">
+              <div className="flex justify-center mb-6">
+                <div className="bg-memoir-blue/5 p-4 rounded-full">
+                  <Armchair className="w-8 h-8 text-memoir-gold" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-serif text-memoir-blue text-center mb-2">Mémoire d'objet</h3>
+              <div className="text-center mb-6">
+                <span className="text-sm text-memoir-blue/60">À partir de</span>
+                <div className="text-4xl font-bold text-memoir-gold">49€</div>
+              </div>
+              <ul className="space-y-3 text-memoir-blue/80 mb-8 border-t border-b border-memoir-gold/10 py-6">
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Conservation 5 ans</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Mémorial privé ou public</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Certificat d'authenticité</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>QR code pour l'objet</li>
+                <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Options: contributeurs</li>
+              </ul>
+              <Link href="/dashboard/new?context=object_memory" className="block w-full text-center bg-memoir-blue text-white py-3 rounded hover:bg-memoir-blue/90 transition-colors">
+                Créer
+              </Link>
+            </div>
+          </div>
+
+          <div className="mt-16 bg-memoir-blue rounded-2xl p-8 md:p-12 text-center">
+            <h3 className="text-memoir-gold text-2xl font-serif italic mb-4">Vous êtes professionnel du funéraire ou assureur ?</h3>
+            <p className="text-white/80 mb-8 max-w-2xl mx-auto">
+              Découvrez nos offres partenaires dédiées : abonnement annuel, commissions sur les upsells et les supports physiques, outils de gestion simplifiés.
+            </p>
+            <Link href="/partner" className="inline-block border border-memoir-gold text-memoir-gold px-8 py-3 rounded hover:bg-memoir-gold hover:text-memoir-blue transition-colors">
+              Devenir partenaire
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* Section Modèles */}
       {/* Section Objets & Supports */}
