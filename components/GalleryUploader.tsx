@@ -19,9 +19,9 @@ interface GalleryUploaderProps {
   maxPhotos?: number;
 }
 
-export default function GalleryUploader({ 
-  medias = [], 
-  onMediasChange, 
+export default function GalleryUploader({
+  medias = [],
+  onMediasChange,
   memorialId,
   maxPhotos = 20
 }: GalleryUploaderProps) {
@@ -82,18 +82,18 @@ export default function GalleryUploader({
 
         const blob = await fileToBlob(file);
         const id = `gallery-${memorialId}-${Date.now()}-${i}`;
-        
+
         await savePhoto({
           id,
           memorialId,
-          type: 'image',
+          type: 'gallery',
           blob,
           nom: file.name,
         });
 
         newMedias.push({
           id,
-          type: 'image',
+          type: 'gallery',
           url: `indexed-db:${id}`,
           nom: file.name,
         });
@@ -111,7 +111,7 @@ export default function GalleryUploader({
 
   const handleRemove = async (index: number) => {
     const media = medias[index];
-    
+
     if (media.url && media.url.startsWith('indexed-db:')) {
       const photoId = media.url.replace('indexed-db:', '');
       try {
@@ -143,7 +143,7 @@ export default function GalleryUploader({
     const draggedMedia = newMedias[draggedIndex];
     newMedias.splice(draggedIndex, 1);
     newMedias.splice(index, 0, draggedMedia);
-    
+
     setDraggedIndex(index);
     onMediasChange(newMedias);
   };
@@ -194,7 +194,7 @@ export default function GalleryUploader({
           <p className="text-sm text-memoir-blue/70">
             {mediasWithUrls.length} photo{mediasWithUrls.length > 1 ? 's' : ''} • Glissez pour réorganiser
           </p>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {mediasWithUrls.map((media, index) => (
               <div
@@ -203,11 +203,10 @@ export default function GalleryUploader({
                 onDragStart={() => handleDragStart(index)}
                 onDragOver={(e) => handleDragOver(e, index)}
                 onDragEnd={handleDragEnd}
-                className={`relative group border-2 rounded-lg overflow-hidden transition-all ${
-                  draggedIndex === index 
-                    ? 'border-memoir-gold scale-95 opacity-50' 
+                className={`relative group border-2 rounded-lg overflow-hidden transition-all ${draggedIndex === index
+                    ? 'border-memoir-gold scale-95 opacity-50'
                     : 'border-memoir-blue/10 hover:border-memoir-gold/30'
-                }`}
+                  }`}
               >
                 <div className="absolute top-2 left-2 bg-black/50 rounded p-1 cursor-move z-10">
                   <GripVertical className="w-4 h-4 text-white" />

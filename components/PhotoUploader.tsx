@@ -11,11 +11,11 @@ interface PhotoUploaderProps {
   label?: string;
 }
 
-export default function PhotoUploader({ 
-  photoId, 
-  onPhotoChange, 
+export default function PhotoUploader({
+  photoId,
+  onPhotoChange,
   memorialId,
-  label = "Photo de profil" 
+  label = "Photo de profil"
 }: PhotoUploaderProps) {
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -24,7 +24,7 @@ export default function PhotoUploader({
     if (photoId) {
       loadPhoto(photoId);
     }
-    
+
     return () => {
       if (photoUrl) {
         URL.revokeObjectURL(photoUrl);
@@ -63,11 +63,11 @@ export default function PhotoUploader({
     try {
       const blob = await fileToBlob(file);
       const id = `photo-profil-${memorialId}-${Date.now()}`;
-      
+
       await savePhoto({
         id,
         memorialId,
-        type: 'image',
+        type: 'profile',
         blob,
         nom: file.name,
       });

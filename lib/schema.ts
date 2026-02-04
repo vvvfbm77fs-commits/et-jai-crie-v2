@@ -75,13 +75,13 @@ export interface QuestionnaireData {
   };
 
   // Médias et liens
-    // Nouveaux champs médias
+  // Nouveaux champs médias
   photoProfil?: { photoProfilId?: string };
   musiqueAudio?: { musiqueFileId?: string };
   galerie?: { photos?: any[] };
   medias?: any[];
   liensWeb?: any[];
-  };
+};
 
 export interface Media {
   id: string;
@@ -94,10 +94,12 @@ export interface Media {
 export interface Question {
   id: string;
   label: string;
-type: 'text' | 'date' | 'textarea' | 'select' | 'radio' | 'checkbox' | 'file' | 'photo' | 'gallery';  optional?: boolean;
+  type: 'text' | 'date' | 'textarea' | 'select' | 'radio' | 'checkbox' | 'file' | 'photo' | 'gallery';
+  optional?: boolean;
   options?: string[];
   placeholder?: string;
   helper?: string;
+  path?: string;
 }
 
 export interface Step {
@@ -176,6 +178,6 @@ export const STYLE_EXEMPLES = [
     id: 'poetique',
     titre: 'Poétique / Sensible',
     texte: 'Il avançait doucement, laissant derrière lui des gestes simples et des traces discrètes. Ce qui demeure aujourd\'hui, ce sont ces présences invisibles qui continuent de nous accompagner.',
-  
+
   },
 ];
