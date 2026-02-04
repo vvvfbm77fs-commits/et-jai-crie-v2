@@ -1,16 +1,21 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { steps } from './steps';
+import { useState, useEffect, Suspense, useMemo } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { getSteps } from './steps';
 import { QuestionnaireData } from '@/lib/schema';
 import Progress from '@/components/Progress';
-import Step from '@/components/Step';
+import StepComponent from '@/components/Step';
 import { ChevronLeft, ChevronRight, Save, Home } from 'lucide-react';
 import AlmaChatBubble from '@/components/AlmaChatBubble';
 
-export default function QuestionnairePage() {
+function QuestionnaireContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const context = (searchParams.get('context') as 'funeral' | 'living_story' | 'object_memory') || 'funeral';
+
+  const steps = useMemo(() => getSteps(context), [context]);
+
   const [stepIndex, setStepIndex] = useState(0);
   const [data, setData] = useState<Partial<QuestionnaireData>>({
     identite: { prenom: '' },
@@ -34,7 +39,8 @@ export default function QuestionnairePage() {
 
   // Charger les données depuis localStorage au montage
   useEffect(() => {
-    const saved = localStorage.getItem('questionnaire-memoire');
+    // Separate storage key per context to avoid mixing data
+    const saved = localStorage.getItem(`questionnaire-memoire-${context}`);
     if (saved) {
       try {
         setData(JSON.parse(saved));
@@ -42,7 +48,7 @@ export default function QuestionnairePage() {
         console.error('Erreur lors du chargement des données sauvegardées');
       }
     }
-  }, []);
+  }, [context]);
 
   const handleChange = (field: string, value: any) => {
     setData((prev) => {
@@ -63,7 +69,7 @@ export default function QuestionnairePage() {
       }
 
       // Sauvegarde automatique à chaque changement
-      localStorage.setItem('questionnaire-memoire', JSON.stringify(newData));
+      localStorage.setItem(`questionnaire-memoire-${context}`, JSON.stringify(newData));
       return newData;
     });
   };
@@ -83,7 +89,7 @@ export default function QuestionnairePage() {
   };
 
   const handleSave = () => {
-    localStorage.setItem('questionnaire-memoire', JSON.stringify(data));
+    localStorage.setItem(`questionnaire-memoire-${context}`, JSON.stringify(data));
     alert('Vos réponses ont été sauvegardées.');
   };
 
@@ -112,10 +118,10 @@ export default function QuestionnairePage() {
               <span className="text-sm font-medium">Retour à l'accueil</span>
             </button>
             <h1 className="text-3xl md:text-5xl font-bold text-memoir-blue mb-2 md:mb-4">
-              Et j'ai crié – Mémoire
+              {context === 'object_memory' ? 'Mémoire d\'Objet' : 'Et j\'ai crié – Mémoire'}
             </h1>
             <p className="text-memoir-blue/70 text-base md:text-lg">
-              Création de votre mémorial
+              {context === 'object_memory' ? 'Raconter son histoire' : 'Création de votre mémorial'}
             </p>
           </div>
 
@@ -124,7 +130,7 @@ export default function QuestionnairePage() {
 
           {/* Étape courante */}
           <div className="bg-white rounded-2xl shadow-lg p-6 md:p-12 mb-6 md:mb-8">
-            <Step step={currentStep} data={data} onChange={handleChange} />
+            <StepComponent step={currentStep} data={data} onChange={handleChange} />
           </div>
 
           {/* Navigation */}
@@ -176,5 +182,17 @@ export default function QuestionnairePage() {
       {/* Bulle ALMA flottante */}
       <AlmaChatBubble />
     </>
+  );
+}
+
+export default function QuestionnairePage() {
+  return (
+    <Suspense fallback={
+      <div className="h-screen flex items-center justify-center bg-memoir-bg">
+        <div className="animate-spin w-8 h-8 border-4 border-memoir-gold border-t-transparent rounded-full" />
+      </div>
+    }>
+      <QuestionnaireContent />
+    </Suspense>
   );
 }

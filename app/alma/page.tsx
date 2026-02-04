@@ -1,12 +1,14 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import AlmaChat from '@/components/AlmaChat';
 import { Home } from 'lucide-react';
 
-export default function AlmaPage() {
+function AlmaContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const context = (searchParams.get('context') as 'funeral' | 'living_story' | 'object_memory') || 'funeral';
 
   return (
     <div className="h-screen flex flex-col bg-memoir-bg">
@@ -36,9 +38,21 @@ export default function AlmaPage() {
       {/* Alma Chat pleine hauteur */}
       <div className="flex-1 overflow-hidden">
         <div className="max-w-7xl mx-auto h-full">
-          <AlmaChat />
+          <AlmaChat context={context} />
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AlmaPage() {
+  return (
+    <Suspense fallback={
+      <div className="h-screen flex items-center justify-center bg-memoir-bg">
+        <div className="animate-spin w-8 h-8 border-4 border-memoir-gold border-t-transparent rounded-full" />
+      </div>
+    }>
+      <AlmaContent />
+    </Suspense>
   );
 }

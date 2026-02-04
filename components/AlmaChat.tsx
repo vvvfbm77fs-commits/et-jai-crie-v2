@@ -11,16 +11,17 @@ interface Message {
 
 interface AlmaChatProps {
   userName?: string;
+  context?: 'funeral' | 'living_story' | 'object_memory';
   onSuggestion?: (suggestion: string) => void;
 }
 
 const QUICK_TAG_CLASS = "text-xs px-3 py-1.5 bg-white text-memoir-blue/80 rounded-lg border border-memoir-gold/10 hover:border-memoir-gold hover:text-memoir-gold transition-all text-left shadow-sm";
 
-export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatProps) {
+export default function AlmaChat({ userName = 'Aline', context = 'funeral', onSuggestion }: AlmaChatProps) {
   const [messages, setMessages] = useState<Message[]>(() => {
     // Charger la conversation sauvegardée au démarrage
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('almaConversation');
+      const saved = localStorage.getItem(`almaConversation_${context}`); // Save per context
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -34,10 +35,24 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
       }
     }
 
+    let initialContent = `Bonjour ${userName}. Je suis Alma. `;
+    switch (context) {
+      case 'living_story':
+        initialContent += "Je suis là pour vous aider à raconter votre histoire ou celle d'un proche. Par quel souvenir aimeriez-vous commencer ?";
+        break;
+      case 'object_memory':
+        initialContent += "Je suis là pour révéler l'histoire de cet objet. Dîtes-moi, quel est cet objet et d'où vient-il ?";
+        break;
+      case 'funeral':
+      default:
+        initialContent += "Ici, vous pouvez parler de la personne qui compte pour vous, à votre rythme. Par où aimeriez-vous commencer ?";
+        break;
+    }
+
     return [
       {
         role: 'assistant',
-        content: `Bonjour ${userName}. Je suis Alma. Ici, vous pouvez parler de la personne qui compte pour vous, à votre rythme. Par où aimeriez-vous commencer ?`,
+        content: initialContent,
         timestamp: new Date(),
       }
     ];
@@ -67,7 +82,7 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
 
     setMessages(prev => {
       const newMessages = [...prev, userMessage];
-      localStorage.setItem('almaConversation', JSON.stringify(newMessages));
+      localStorage.setItem(`almaConversation_${context}`, JSON.stringify(newMessages));
       return newMessages;
     });
 
@@ -101,7 +116,7 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
 
       setMessages(prev => {
         const newMessages = [...prev, assistantMessage];
-        localStorage.setItem('almaConversation', JSON.stringify(newMessages));
+        localStorage.setItem(`almaConversation_${context}`, JSON.stringify(newMessages));
         return newMessages;
       });
 
@@ -125,7 +140,7 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
 
       setMessages(prev => {
         const newMessages = [...prev, errorMessage];
-        localStorage.setItem('almaConversation', JSON.stringify(newMessages));
+        localStorage.setItem(`almaConversation_${context}`, JSON.stringify(newMessages));
         return newMessages;
       });
     } finally {
@@ -142,7 +157,7 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
 
     setMessages(prev => {
       const newMessages = [...prev, userMessage];
-      localStorage.setItem('almaConversation', JSON.stringify(newMessages));
+      localStorage.setItem(`almaConversation_${context}`, JSON.stringify(newMessages));
       return newMessages;
     });
 
@@ -174,7 +189,7 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
 
         setMessages(prev => {
           const newMessages = [...prev, assistantMessage];
-          localStorage.setItem('almaConversation', JSON.stringify(newMessages));
+          localStorage.setItem(`almaConversation_${context}`, JSON.stringify(newMessages));
           return newMessages;
         });
 
@@ -204,7 +219,7 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
 
     setMessages(prev => {
       const newMessages = [...prev, finishMessage];
-      localStorage.setItem('almaConversation', JSON.stringify(newMessages));
+      localStorage.setItem(`almaConversation_${context}`, JSON.stringify(newMessages));
       return newMessages;
     });
 
@@ -234,7 +249,7 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
 
         setMessages(prev => {
           const newMessages = [...prev, assistantMessage];
-          localStorage.setItem('almaConversation', JSON.stringify(newMessages));
+          localStorage.setItem(`almaConversation_${context}`, JSON.stringify(newMessages));
           return newMessages;
         });
       }
