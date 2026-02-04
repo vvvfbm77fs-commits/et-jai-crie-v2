@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -26,23 +26,58 @@ const LITERARY_STYLES = [
     },
 ];
 
-export default function NewMemorialPage() {
+function NewMemorialContent() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const context = searchParams.get('context') || 'funeral'; // 'funeral', 'living_story', 'object_memory'
+
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
-        name: '',
+        name: '', // Person name OR Object name
         birthDate: '',
         deathDate: '',
+        objectType: '',
+        objectOrigin: '',
+        objectMaterial: '',
         photo: null as File | null,
         literaryStyle: '',
     });
     const [selectedStyle, setSelectedStyle] = useState('');
 
+    const getContextTitle = () => {
+        switch (context) {
+            case 'living_story': return 'Transmettre une histoire';
+            case 'object_memory': return 'Mémoire d\'objet';
+            default: return 'Créer un mémorial';
+        }
+    };
+
+    const getContextSubtitle = () => {
+        switch (context) {
+            case 'living_story': return 'Racontez votre histoire ou celle d\'un proche';
+            case 'object_memory': return 'Donnez une voix à un objet qui compte';
+            default: return 'Quelques informations pour commencer';
+        }
+    };
+
     const handleNext = () => {
         if (step === 1) {
-            if (!formData.name || !formData.birthDate || !formData.deathDate) {
-                alert('Veuillez remplir tous les champs requis');
-                return;
+            if (context === 'object_memory') {
+                if (!formData.name || !formData.objectType) {
+                    alert('Veuillez remplir le nom et le type d\'objet');
+                    return;
+                }
+            } else if (context === 'living_story') {
+                if (!formData.name || !formData.birthDate) {
+                    alert('Veuillez remplir le nom et la date de naissance');
+                    return;
+                }
+            } else {
+                // Funeral default
+                if (!formData.name || !formData.birthDate || !formData.deathDate) {
+                    alert('Veuillez remplir tous les champs requis');
+                    return;
+                }
             }
         }
         if (step === 2) {
@@ -56,9 +91,12 @@ export default function NewMemorialPage() {
     };
 
     const handleStartQuestionnaire = () => {
-        // For now, redirect to existing questionnaire
-        // In real implementation, this would create the memorial and redirect
-        router.push('/questionnaire');
+        // Redirect with context preserved
+        router.push(`/questionnaire?context=${context}`);
+    };
+
+    const handleStartAlma = () => {
+        router.push(`/alma?context=${context}`);
     };
 
     return (
@@ -91,52 +129,104 @@ export default function NewMemorialPage() {
                     <div className="space-y-8">
                         <div>
                             <h1 className="text-4xl md:text-5xl text-[#0F2A44] mb-4 font-normal text-center" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
-                                Créer un mémorial
+                                {getContextTitle()}
                             </h1>
                             <p className="text-center text-gray-600 italic text-lg">
-                                Quelques informations pour commencer
+                                {getContextSubtitle()}
                             </p>
                         </div>
 
                         <div className="bg-white rounded-2xl border border-[#C9A24D]/20 p-8 space-y-6">
+
+                            {/* Common Field: Name */}
                             <div>
                                 <label className="block text-[#0F2A44] font-medium mb-2">
-                                    Nom complet <span className="text-red-500">*</span>
+                                    {context === 'object_memory' ? "Nom de l'objet" : "Nom complet"} <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     type="text"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    placeholder="Marie Dubois"
+                                    placeholder={context === 'object_memory' ? "Ex: L'horloge du grand-père" : "Marie Dubois"}
                                     className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C9A24D] text-lg"
                                 />
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label className="block text-[#0F2A44] font-medium mb-2">
-                                        Date de naissance <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
-                                        type="date"
-                                        value={formData.birthDate}
-                                        onChange={(e) => setFormData({ ...formData, birthDate: e.target.value })}
-                                        className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C9A24D]"
-                                    />
-                                </div>
+                            {/* Object Context Fields */}
+                            {context === 'object_memory' && (
+                                <>
+                                    <div>
+                                        <label className="block text-[#0F2A44] font-medium mb-2">
+                                            Type d'objet <span className="text-red-500">*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={formData.objectType}
+                                            onChange={(e) => setFormData({ ...formData, objectType: e.target.value })}
+                                            placeholder="Meuble, Bijou, Maison..."
+                                            className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C9A24D]"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label className="block text-[#0F2A44] font-medium mb-2">
+                                                Origine (Lieu/Époque)
+                                            </label>
+                                            <input
+                                                type="text"
+                                                value={formData.objectOrigin}
+                                                onChange={(e) => setFormData({ ...formData, objectOrigin: e.target.value })}
+                                                placeholder="Ex: Bretagne, 1920"
+                                                className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C9A24D]"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-[#0F2A44] font-medium mb-2">
+                                                Matière principale
+                                            </label>
+                                            <input
+                                                type="text"
+                                                value={formData.objectMaterial}
+                                                onChange={(e) => setFormData({ ...formData, objectMaterial: e.target.value })}
+                                                placeholder="Ex: Chêne massif, Or"
+                                                className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C9A24D]"
+                                            />
+                                        </div>
+                                    </div>
+                                </>
+                            )}
 
-                                <div>
-                                    <label className="block text-[#0F2A44] font-medium mb-2">
-                                        Date de décès <span className="text-red-500">*</span>
-                                    </label>
-                                    <input
-                                        type="date"
-                                        value={formData.deathDate}
-                                        onChange={(e) => setFormData({ ...formData, deathDate: e.target.value })}
-                                        className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C9A24D]"
-                                    />
+                            {/* Person Context Fields */}
+                            {context !== 'object_memory' && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block text-[#0F2A44] font-medium mb-2">
+                                            Date de naissance <span className="text-red-500">*</span>
+                                        </label>
+                                        <input
+                                            type="date"
+                                            value={formData.birthDate}
+                                            onChange={(e) => setFormData({ ...formData, birthDate: e.target.value })}
+                                            className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C9A24D]"
+                                        />
+                                    </div>
+
+                                    {/* Funeral Only */}
+                                    {context === 'funeral' && (
+                                        <div>
+                                            <label className="block text-[#0F2A44] font-medium mb-2">
+                                                Date de décès <span className="text-red-500">*</span>
+                                            </label>
+                                            <input
+                                                type="date"
+                                                value={formData.deathDate}
+                                                onChange={(e) => setFormData({ ...formData, deathDate: e.target.value })}
+                                                className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C9A24D]"
+                                            />
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
+                            )}
 
                             <div>
                                 <label className="block text-[#0F2A44] font-medium mb-2">
@@ -172,7 +262,7 @@ export default function NewMemorialPage() {
                                 Choisissez un style
                             </h1>
                             <p className="text-center text-gray-600 italic text-lg max-w-2xl mx-auto">
-                                Ce style guidera l'écriture de votre mémorial. Lisez les exemples et choisissez celui qui vous ressemble le plus.
+                                Ce style guidera l'écriture du récit {context === 'object_memory' ? "de cet objet" : "de vie"}.
                             </p>
                         </div>
 
@@ -221,7 +311,7 @@ export default function NewMemorialPage() {
                     <div className="space-y-8">
                         <div>
                             <h1 className="text-4xl md:text-5xl text-[#0F2A44] mb-4 font-normal text-center" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
-                                Comment souhaitez-vous créer ce mémorial ?
+                                Comment souhaitez-vous créer {context === 'object_memory' ? "cette mémoire" : "ce mémorial"} ?
                             </h1>
                             <p className="text-center text-gray-600 italic text-lg">
                                 Choisissez la méthode qui vous convient le mieux
@@ -231,7 +321,7 @@ export default function NewMemorialPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Alma */}
                             <button
-                                onClick={() => router.push('/alma')}
+                                onClick={handleStartAlma}
                                 className="bg-white border-2 border-[#C9A24D]/30 rounded-2xl p-8 hover:border-[#C9A24D] hover:shadow-xl transition-all text-left group"
                             >
                                 <div className="flex items-center justify-center mb-6">
@@ -241,7 +331,7 @@ export default function NewMemorialPage() {
                                     Avec Alma
                                 </h3>
                                 <p className="text-gray-600 italic text-center leading-relaxed">
-                                    Une conversation douce et bienveillante qui vous guide pas à pas dans vos souvenirs.
+                                    Une conversation douce et bienveillante qui vous guide pas à pas {context === 'object_memory' ? "pour révéler l'histoire de l'objet" : "dans vos souvenirs"}.
                                 </p>
                             </button>
 
@@ -257,7 +347,7 @@ export default function NewMemorialPage() {
                                     Questionnaire
                                 </h3>
                                 <p className="text-gray-600 italic text-center leading-relaxed">
-                                    Un formulaire structuré pour créer votre mémorial à votre propre rythme.
+                                    Un formulaire structuré pour créer {context === 'object_memory' ? "la fiche mémoire" : "votre mémorial"} à votre propre rythme.
                                 </p>
                             </button>
                         </div>
@@ -275,5 +365,13 @@ export default function NewMemorialPage() {
                 )}
             </main>
         </div>
+    );
+}
+
+export default function NewMemorialPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Chargement...</div>}>
+            <NewMemorialContent />
+        </Suspense>
     );
 }

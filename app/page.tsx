@@ -74,7 +74,7 @@ export default function HomePage() {
               Quelqu'un est parti
             </h3>
             <p className="text-memoir-light/70 text-sm mb-6 flex-grow">
-              Créer un mémorial partagé, accessible par QR ou NFC. Pour honorer sa mémoire ensemble.
+              Créer un espace de mémoire partagé, accessible par tous
             </p>
             <Link
               href="/dashboard/new?context=funeral"
@@ -90,10 +90,10 @@ export default function HomePage() {
               <BookOpen className="w-8 h-8 text-memoir-gold" />
             </div>
             <h3 className="text-memoir-gold text-2xl font-serif italic mb-2">
-              Transmettre une histoire
+              Quelqu'un est vivant
             </h3>
             <p className="text-memoir-light/70 text-sm mb-6 flex-grow">
-              Raconter une vie, garder une mémoire familiale vivante. Pour que rien ne s'oublie.
+              Raconter qui il est, avant qu'il ne soit trop tard
             </p>
             <Link
               href="/dashboard/new?context=living_story"
@@ -109,16 +109,16 @@ export default function HomePage() {
               <Armchair className="w-8 h-8 text-memoir-gold" />
             </div>
             <h3 className="text-memoir-gold text-2xl font-serif italic mb-2">
-              Un objet raconte
+              Cet objet porte une histoire
             </h3>
             <p className="text-memoir-light/70 text-sm mb-6 flex-grow">
-              Donner une mémoire à un meuble, une maison, un objet transmis. Révélez ses secrets.
+              La raconter, la garder, la transmettre
             </p>
             <Link
               href="/dashboard/new?context=object_memory"
               className="mt-auto w-full py-3 px-6 rounded border border-memoir-gold text-memoir-gold hover:bg-memoir-gold hover:text-memoir-blue transition-colors text-center text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2"
             >
-              Mémoire d'objet <ArrowRight className="w-4 h-4" />
+              Créer <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
@@ -139,7 +139,7 @@ export default function HomePage() {
               <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-full flex items-center justify-center text-memoir-gold shadow-sm group-hover:scale-110 transition-transform">
                 <span className="font-serif text-2xl font-bold">1</span>
               </div>
-              <h3 className="text-memoir-blue font-bold mb-2">Choisissez votre contexte</h3>
+              <h3 className="text-memoir-blue font-bold mb-2">Choisissez votre point de départ</h3>
               <p className="text-memoir-blue/60 text-sm">Funéraire, vivant ou objet : commencez là où vous êtes.</p>
             </div>
 
@@ -147,8 +147,8 @@ export default function HomePage() {
               <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-full flex items-center justify-center text-memoir-gold shadow-sm group-hover:scale-110 transition-transform">
                 <PenTool className="w-6 h-6" />
               </div>
-              <h3 className="text-memoir-blue font-bold mb-2">Créez avec Alma</h3>
-              <p className="text-memoir-blue/60 text-sm">Une IA bienveillante vous guide, ou répondez librement.</p>
+              <h3 className="text-memoir-blue font-bold mb-2">Créez avec Alma ou en autonomie</h3>
+              <p className="text-memoir-blue/60 text-sm">Une IA bienveillante vous guide, ou répondez librement à un questionnaire.</p>
             </div>
 
             <div className="text-center group">
@@ -163,8 +163,8 @@ export default function HomePage() {
               <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-full flex items-center justify-center text-memoir-gold shadow-sm group-hover:scale-110 transition-transform">
                 <Box className="w-6 h-6" />
               </div>
-              <h3 className="text-memoir-blue font-bold mb-2">Support physique</h3>
-              <p className="text-memoir-blue/60 text-sm">Optionnel : commandez un QR code ou NFC sur plaque.</p>
+              <h3 className="text-memoir-blue font-bold mb-2">Matérialisez (optionnel)</h3>
+              <p className="text-memoir-blue/60 text-sm">QR code ou NFC sur une plaque, un médaillon, une étiquette. La mémoire devient physique.</p>
             </div>
           </div>
         </div>
@@ -178,7 +178,7 @@ export default function HomePage() {
           Du numérique au physique
         </h2>
         <p className="text-memoir-light/80 text-center mb-16 italic text-base md:text-lg px-4 max-w-3xl mx-auto">
-          Après avoir créé votre Commun, vous pouvez commander un support gravé (plaque funéraire, médaillon, étiquette) avec QR code ou puce NFC. Un simple scan donne accès à la mémoire complète.
+          Après avoir créé votre Commun, vous pouvez commander un support gravé : plaque funéraire, médaillon, étiquette pour meuble. Un QR code ou une puce NFC donne accès à la mémoire complète, d'un simple geste.
         </p>
 
         <div className="max-w-7xl mx-auto">

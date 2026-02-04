@@ -41,9 +41,11 @@ function LoginContent() {
           .single();
 
         if (userData?.role === 'admin') {
-          router.push('/admin/dashboard');
+          router.push('/admin');
+        } else if (userData?.role === 'funeral_partner') {
+          router.push('/dashboard-pro');
         } else {
-          router.push('/choix');
+          router.push('/dashboard');
         }
 
       } else if (mode === 'signup') {
@@ -91,7 +93,7 @@ function LoginContent() {
           .eq('id', invitation.id);
 
         alert('Compte créé avec succès !');
-        router.push('/choix');
+        router.push('/dashboard');
       }
     } catch (error: any) {
       setError(error.message || 'Une erreur est survenue');
@@ -138,7 +140,7 @@ function LoginContent() {
               onClick={async () => {
                 const { error } = await supabase.auth.signInWithOAuth({
                   provider: 'google',
-                  options: { redirectTo: `${window.location.origin}/choix` }
+                  options: { redirectTo: `${window.location.origin}/dashboard` }
                 });
                 if (error) setError(error.message);
               }}
@@ -157,7 +159,7 @@ function LoginContent() {
               onClick={async () => {
                 const { error } = await supabase.auth.signInWithOAuth({
                   provider: 'apple',
-                  options: { redirectTo: `${window.location.origin}/choix` }
+                  options: { redirectTo: `${window.location.origin}/dashboard` }
                 });
                 if (error) setError(error.message);
               }}

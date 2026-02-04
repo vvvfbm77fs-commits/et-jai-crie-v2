@@ -12,6 +12,9 @@ export interface QuestionnaireData {
     pronom?: 'il' | 'elle' | 'iel' | 'prenom';
   };
 
+  // Contexte du Commun
+  context?: 'funeral' | 'living_story' | 'object_memory';
+
   // Nouveau - Type d'hommage
   typeHommage?: 'personnel' | 'professionnel' | 'mixte';
 

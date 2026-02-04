@@ -35,6 +35,8 @@ const MOCK_MEMORIALS = [
     },
 ];
 
+// ... (mock data and imports)
+
 export default function DashboardPage() {
     const router = useRouter();
     const [memorials] = useState(MOCK_MEMORIALS);
@@ -45,9 +47,9 @@ export default function DashboardPage() {
             <header className="bg-white border-b border-[#C9A24D]/20 sticky top-0 z-40 shadow-sm">
                 <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
                     <Link href="/" className="flex items-center gap-3">
-                        <img src="/logo.jpg" alt="Et j'ai crié" className="w-12 h-12 rounded-full" />
+                        <img src="/logo.jpg" alt="Commun Vivant" className="w-12 h-12 rounded-full" />
                         <span className="text-xl text-[#0F2A44] font-medium" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
-                            Et j'ai crié
+                            Commun Vivant
                         </span>
                     </Link>
 
@@ -71,20 +73,20 @@ export default function DashboardPage() {
                         Bonjour, Aline
                     </h1>
                     <p className="text-lg text-gray-600 italic">
-                        Vos espaces mémoire
+                        Vos Communs
                     </p>
                 </div>
 
                 {/* Create Button */}
                 <div className="mb-8">
-                    <button
-                        onClick={() => router.push('/dashboard/new')}
-                        className="flex items-center gap-3 bg-[#C9A24D] text-[#0F2A44] px-8 py-4 rounded-xl hover:bg-[#E1C97A] transition-all shadow-lg hover:shadow-xl text-lg font-medium"
+                    <Link
+                        href="/#usages"
+                        className="flex items-center gap-3 bg-[#C9A24D] text-[#0F2A44] px-8 py-4 rounded-xl hover:bg-[#E1C97A] transition-all shadow-lg hover:shadow-xl text-lg font-medium inline-flex"
                         style={{ fontFamily: 'Manrope, sans-serif' }}
                     >
                         <Plus className="w-6 h-6" />
-                        <span>Créer un mémorial</span>
-                    </button>
+                        <span>Créer un nouveau Commun</span>
+                    </Link>
                 </div>
 
                 {/* Memorials Grid */}
@@ -96,14 +98,14 @@ export default function DashboardPage() {
                     </div>
                 ) : (
                     <div className="text-center py-20">
-                        <p className="text-gray-500 text-lg mb-6">Vous n'avez pas encore créé de mémorial</p>
-                        <button
-                            onClick={() => router.push('/dashboard/new')}
+                        <p className="text-gray-500 text-lg mb-6">Vous n'avez pas encore créé de Commun</p>
+                        <Link
+                            href="/#usages"
                             className="inline-flex items-center gap-2 text-[#C9A24D] hover:text-[#E1C97A] transition-colors"
                         >
                             <Plus className="w-5 h-5" />
-                            <span>Créer votre premier mémorial</span>
-                        </button>
+                            <span>Créer votre premier Commun</span>
+                        </Link>
                     </div>
                 )}
             </main>
@@ -111,7 +113,7 @@ export default function DashboardPage() {
             {/* Footer */}
             <footer className="mt-20 border-t border-[#C9A24D]/20 py-8 bg-white">
                 <div className="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
-                    <p>© 2026 Et j'ai crié • Tous droits réservés</p>
+                    <p>© 2026 Commun Vivant • Tous droits réservés</p>
                 </div>
             </footer>
         </div>
