@@ -93,7 +93,7 @@ export default function HomePage() {
               Quelqu'un est vivant
             </h3>
             <p className="text-memoir-light/70 text-sm mb-6 flex-grow">
-              Raconter qui il est, avant qu'il ne soit trop tard
+              Célébrer sa vie, maintenant. Raconter son histoire et partager ses souvenirs.
             </p>
             <Link
               href="/dashboard/new?context=living_story"
