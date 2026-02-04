@@ -1,12 +1,11 @@
-```typescript
 import { Step } from '@/lib/schema';
 
 export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' = 'funeral'): Step[] => {
-  
+
   if (context === 'object_memory') {
     return [
-       // ÉTAPE 0 - Identité de l'objet
-       {
+      // ÉTAPE 0 - Identité de l'objet
+      {
         id: 'identite',
         title: 'L\'objet',
         description: 'De quel objet s\'agit-il ?',
@@ -18,13 +17,13 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
             placeholder: 'Ex: Le fauteuil de Grand-Père',
           },
           {
-             id: 'type_objet',
-             label: 'Type d\'objet',
-             type: 'text',
-             optional: true,
-             placeholder: 'Ex: Meuble, bijou, outil...',
-             // Note: schema keys might need to be flexible or we reuse 'nom' field 
-           }
+            id: 'type_objet',
+            label: 'Type d\'objet',
+            type: 'text',
+            optional: true,
+            placeholder: 'Ex: Meuble, bijou, outil...',
+            // Note: schema keys might need to be flexible or we reuse 'nom' field 
+          }
         ],
       },
       {
@@ -44,60 +43,60 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
       },
       // ÉTAPE 1 - Origine
       {
-         id: 'parcours', // Reusing parcours structure
-         title: 'Origine et fabrication',
-         description: 'D\'où vient cet objet ?',
-         questions: [
-           {
-             id: 'moments', // mapped to origin story
-             label: 'Histoire de son acquisition ou fabrication',
-             type: 'textarea',
-             placeholder: 'Acheté, fabriqué, transmis ? Racontez...',
-           },
-           {
-              id: 'dateNaissance', // mapped to creation date
-              label: 'Année de fabrication / acquisition (approximative)',
-              type: 'text',
-              placeholder: 'Ex: Vers 1950',
-           },
-           {
-              id: 'lieuNaissance', // mapped to place of origin
-              label: 'Lieu d\'origine',
-              type: 'text',
-              placeholder: 'Ville, Pays, Atelier...',
-           }
-         ]
+        id: 'parcours', // Reusing parcours structure
+        title: 'Origine et fabrication',
+        description: 'D\'où vient cet objet ?',
+        questions: [
+          {
+            id: 'moments', // mapped to origin story
+            label: 'Histoire de son acquisition ou fabrication',
+            type: 'textarea',
+            placeholder: 'Acheté, fabriqué, transmis ? Racontez...',
+          },
+          {
+            id: 'dateNaissance', // mapped to creation date
+            label: 'Année de fabrication / acquisition (approximative)',
+            type: 'text',
+            placeholder: 'Ex: Vers 1950',
+          },
+          {
+            id: 'lieuNaissance', // mapped to place of origin
+            label: 'Lieu d\'origine',
+            type: 'text',
+            placeholder: 'Ville, Pays, Atelier...',
+          }
+        ]
       },
-       // ÉTAPE 2 - Détails physiques
-       {
-         id: 'gouts', // Reusing gouts for physical details
-         title: 'Détails et matières',
-         description: 'À quoi ressemble-t-il vraiment ?',
-         questions: [
-           {
-             id: 'goutsTexte',
-             label: 'Matières, couleurs, usure',
-             type: 'textarea',
-             placeholder: 'En bois de chêne, cuir usé, rayure sur le côté...',
-           }
-         ]
-       },
-       // ÉTAPE 3 - Vie de l'objet
-       {
-         id: 'souvenirs_objet',
-         title: 'La vie de l\'objet',
-         description: 'Quels souvenirs sont liés à lui ?',
-         questions: [
-           {
-             id: 'anecdote', // mapped to character anecdote
-             label: 'Une scène, un moment marquant avec cet objet',
-             type: 'textarea',
-             placeholder: 'Il trônait toujours dans le salon...',
-           }
-         ]
-       },
-       // Galerie
-       {
+      // ÉTAPE 2 - Détails physiques
+      {
+        id: 'gouts', // Reusing gouts for physical details
+        title: 'Détails et matières',
+        description: 'À quoi ressemble-t-il vraiment ?',
+        questions: [
+          {
+            id: 'goutsTexte',
+            label: 'Matières, couleurs, usure',
+            type: 'textarea',
+            placeholder: 'En bois de chêne, cuir usé, rayure sur le côté...',
+          }
+        ]
+      },
+      // ÉTAPE 3 - Vie de l'objet
+      {
+        id: 'souvenirs_objet',
+        title: 'La vie de l\'objet',
+        description: 'Quels souvenirs sont liés à lui ?',
+        questions: [
+          {
+            id: 'anecdote', // mapped to character anecdote
+            label: 'Une scène, un moment marquant avec cet objet',
+            type: 'textarea',
+            placeholder: 'Il trônait toujours dans le salon...',
+          }
+        ]
+      },
+      // Galerie
+      {
         id: 'galerie',
         title: 'Galerie photos',
         description: 'Dautres angles ou détails (facultatif)',
@@ -147,7 +146,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE - Photo de profil
     {
       id: 'photoProfil',
@@ -164,7 +163,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 1 - Type d'hommage
     {
       id: 'typeHommage',
@@ -184,7 +183,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 2 - Lien avec la personne
     {
       id: 'lienPersonne',
@@ -216,7 +215,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 3 - Mode contributeur
     {
       id: 'modeContributeur',
@@ -249,7 +248,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 4 - Style d'écriture
     {
       id: 'style',
@@ -257,7 +256,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
       description: 'Quel style vous ressemble le plus ?',
       type: 'style-picker',
     },
-  
+
     // ÉTAPE 5 - Repères biographiques
     {
       id: 'repereBio',
@@ -303,7 +302,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ].filter(Boolean) as any[],
     },
-  
+
     // ÉTAPE 6 - Généalogie
     {
       id: 'genealogie',
@@ -340,7 +339,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 7 - Caractère
     {
       id: 'caractere',
@@ -362,7 +361,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 8 - Valeurs
     {
       id: 'valeurs',
@@ -384,7 +383,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 9 - Faits marquants
     {
       id: 'parcours',
@@ -414,7 +413,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 10 - Humour
     {
       id: 'humour',
@@ -437,7 +436,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 11 - Talents et passions
     {
       id: 'talents',
@@ -460,7 +459,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 12 - Goûts
     {
       id: 'gouts',
@@ -490,7 +489,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 13 - Musique / audio
     {
       id: 'musiqueAudio',
@@ -507,7 +506,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 14 - Galerie
     {
       id: 'galerie',
@@ -524,7 +523,7 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
         },
       ],
     },
-  
+
     // ÉTAPE 15 - Message libre
     {
       id: 'message',
@@ -549,4 +548,3 @@ export const getSteps = (context: 'funeral' | 'living_story' | 'object_memory' =
     },
   ];
 };
-```
