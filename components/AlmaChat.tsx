@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Send, Sparkles } from 'lucide-react';
+import { Send, Sparkles, Lightbulb, X } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -45,6 +45,7 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
 
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showMobileSuggestions, setShowMobileSuggestions] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -252,10 +253,10 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
     <div className="h-full flex flex-col bg-white">
       {/* Bandeau explicatif */}
       <div className="p-3 bg-memoir-bg text-memoir-blue text-xs text-center border-b border-memoir-gold/20 font-serif italic">
-        Alma est là pour vous écouter. Cliquez sur les mots à droite pour enrichir le récit instantanément.
+        Alma est là pour vous écouter. Cliquez sur les suggestions pour enrichir le récit instantanément.
       </div>
 
-      <div className="flex-1 flex overflow-hidden min-h-[calc(100vh-120px)]">
+      <div className="flex-1 flex overflow-hidden min-h-[calc(100vh-120px)] relative">
         {/* Chat Area (2/3) */}
         <div className="flex-1 flex flex-col border-r border-memoir-gold/10 bg-white md:w-2/3">
           {/* Header */}
@@ -269,12 +270,22 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
                 <p className="text-xs text-memoir-blue/60">Votre biographe personnelle</p>
               </div>
             </div>
-            <button
-              onClick={() => window.location.href = '/questionnaire'}
-              className="text-xs text-memoir-blue/60 hover:text-memoir-gold underline transition-colors"
-            >
-              Passer au questionnaire classique
-            </button>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShowMobileSuggestions(!showMobileSuggestions)}
+                className="md:hidden p-2 text-memoir-gold hover:bg-memoir-gold/10 rounded-full transition-colors"
+                title="Inspiration"
+              >
+                <Lightbulb className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => window.location.href = '/questionnaire'}
+                className="hidden sm:block text-xs text-memoir-blue/60 hover:text-memoir-gold underline transition-colors"
+              >
+                Passer au questionnaire classique
+              </button>
+            </div>
           </div>
 
           {/* Messages */}
@@ -342,15 +353,27 @@ export default function AlmaChat({ userName = 'Aline', onSuggestion }: AlmaChatP
           </div>
         </div>
 
-        {/* Sidebar Contextuelle (1/3) */}
-        < div className="w-1/3 bg-memoir-bg p-6 border-l border-memoir-gold/10 hidden md:block overflow-y-auto custom-scrollbar" >
-          <div className="mb-6">
-            <h3 className="text-sm font-semibold text-memoir-blue mb-1 flex items-center gap-2 font-serif italic">
-              ✨ Boîte à inspiration
-            </h3>
-            <p className="text-xs text-memoir-blue/50">
-              Cliquez pour envoyer directement l'idée à Alma.
-            </p>
+        {/* Sidebar Contextuelle (1/3) - Overlay on mobile */}
+        <div className={`
+          bg-memoir-bg border-l border-memoir-gold/10 overflow-y-auto custom-scrollbar
+          md:w-1/3 md:block md:static md:p-6
+          ${showMobileSuggestions ? 'absolute inset-0 z-20 w-full block p-6' : 'hidden'}
+        `}>
+          <div className="mb-6 flex justify-between items-start">
+            <div>
+              <h3 className="text-sm font-semibold text-memoir-blue mb-1 flex items-center gap-2 font-serif italic">
+                ✨ Boîte à inspiration
+              </h3>
+              <p className="text-xs text-memoir-blue/50">
+                Cliquez pour envoyer directement l'idée à Alma.
+              </p>
+            </div>
+            <button
+              onClick={() => setShowMobileSuggestions(false)}
+              className="md:hidden p-1 text-memoir-blue/50 hover:text-memoir-blue"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
           <div className="space-y-6 pb-20">

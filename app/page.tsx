@@ -15,30 +15,39 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-[500px] h-[60vh] md:h-[600px] flex items-center justify-center overflow-hidden bg-memoir-blue">
+      <section className="relative min-h-[500px] h-[60vh] md:h-[600px] flex items-center justify-center overflow-hidden bg-memoir-bg">
         {/* Animated Background - Photo Vivante */}
         <div className="absolute inset-0 z-0 animate-alive overflow-hidden">
           <Image
             src="/image-site4.png"
             alt="Fleurs au soleil"
             fill
-            className="object-cover"
+            className="object-cover opacity-80"
             priority
           />
           {/* Effet de lumière/Soleil */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 animate-sunlight" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-white/40 to-white/10 opacity-60" />
         </div>
 
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-memoir-blue/40 mix-blend-multiply z-10"></div>
+        {/* Overlay léger pour contraste texte foncé */}
+        <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px] z-10"></div>
 
-        <div className="relative z-20 text-center px-6 w-full max-w-5xl mx-auto">
-          <p className="text-memoir-gold text-lg md:text-2xl mb-6 font-light italic tracking-wide animate-fade-in">
-            Une interface pour se souvenir
-          </p>
-          <h1 className="text-memoir-light text-4xl md:text-7xl lg:text-8xl font-bold leading-tight drop-shadow-lg font-sans animate-slide-up">
-            Un mémorial, pour de vrai.
+        <div className="relative z-20 text-center px-6 w-full max-w-5xl mx-auto flex flex-col items-center gap-6">
+          <h1 className="text-memoir-blue text-7xl md:text-9xl font-calli leading-tight drop-shadow-sm animate-fade-in -rotate-2">
+            Commun Vivant
           </h1>
+
+          <div className="flex flex-col gap-2 animate-slide-up">
+            <p className="text-memoir-blue/70 text-lg md:text-2xl font-serif italic tracking-wide">
+              Comme un souvenir.
+            </p>
+            <p className="text-memoir-blue/70 text-lg md:text-2xl font-serif italic tracking-wide">
+              Comme une transmission.
+            </p>
+            <p className="text-memoir-blue/70 text-lg md:text-2xl font-serif italic tracking-wide">
+              Comme un lien.
+            </p>
+          </div>
         </div>
       </section>
 
