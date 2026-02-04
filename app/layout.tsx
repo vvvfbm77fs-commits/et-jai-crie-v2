@@ -2,21 +2,21 @@ import type { Metadata } from 'next';
 import { Inter, Crimson_Text, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
 });
 
-const crimson = Crimson_Text({ 
+const crimson = Crimson_Text({
   weight: ['400', '600'],
   subsets: ['latin'],
   variable: '--font-serif',
   display: 'swap',
 });
 
-const cormorant = Cormorant_Garamond({ 
-  weight: ['300', '400'],
+const cormorant = Cormorant_Garamond({
+  weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
   variable: '--font-calli',
   display: 'swap',

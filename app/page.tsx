@@ -1,9 +1,10 @@
 'use client';
 
-
+import { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import { Flower2, BookOpen, Armchair, ArrowRight, Smartphone, PenTool, Share2, Box } from 'lucide-react';
 
 export default function HomePage() {
 
@@ -51,152 +52,133 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Question Centrale */}
+      <section className="bg-memoir-blue py-12 px-6 text-center">
+        <h2 className="text-memoir-gold text-2xl md:text-3xl font-serif italic mb-2">Pourquoi êtes-vous ici ?</h2>
+        <div className="w-16 h-px bg-memoir-gold/30 mx-auto"></div>
+      </section>
 
 
 
-      {/* Section Image + Texte */}
-      <section className="bg-memoir-blue py-16 md:py-24 px-6" id="apropos">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-[450px_1fr] gap-16 items-center">
-            {/* Image */}
-            <div className="flex items-start justify-center order-2 md:order-1 relative">
-              <div className="relative w-full max-w-[400px] h-[500px]">
-                <Image
-                  src="/image-site2.png"
-                  alt="Souvenirs"
-                  fill
-                  className="object-cover rounded-lg shadow-2xl"
-                />
-              </div>
+
+      {/* Les 3 Cartes Usages */}
+      <section className="bg-memoir-blue pb-20 px-6 -mt-6" id="usages">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          {/* Carte 1 : Funéraire */}
+          <div className="flex flex-col bg-white/5 border border-memoir-gold/20 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:border-memoir-gold/50 transition-all duration-300 group">
+            <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-blue/50 border border-memoir-gold/30 group-hover:bg-memoir-gold/10 transition-colors">
+              <Flower2 className="w-8 h-8 text-memoir-gold" />
             </div>
-
-            {/* Texte */}
-            <div className="space-y-10 md:space-y-14 order-1 md:order-2">
-              <h2 className="text-memoir-gold text-4xl md:text-5xl lg:text-6xl font-normal leading-tight text-center md:text-left font-serif italic">
-                À votre rythme, à son image
-              </h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12">
-                <div>
-                  <h3 className="text-memoir-gold text-2xl mb-4 font-sans">
-                    Faites vivre la mémoire
-                  </h3>
-                  <p className="text-memoir-light/80 text-lg italic mb-6 leading-relaxed">
-                    Photos, textes, musique : partagez ce qui compte vraiment.
-                  </p>
-                  <button className="text-memoir-light underline hover:text-memoir-gold transition-colors text-base">
-                    Notre accompagnement
-                  </button>
-                </div>
-
-                <div>
-                  <h3 className="text-memoir-gold text-2xl mb-4 font-sans">
-                    Besoin d'aide ?
-                  </h3>
-                  <p className="text-memoir-light/80 text-lg italic mb-6 leading-relaxed">
-                    Nos conseillers sont là pour vous accompagner.
-                  </p>
-                  <button className="text-memoir-light underline hover:text-memoir-gold transition-colors text-base">
-                    Prendre rendez-vous
-                  </button>
-                </div>
-              </div>
-            </div>
+            <h3 className="text-memoir-gold text-2xl font-serif italic mb-2">
+              Quelqu'un est parti
+            </h3>
+            <p className="text-memoir-light/70 text-sm mb-6 flex-grow">
+              Créer un mémorial partagé, accessible par QR ou NFC. Pour honorer sa mémoire ensemble.
+            </p>
+            <Link
+              href="/dashboard/new?context=funeral"
+              className="mt-auto w-full py-3 px-6 rounded border border-memoir-gold text-memoir-gold hover:bg-memoir-gold hover:text-memoir-blue transition-colors text-center text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2"
+            >
+              Créer un mémorial <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
+
+          {/* Carte 2 : Vivant */}
+          <div className="flex flex-col bg-white/5 border border-memoir-gold/20 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:border-memoir-gold/50 transition-all duration-300 group">
+            <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-blue/50 border border-memoir-gold/30 group-hover:bg-memoir-gold/10 transition-colors">
+              <BookOpen className="w-8 h-8 text-memoir-gold" />
+            </div>
+            <h3 className="text-memoir-gold text-2xl font-serif italic mb-2">
+              Transmettre une histoire
+            </h3>
+            <p className="text-memoir-light/70 text-sm mb-6 flex-grow">
+              Raconter une vie, garder une mémoire familiale vivante. Pour que rien ne s'oublie.
+            </p>
+            <Link
+              href="/dashboard/new?context=living_story"
+              className="mt-auto w-full py-3 px-6 rounded border border-memoir-gold text-memoir-gold hover:bg-memoir-gold hover:text-memoir-blue transition-colors text-center text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2"
+            >
+              Créer une histoire <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          {/* Carte 3 : Objet */}
+          <div className="flex flex-col bg-white/5 border border-memoir-gold/20 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:border-memoir-gold/50 transition-all duration-300 group">
+            <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-blue/50 border border-memoir-gold/30 group-hover:bg-memoir-gold/10 transition-colors">
+              <Armchair className="w-8 h-8 text-memoir-gold" />
+            </div>
+            <h3 className="text-memoir-gold text-2xl font-serif italic mb-2">
+              Un objet raconte
+            </h3>
+            <p className="text-memoir-light/70 text-sm mb-6 flex-grow">
+              Donner une mémoire à un meuble, une maison, un objet transmis. Révélez ses secrets.
+            </p>
+            <Link
+              href="/dashboard/new?context=object_memory"
+              className="mt-auto w-full py-3 px-6 rounded border border-memoir-gold text-memoir-gold hover:bg-memoir-gold hover:text-memoir-blue transition-colors text-center text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2"
+            >
+              Mémoire d'objet <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
         </div>
       </section>
 
       <div className="h-px bg-memoir-gold/30 w-full"></div>
 
-      {/* Section 3 colonnes */}
-      <section className="bg-memoir-blue/95 py-20 px-6" id="services">
-        <h2 className="text-memoir-gold text-4xl md:text-6xl text-center mb-16 font-normal leading-tight font-serif italic">
-          Créez l'hommage que vous souhaitez lui rendre
-        </h2>
+      {/* Comment ça marche */}
+      <section className="bg-memoir-bg py-20 px-6" id="comment-ca-marche">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-memoir-blue text-3xl md:text-5xl text-center mb-16 font-serif italic">
+            Comment ça marche
+          </h2>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Carte 1 - Alma */}
-          <div className="flex flex-col items-center bg-white/5 border border-memoir-gold/20 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:border-memoir-gold/50 transition-all duration-300 group">
-            <div className="w-56 h-56 mb-8 relative flex items-center justify-center p-6 bg-memoir-blue/50 rounded-full border border-memoir-gold/30 group-hover:border-memoir-gold transition-colors">
-              <img
-                src="/alma-icon-transparent.png"
-                alt="Alma"
-                className="w-40 h-40 object-contain opacity-90 group-hover:opacity-100 transition-opacity"
-              />
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="text-center group">
+              <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-full flex items-center justify-center text-memoir-gold shadow-sm group-hover:scale-110 transition-transform">
+                <span className="font-serif text-2xl font-bold">1</span>
+              </div>
+              <h3 className="text-memoir-blue font-bold mb-2">Choisissez votre contexte</h3>
+              <p className="text-memoir-blue/60 text-sm">Funéraire, vivant ou objet : commencez là où vous êtes.</p>
             </div>
-            <h3 className="text-memoir-gold text-2xl md:text-3xl mb-4 font-medium text-center font-sans">
-              Avec Alma
-            </h3>
-            <p className="text-memoir-light/80 text-center italic text-lg leading-relaxed mb-8 flex-grow">
-              Une intelligence artificielle bienveillante qui vous guide pas à pas.
-            </p>
-            <Link
-              href="/alma"
-              className="text-memoir-gold border border-memoir-gold px-8 py-3 rounded hover:bg-memoir-gold hover:text-memoir-blue transition-all text-lg font-sans"
-            >
-              Découvrir Alma
-            </Link>
-          </div>
 
-          {/* Carte 2 - Questionnaire */}
-          <div className="flex flex-col items-center bg-white/5 border border-memoir-gold/20 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:border-memoir-gold/50 transition-all duration-300 group">
-            <div className="w-56 h-56 mb-8 relative flex items-center justify-center p-6 bg-memoir-blue/50 rounded-full border border-memoir-gold/30 group-hover:border-memoir-gold transition-colors">
-              <img
-                src="/questionnaire-icon-transparent.png"
-                alt="Questionnaire"
-                className="w-40 h-40 object-contain opacity-90 group-hover:opacity-100 transition-opacity"
-              />
+            <div className="text-center group">
+              <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-full flex items-center justify-center text-memoir-gold shadow-sm group-hover:scale-110 transition-transform">
+                <PenTool className="w-6 h-6" />
+              </div>
+              <h3 className="text-memoir-blue font-bold mb-2">Créez avec Alma</h3>
+              <p className="text-memoir-blue/60 text-sm">Une IA bienveillante vous guide, ou répondez librement.</p>
             </div>
-            <h3 className="text-memoir-gold text-2xl md:text-3xl mb-4 font-medium text-center font-sans">
-              En autonomie
-            </h3>
-            <p className="text-memoir-light/80 text-center italic text-lg leading-relaxed mb-8 flex-grow">
-              Répondez à un questionnaire structuré pour créer votre mémorial.
-            </p>
-            <Link
-              href="/questionnaire"
-              className="text-memoir-gold border border-memoir-gold px-8 py-3 rounded hover:bg-memoir-gold hover:text-memoir-blue transition-all text-lg font-sans"
-            >
-              Commencer
-            </Link>
-          </div>
 
-          {/* Carte 3 - Liberté */}
-          <div className="flex flex-col items-center bg-white/5 border border-memoir-gold/20 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:border-memoir-gold/50 transition-all duration-300 group">
-            <div className="w-56 h-56 mb-8 relative flex items-center justify-center p-6 bg-memoir-blue/50 rounded-full border border-memoir-gold/30 group-hover:border-memoir-gold transition-colors">
-              <img
-                src="/liberte-icon-transparent.png"
-                alt="Liberté"
-                className="w-40 h-40 object-contain opacity-90 group-hover:opacity-100 transition-opacity"
-              />
+            <div className="text-center group">
+              <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-full flex items-center justify-center text-memoir-gold shadow-sm group-hover:scale-110 transition-transform">
+                <Share2 className="w-6 h-6" />
+              </div>
+              <h3 className="text-memoir-blue font-bold mb-2">Partagez et enrichissez</h3>
+              <p className="text-memoir-blue/60 text-sm">Invitez des proches à contribuer. Modifiez à tout moment.</p>
             </div>
-            <h3 className="text-memoir-gold text-2xl md:text-3xl mb-4 font-medium text-center font-sans">
-              Toujours modifiable
-            </h3>
-            <p className="text-memoir-light/80 text-center italic text-lg leading-relaxed mb-8 flex-grow">
-              Vous gardez le contrôle total. Modifiez, complétez ou supprimez.
-            </p>
-            <Link
-              href="/dashboard/new"
-              className="text-memoir-gold border border-memoir-gold px-8 py-3 rounded hover:bg-memoir-gold hover:text-memoir-blue transition-all text-lg font-sans"
-            >
-              Créer un espace
-            </Link>
+
+            <div className="text-center group">
+              <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-full flex items-center justify-center text-memoir-gold shadow-sm group-hover:scale-110 transition-transform">
+                <Box className="w-6 h-6" />
+              </div>
+              <h3 className="text-memoir-blue font-bold mb-2">Support physique</h3>
+              <p className="text-memoir-blue/60 text-sm">Optionnel : commandez un QR code ou NFC sur plaque.</p>
+            </div>
           </div>
         </div>
-
-        {/* Ligne de séparation */}
-        <div className="h-px bg-memoir-gold/30 mt-20"></div>
       </section>
 
 
       {/* Section Modèles */}
-      <section className="bg-memoir-blue py-16 md:py-24 px-6" id="modeles">
-        <h2 className="text-memoir-gold text-4xl md:text-5xl text-center mb-4 font-normal font-serif italic">
-          Un mémorial accessible partout
+      {/* Section Objets & Supports */}
+      <section className="bg-memoir-blue py-16 md:py-24 px-6" id="objets">
+        <h2 className="text-memoir-gold text-4xl md:text-5xl text-center mb-6 font-normal font-serif italic">
+          Du numérique au physique
         </h2>
-        <p className="text-memoir-light/80 text-center mb-16 md:mb-20 italic text-base md:text-lg px-4">
-          Créez votre mémorial en ligne, puis commandez une plaque avec QR code ou puce NFC
+        <p className="text-memoir-light/80 text-center mb-16 italic text-base md:text-lg px-4 max-w-3xl mx-auto">
+          Après avoir créé votre Commun, vous pouvez commander un support gravé (plaque funéraire, médaillon, étiquette) avec QR code ou puce NFC. Un simple scan donne accès à la mémoire complète.
         </p>
 
         <div className="max-w-7xl mx-auto">
@@ -228,27 +210,20 @@ export default function HomePage() {
             {/* Texte */}
             <div className="flex flex-col justify-center px-4 lg:px-8 text-center lg:text-left h-full py-8 lg:py-0">
               <h3 className="text-memoir-gold text-2xl md:text-3xl mb-6 font-light font-sans">
-                Du numérique au physique
+                L'émotion à portée de main
               </h3>
               <p className="text-memoir-light/80 text-lg italic mb-10 leading-relaxed">
-                Après avoir créé votre mémorial en ligne, commandez une plaque gravée avec QR code ou puce NFC. Un simple scan donnera accès au mémorial complet.
+                Plaque funéraire avec QR, médaillon avec NFC, étiquette pour meuble... Choisissez le support qui vous convient.
               </p>
               <div className="flex justify-center lg:justify-start">
                 <button
                   className="bg-memoir-gold text-memoir-blue py-3 md:py-4 px-10 rounded-lg text-lg font-medium hover:bg-memoir-gold/80 transition-colors w-fit shadow-lg font-sans"
                 >
-                  Voir les plaques
+                  Voir les supports
                 </button>
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="max-w-6xl mx-auto mt-20 md:mt-24">
-          <div className="h-px bg-memoir-gold/30 mb-12"></div>
-          <h3 className="text-memoir-gold text-2xl md:text-3xl text-center font-normal font-serif italic">
-            Nos formats de plaques
-          </h3>
         </div>
       </section>
 
@@ -280,7 +255,7 @@ export default function HomePage() {
           </div>
 
           <div className="text-center pt-6 border-t border-memoir-gold/20 text-memoir-light/50 text-xs">
-            <p>© {new Date().getFullYear()} Et j'ai crié • Tous droits réservés</p>
+            <p>© 2026 Commun Vivant • Une marque sensible et éclairée</p>
           </div>
         </div>
       </footer>

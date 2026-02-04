@@ -31,10 +31,11 @@ export default function Header() {
                         </Link>
 
                         <nav className="flex gap-8 text-memoir-light text-base font-light tracking-wide" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                            <a href="/" className="hover:text-memoir-gold transition-colors">Accueil</a>
+                            <a href="/#usages" className="hover:text-memoir-gold transition-colors">Usages</a>
+                            <a href="/#comment-ca-marche" className="hover:text-memoir-gold transition-colors">Comment ça marche</a>
+                            <a href="/#objets" className="hover:text-memoir-gold transition-colors">Objets & supports</a>
                             <a href="/#apropos" className="hover:text-memoir-gold transition-colors">À propos</a>
-                            <a href="/#services" className="hover:text-memoir-gold transition-colors">Nos services</a>
-                            <a href="/#modeles" className="hover:text-memoir-gold transition-colors">Modèles</a>
-                            <a href="/#contact" className="hover:text-memoir-gold transition-colors">Contact</a>
                         </nav>
                     </div>
 
@@ -52,14 +53,7 @@ export default function Header() {
                                 className="text-memoir-light hover:text-memoir-gold transition-colors text-sm font-medium px-4"
                                 style={{ fontFamily: 'Manrope, sans-serif' }}
                             >
-                                Connexion
-                            </button>
-                            <button
-                                onClick={() => router.push('/admin/dashboard')}
-                                className="border border-memoir-gold text-memoir-gold px-5 py-2 rounded hover:bg-memoir-gold hover:text-memoir-blue transition-all text-sm font-medium"
-                                style={{ fontFamily: 'Manrope, sans-serif' }}
-                            >
-                                Espace Pro
+                                Se connecter
                             </button>
                         </div>
                     </div>
@@ -90,10 +84,11 @@ export default function Header() {
             {isMenuOpen && (
                 <div className="md:hidden absolute top-full left-0 w-full bg-memoir-blue border-t border-memoir-gold/20 shadow-xl px-6 py-8 flex flex-col gap-6 animate-in slide-in-from-top-5 duration-200 h-screen">
                     <nav className="flex flex-col items-center gap-6 text-memoir-light text-xl font-light" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                        <a href="/" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Accueil</a>
+                        <a href="/#usages" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Usages</a>
+                        <a href="/#comment-ca-marche" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Comment ça marche</a>
+                        <a href="/#objets" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Objets & supports</a>
                         <a href="/#apropos" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">À propos</a>
-                        <a href="/#services" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Nos services</a>
-                        <a href="/#modeles" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Modèles</a>
-                        <a href="/#contact" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Contact</a>
                     </nav>
 
                     <div className="h-px bg-memoir-gold/20 w-full my-4"></div>
@@ -101,17 +96,10 @@ export default function Header() {
                     <div className="flex flex-col gap-4 items-center w-full">
                         <button
                             onClick={() => { router.push('/login'); toggleMenu(); }}
-                            className="text-memoir-light hover:text-memoir-gold transition-colors text-lg w-full py-3 border border-memoir-gold/20 rounded text-center"
-                            style={{ fontFamily: 'Manrope, sans-serif' }}
-                        >
-                            Connexion
-                        </button>
-                        <button
-                            onClick={() => { router.push('/admin/dashboard'); toggleMenu(); }}
                             className="bg-memoir-gold text-memoir-blue px-6 py-3 rounded hover:bg-[#E1C97A] transition-colors text-lg font-medium w-full text-center"
                             style={{ fontFamily: 'Manrope, sans-serif' }}
                         >
-                            Espace Pro
+                            Se connecter
                         </button>
                     </div>
                 </div>
