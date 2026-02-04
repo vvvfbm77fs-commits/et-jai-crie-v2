@@ -19,6 +19,7 @@ import {
 import { getPhoto, blobToURL } from '@/lib/indexedDB';
 import { getTemplate } from '@/lib/templates';
 import { BlockType } from '@/lib/layouts';
+import ReportButton from '@/components/ReportButton';
 
 export default function MemorialPage() {
   const params = useParams();
@@ -36,50 +37,50 @@ export default function MemorialPage() {
     }
     const decodedId = decodeURIComponent(String(id));
 
-// Récupérer le mémorial depuis Supabase
-const fetchMemorial = async () => {
-  try {
-    const { data: memorial, error } = await supabase
-      .from('memoriaux')
-      .select('*')
-      .eq('slug', decodedId)
-      .maybeSingle(); // 👈 essentiel
+    // Récupérer le mémorial depuis Supabase
+    const fetchMemorial = async () => {
+      try {
+        const { data: memorial, error } = await supabase
+          .from('memoriaux')
+          .select('*')
+          .eq('slug', decodedId)
+          .maybeSingle(); // 👈 essentiel
 
-    if (error) {
-      console.error('Erreur Supabase:', error);
-      return;
-    }
+        if (error) {
+          console.error('Erreur Supabase:', error);
+          return;
+        }
 
-    if (!memorial) {
-      console.warn('Mémorial non trouvé pour le slug:', id);
-      router.push('/');
-      return;
-    }
+        if (!memorial) {
+          console.warn('Mémorial non trouvé pour le slug:', id);
+          router.push('/');
+          return;
+        }
 
-    // memorial = ligne Supabase
-// memorial.data = tes vraies données (questionnaire)
-const payload = memorial.data ?? memorial;
+        // memorial = ligne Supabase
+        // memorial.data = tes vraies données (questionnaire)
+        const payload = memorial.data ?? memorial;
 
-// 👉 on met dans le state le "vrai" objet de données
-setMemorial(payload);
+        // 👉 on met dans le state le "vrai" objet de données
+        setMemorial(payload);
 
-if (payload.identite?.photoProfilId) {
-  loadProfilePhoto(payload.identite.photoProfilId);
-}
+        if (payload.identite?.photoProfilId) {
+          loadProfilePhoto(payload.identite.photoProfilId);
+        }
 
-if (payload.medias && payload.medias.length > 0) {
-  loadGalleryMedias(payload.medias);
-}
+        if (payload.medias && payload.medias.length > 0) {
+          loadGalleryMedias(payload.medias);
+        }
 
-if (payload.gouts?.musiqueFileId) {
-  loadAudio(payload.gouts.musiqueFileId);
-}
+        if (payload.gouts?.musiqueFileId) {
+          loadAudio(payload.gouts.musiqueFileId);
+        }
 
-  } catch (e) {
-    console.error('Erreur fetchMemorial:', e);
-    router.push('/');
-  }
-};
+      } catch (e) {
+        console.error('Erreur fetchMemorial:', e);
+        router.push('/');
+      }
+    };
 
 
     fetchMemorial();
@@ -217,19 +218,19 @@ if (payload.gouts?.musiqueFileId) {
         <div className="max-w-6xl mx-auto">
           {/* Header avec retour et partage */}
           <div className="flex items-center justify-between mb-12">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="inline-flex items-center gap-2 transition-colors"
               style={{ color: currentTemplate.colors.accent }}
             >
               <Home className="w-5 h-5" />
               <span className="text-sm">Retour</span>
             </Link>
-            
+
             <button
               onClick={handleShare}
               className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors text-sm"
-              style={{ 
+              style={{
                 backgroundColor: currentTemplate.colors.accent,
                 color: isLightBg ? '#fff' : currentTemplate.colors.bg
               }}
@@ -246,6 +247,10 @@ if (payload.gouts?.musiqueFileId) {
           />
         </div>
       </section>
+
+      <div className="max-w-6xl mx-auto px-4 pb-8 flex justify-end">
+        <ReportButton />
+      </div>
 
       <Footer />
     </main>

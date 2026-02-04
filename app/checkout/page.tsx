@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, CreditCard, Lock, Check } from 'lucide-react';
 import Image from 'next/image';
+import ValidationModal from '@/components/ValidationModal';
 
 export default function CheckoutPage() {
     const router = useRouter();
@@ -11,6 +12,8 @@ export default function CheckoutPage() {
     const context = searchParams.get('context') || 'funeral';
 
     const [step, setStep] = useState(1); // 1: Recap, 2: Payment, 3: Success
+    const [showValidation, setShowValidation] = useState(false);
+    const [isPublishing, setIsPublishing] = useState(false);
 
     const getProductDetails = () => {
         switch (context) {
@@ -38,16 +41,38 @@ export default function CheckoutPage() {
     const product = getProductDetails();
 
     const handlePayment = () => {
-        // Here we would integrate Stripe
-        setStep(3);
-        // Simulate redirect to dashboard after success
+        // Mock Stripe Payment Success
+        // Instead of going directly to success, show validation modal
+        setShowValidation(true);
+    };
+
+    const handlePublishConfirm = async () => {
+        setIsPublishing(true);
+
+        // Simulate API call to save acceptance and publish
+        // In real app: await fetch('/api/publish', { method: 'POST', body: JSON.stringify({ ... }) })
+
         setTimeout(() => {
-            router.push('/dashboard');
-        }, 3000);
+            setIsPublishing(false);
+            setShowValidation(false);
+            setStep(3); // Success Screen
+
+            // Redirect after delay
+            setTimeout(() => {
+                router.push('/dashboard');
+            }, 3000);
+        }, 1500);
     };
 
     return (
         <div className="min-h-screen bg-[#F5F4F2]">
+            <ValidationModal
+                isOpen={showValidation}
+                onClose={() => setShowValidation(false)}
+                onConfirm={handlePublishConfirm}
+                isProcessing={isPublishing}
+            />
+
             <header className="bg-white border-b border-[#C9A24D]/20 py-4 px-6 fixed w-full z-10 top-0">
                 <div className="max-w-4xl mx-auto flex items-center justify-between">
                     <button onClick={() => router.back()} className="flex items-center gap-2 text-gray-600 hover:text-[#0F2A44]">
