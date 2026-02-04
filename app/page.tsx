@@ -29,22 +29,22 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-white/40 to-white/10 opacity-60" />
         </div>
 
-        {/* Overlay léger pour contraste texte foncé */}
-        <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px] z-10"></div>
+        {/* Overlay léger sans flou */}
+        <div className="absolute inset-0 bg-white/20 z-10"></div>
 
         <div className="relative z-20 text-center px-6 w-full max-w-5xl mx-auto flex flex-col items-center gap-6">
-          <h1 className="text-memoir-blue text-7xl md:text-9xl font-calli leading-tight drop-shadow-sm animate-fade-in -rotate-2">
+          <h1 className="text-memoir-blue text-7xl md:text-9xl font-serif italic font-semibold leading-tight drop-shadow-sm animate-fade-in -rotate-2">
             Commun Vivant
           </h1>
 
           <div className="flex flex-col gap-2 animate-slide-up">
-            <p className="text-memoir-blue/70 text-lg md:text-2xl font-serif italic tracking-wide">
+            <p className="text-memoir-blue/80 text-lg md:text-2xl font-serif italic tracking-wide font-medium">
               Comme un souvenir.
             </p>
-            <p className="text-memoir-blue/70 text-lg md:text-2xl font-serif italic tracking-wide">
+            <p className="text-memoir-blue/80 text-lg md:text-2xl font-serif italic tracking-wide font-medium">
               Comme une transmission.
             </p>
-            <p className="text-memoir-blue/70 text-lg md:text-2xl font-serif italic tracking-wide">
+            <p className="text-memoir-blue/80 text-lg md:text-2xl font-serif italic tracking-wide font-medium">
               Comme un lien.
             </p>
           </div>
