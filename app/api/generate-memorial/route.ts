@@ -5,6 +5,11 @@ export async function POST(request: NextRequest) {
     const { prompt } = await request.json();
 
     const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY;
+    console.log("ENV CHECK:", {
+  hasKey: !!process.env.MISTRAL_API_KEY,
+  keyLength: process.env.MISTRAL_API_KEY?.length ?? 0,
+});
+
     if (!MISTRAL_API_KEY) {
       console.error('Clé API Mistral manquante');
       return NextResponse.json(

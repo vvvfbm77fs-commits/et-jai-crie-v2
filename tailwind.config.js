@@ -8,10 +8,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'memoir-bg': '#F5F5F5',
-        'memoir-blue': '#243b55',
-        'memoir-gold': '#C9A961',
-        'memoir-light': '#FFFFFF',
+        'memoir-bg': '#F5F4F2',   // Beige
+        'memoir-blue': '#0F2A44', // Bleu Nuit (plus de violet)
+        'memoir-gold': '#C9A24D', // Or
+        'memoir-light': '#F5F4F2', // Alias pour le texte clair (Beige)
+      },
+      fontFamily: {
+        sans: ['var(--font-sans)'],
+        serif: ['var(--font-serif)'],
+        calli: ['var(--font-calli)'],
       },
     },
   },

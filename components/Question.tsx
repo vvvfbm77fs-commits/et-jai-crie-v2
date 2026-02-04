@@ -2,6 +2,8 @@
 
 import { Question as QuestionType } from '@/lib/schema';
 import AudioUploader from './AudioUploader';
+import PhotoUploader from './PhotoUploader';
+import GalleryUploader from './GalleryUploader';
 import { ADJECTIFS, VALEURS } from '@/lib/schema';
 
 interface QuestionProps {
@@ -33,10 +35,10 @@ export default function Question({ question, value, onChange }: QuestionProps) {
   return (
     <div className="mb-6">
       <label className="block mb-3">
-        <span className="text-memoir-blue font-medium">
+        <span className="text-memoir-blue font-bold text-lg">
           {label}
           {optional && (
-            <span className="text-memoir-blue/50 text-sm ml-2">(facultatif)</span>
+            <span className="text-memoir-blue/50 text-sm ml-2 font-normal">(facultatif)</span>
           )}
         </span>
         {helper && (
@@ -50,7 +52,7 @@ export default function Question({ question, value, onChange }: QuestionProps) {
           value={value || ''}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="input-field"
+          className="input-field w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-memoir-gold"
         />
       )}
 
@@ -59,7 +61,7 @@ export default function Question({ question, value, onChange }: QuestionProps) {
           type="date"
           value={value || ''}
           onChange={(e) => onChange(e.target.value)}
-          className="input-field"
+          className="input-field w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-memoir-gold"
         />
       )}
 
@@ -69,7 +71,7 @@ export default function Question({ question, value, onChange }: QuestionProps) {
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           rows={4}
-          className="input-field resize-y"
+          className="input-field w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-memoir-gold resize-y"
         />
       )}
 
@@ -77,7 +79,7 @@ export default function Question({ question, value, onChange }: QuestionProps) {
         <select
           value={value || ''}
           onChange={(e) => onChange(e.target.value)}
-          className="input-field"
+          className="input-field w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-memoir-gold bg-white"
         >
           <option value="">-- Choisir --</option>
           {questionOptions.map((option) => (
@@ -89,18 +91,20 @@ export default function Question({ question, value, onChange }: QuestionProps) {
       )}
 
       {type === 'radio' && (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {questionOptions.map((option) => (
-            <label key={option} className="checkbox-item">
-              <input
-                type="radio"
-                name={id}
-                value={option}
-                checked={value === option}
-                onChange={(e) => onChange(e.target.value)}
-                className="w-4 h-4 text-memoir-gold"
-              />
-              <span>{option}</span>
+            <label key={option} className="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:bg-memoir-bg/50 transition-colors cursor-pointer active:bg-memoir-bg">
+              <div className="flex-shrink-0 mt-0.5">
+                <input
+                  type="radio"
+                  name={id}
+                  value={option}
+                  checked={value === option}
+                  onChange={(e) => onChange(e.target.value)}
+                  className="w-5 h-5 text-memoir-gold focus:ring-memoir-gold accent-memoir-gold"
+                />
+              </div>
+              <span className="text-base text-gray-800 leading-tight pt-0.5">{option}</span>
             </label>
           ))}
         </div>
@@ -109,14 +113,16 @@ export default function Question({ question, value, onChange }: QuestionProps) {
       {type === 'checkbox' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-96 overflow-y-auto p-1">
           {questionOptions.map((option) => (
-            <label key={option} className="checkbox-item">
-              <input
-                type="checkbox"
-                checked={Array.isArray(value) && value.includes(option)}
-                onChange={() => handleCheckboxChange(option)}
-                className="w-4 h-4 text-memoir-gold"
-              />
-              <span>{option}</span>
+            <label key={option} className="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:bg-memoir-bg/50 transition-colors cursor-pointer active:bg-memoir-bg">
+              <div className="flex-shrink-0 mt-0.5">
+                <input
+                  type="checkbox"
+                  checked={Array.isArray(value) && value.includes(option)}
+                  onChange={() => handleCheckboxChange(option)}
+                  className="w-5 h-5 text-memoir-gold rounded focus:ring-memoir-gold accent-memoir-gold"
+                />
+              </div>
+              <span className="text-base text-gray-800 leading-tight pt-0.5">{option}</span>
             </label>
           ))}
         </div>
@@ -126,7 +132,25 @@ export default function Question({ question, value, onChange }: QuestionProps) {
         <AudioUploader
           audioId={value}
           onAudioChange={onChange}
-          memorialId="current"
+          memorialId="preview"
+        />
+      )}
+
+      {type === 'photo' && (
+        <PhotoUploader
+          photoId={value}
+          onPhotoChange={onChange}
+          memorialId="preview"
+          label={label}
+        />
+      )}
+
+      {type === 'gallery' && (
+        <GalleryUploader
+          medias={value || []}
+          onMediasChange={onChange}
+          memorialId="preview"
+          maxPhotos={20}
         />
       )}
     </div>

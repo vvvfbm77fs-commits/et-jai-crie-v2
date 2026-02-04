@@ -75,6 +75,10 @@ export interface QuestionnaireData {
   };
 
   // Médias et liens
+    // Nouveaux champs médias
+  photoProfil?: { photoProfilId?: string };
+  musiqueAudio?: { musiqueFileId?: string };
+  galerie?: { photos?: any[] };
   medias?: any[];
   liensWeb?: any[];
   };
@@ -90,8 +94,7 @@ export interface Media {
 export interface Question {
   id: string;
   label: string;
-  type: 'text' | 'date' | 'textarea' | 'checkbox' | 'radio' | 'select' | 'file';
-  optional?: boolean;
+type: 'text' | 'date' | 'textarea' | 'select' | 'radio' | 'checkbox' | 'file' | 'photo' | 'gallery';  optional?: boolean;
   options?: string[];
   placeholder?: string;
   helper?: string;

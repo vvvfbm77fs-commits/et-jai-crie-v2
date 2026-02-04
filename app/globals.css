@@ -2,51 +2,130 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --font-sans: 'Inter', system-ui, sans-serif;
-    --font-serif: 'Crimson Text', Georgia, serif;
-    --font-calli: 'Cormorant Garamond', Georgia, serif;
+/* Animations Personnalisées */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .font-sans {
-    font-family: var(--font-sans);
-  }
-  
-  .font-serif {
-    font-family: var(--font-serif);
-  }
-  
-  .font-calli {
-    font-family: var(--font-calli);
+
+  to {
+    opacity: 1;
   }
 }
 
-@layer base {
-  body {
-    @apply bg-memoir-bg text-memoir-blue;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-memoir-gold text-white px-6 py-3 rounded-lg hover:bg-memoir-gold/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium;
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
   }
-  
-  .btn-secondary {
-    @apply border-2 border-memoir-gold text-memoir-gold px-6 py-3 rounded-lg hover:bg-memoir-gold/5 transition-colors font-medium;
+
+  to {
+    transform: rotate(360deg);
   }
-  
-  .input-field {
-    @apply w-full px-4 py-3 border-2 border-memoir-blue/20 rounded-lg focus:border-memoir-gold focus:outline-none bg-white;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
   }
-  
-  .checkbox-item {
-    @apply flex items-center space-x-3 p-3 border-2 border-memoir-blue/10 rounded-lg hover:border-memoir-gold/50 cursor-pointer transition-colors;
+
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
-  
-  .checkbox-item input:checked + label {
-    @apply font-semibold;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+.animate-slide-up-delay {
+  animation: slideUp 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+  /* Important pour le délai */
+}
+
+.animate-spin-slow {
+  animation: spinSlow 8s linear infinite;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out forwards;
+}
+
+/* Animations Page d'accueil */
+@keyframes alive {
+  0% {
+    transform: scale(1);
   }
+
+  50% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes sunlight {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(-10%) translateY(10%);
+  }
+
+  50% {
+    opacity: 0.3;
+    transform: translateX(10%) translateY(-10%);
+  }
+}
+
+.animate-alive {
+  animation: alive 25s infinite ease-in-out;
+}
+
+.animate-sunlight {
+  animation: sunlight 15s infinite ease-in-out;
+}
+
+/* Utilitaires 3D */
+[transform-style\:preserve-3d] {
+  transform-style: preserve-3d;
+}
+
+[backface-visibility\:hidden] {
+  backface-visibility: hidden;
+}
+
+/* Custom Scrollbar for Alma Chat */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #C9A24D;
+  border-radius: 4px;
+  /* Opacity is not directly supported on thumb background in all browsers, using RGBA or handled by color */
 }
