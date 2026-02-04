@@ -3,6 +3,21 @@
 @tailwind utilities;
 
 /* Animations Personnalisées */
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(201, 162, 77, 0.1);
+    /* memoir-gold with low opacity */
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(201, 162, 77, 0.4);
+    transform: scale(1.02);
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

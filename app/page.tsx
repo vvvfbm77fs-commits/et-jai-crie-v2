@@ -1,14 +1,29 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import { Flower2, BookOpen, Armchair, ArrowRight, Smartphone, PenTool, Share2, Box } from 'lucide-react';
 
 export default function HomePage() {
+  const [activeCard, setActiveCard] = useState<string | null>(null);
 
+  // Helper function for card styles
+  const getCardStyle = (id: string) => {
+    const isActive = activeCard === id;
+    const baseStyle = "flex flex-col p-8 rounded-2xl transition-all duration-500 group relative overflow-hidden cursor-pointer";
 
+    if (isActive) {
+      if (id === 'funeral') return `${baseStyle} bg-gradient-to-br from-[#1a1a2e] to-[#16213e] shadow-[0_0_30px_rgba(100,100,255,0.2)] scale-105 border-white/20`;
+      if (id === 'living') return `${baseStyle} bg-gradient-to-br from-[#C9A24D] to-[#E1C97A] text-memoir-blue shadow-[0_0_30px_rgba(201,162,77,0.4)] scale-105 border-white/20`;
+      if (id === 'object') return `${baseStyle} bg-gradient-to-br from-[#5D4037] to-[#8D6E63] shadow-[0_0_30px_rgba(141,110,99,0.4)] scale-105 border-white/20`;
+    }
+
+    // Default Glassmorphism
+    return `${baseStyle} bg-white/5 backdrop-blur-sm border border-white/10 hover:border-memoir-gold/30 hover:bg-white/10`;
+  };
 
   return (
     <div className="min-h-screen bg-memoir-blue flex flex-col font-sans">
@@ -69,22 +84,26 @@ export default function HomePage() {
         <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
 
           {/* Carte 1 : Funéraire */}
-          <div className="flex flex-col bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:shadow-memoir-gold/10 hover:border-memoir-gold/30 transition-all duration-500 group relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div
+            className={getCardStyle('funeral')}
+            onMouseEnter={() => setActiveCard('funeral')}
+            onMouseLeave={() => setActiveCard(null)}
+          >
+            <div className={`absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${activeCard === 'funeral' ? 'opacity-100' : ''}`} />
 
             <div className="relative z-10">
-              <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-blue/40 border border-white/10 group-hover:border-memoir-gold/50 group-hover:scale-110 transition-all duration-500">
-                <Flower2 className="w-8 h-8 text-memoir-gold" />
+              <div className={`w-16 h-16 mb-6 flex items-center justify-center rounded-full transition-all duration-500 ${activeCard === 'funeral' ? 'bg-white/10 text-white' : 'bg-memoir-blue/40 border border-white/10 text-memoir-gold'}`}>
+                <Flower2 className="w-8 h-8" />
               </div>
-              <h3 className="text-white text-2xl font-serif italic mb-3 group-hover:text-memoir-gold transition-colors">
+              <h3 className={`text-2xl font-serif italic mb-3 transition-colors ${activeCard === 'funeral' ? 'text-white' : 'text-white group-hover:text-memoir-gold'}`}>
                 Quelqu'un est parti
               </h3>
-              <p className="text-blue-100/70 text-sm mb-8 leading-relaxed">
+              <p className={`text-sm mb-8 leading-relaxed transition-colors ${activeCard === 'funeral' ? 'text-white/80' : 'text-blue-100/70'}`}>
                 Créer un espace de mémoire partagé, accessible par tous pour honorer sa mémoire.
               </p>
               <Link
                 href="/dashboard/new?context=funeral"
-                className="w-full py-3 px-6 rounded-xl border border-white/20 text-white/90 hover:bg-memoir-gold hover:border-memoir-gold hover:text-memoir-blue transition-all text-center text-sm font-medium flex items-center justify-center gap-2 group-hover:bg-white/5"
+                className={`w-full py-3 px-6 rounded-xl border transition-all text-center text-sm font-medium flex items-center justify-center gap-2 ${activeCard === 'funeral' ? 'bg-white text-[#1a1a2e] border-white hover:bg-white/90' : 'border-white/20 text-white/90 hover:bg-memoir-gold hover:border-memoir-gold hover:text-memoir-blue bg-transparent'}`}
               >
                 Créer un mémorial <ArrowRight className="w-4 h-4" />
               </Link>
@@ -92,22 +111,26 @@ export default function HomePage() {
           </div>
 
           {/* Carte 2 : Vivant (Mise en avant) */}
-          <div className="flex flex-col bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-md border border-memoir-gold/30 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:shadow-memoir-gold/20 hover:border-memoir-gold/60 transition-all duration-500 group relative overflow-hidden ring-1 ring-memoir-gold/20">
-            <div className="absolute inset-0 bg-gradient-to-br from-memoir-gold/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div
+            className={getCardStyle('living')}
+            onMouseEnter={() => setActiveCard('living')}
+            onMouseLeave={() => setActiveCard(null)}
+          >
+            <div className={`absolute inset-0 bg-gradient-to-br from-memoir-gold/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${activeCard === 'living' ? 'opacity-100' : ''}`} />
 
             <div className="relative z-10">
-              <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-gold/10 border border-memoir-gold/30 group-hover:bg-memoir-gold/20 group-hover:scale-110 transition-all duration-500">
-                <BookOpen className="w-8 h-8 text-memoir-gold" />
+              <div className={`w-16 h-16 mb-6 flex items-center justify-center rounded-full transition-all duration-500 ${activeCard === 'living' ? 'bg-memoir-blue/10 text-memoir-blue' : 'bg-memoir-gold/10 border border-memoir-gold/30 text-memoir-gold'}`}>
+                <BookOpen className="w-8 h-8" />
               </div>
-              <h3 className="text-white text-2xl font-serif italic mb-3 group-hover:text-memoir-gold transition-colors">
+              <h3 className={`text-2xl font-serif italic mb-3 transition-colors ${activeCard === 'living' ? 'text-memoir-blue' : 'text-white group-hover:text-memoir-gold'}`}>
                 Quelqu'un est vivant
               </h3>
-              <p className="text-blue-100/70 text-sm mb-8 leading-relaxed">
+              <p className={`text-sm mb-8 leading-relaxed transition-colors ${activeCard === 'living' ? 'text-memoir-blue/80' : 'text-blue-100/70'}`}>
                 Célébrer sa vie, maintenant. Raconter son histoire et partager ses souvenirs précieux.
               </p>
               <Link
                 href="/dashboard/new?context=living_story"
-                className="w-full py-3 px-6 rounded-xl bg-memoir-gold text-memoir-blue hover:bg-white hover:text-memoir-blue transition-all text-center text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-memoir-gold/20"
+                className={`w-full py-3 px-6 rounded-xl transition-all text-center text-sm font-bold flex items-center justify-center gap-2 shadow-lg ${activeCard === 'living' ? 'bg-memoir-blue text-white hover:bg-memoir-blue/90' : 'bg-memoir-gold text-memoir-blue hover:bg-white'}`}
               >
                 Créer une histoire <ArrowRight className="w-4 h-4" />
               </Link>
@@ -115,22 +138,26 @@ export default function HomePage() {
           </div>
 
           {/* Carte 3 : Objet */}
-          <div className="flex flex-col bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:shadow-memoir-gold/10 hover:border-memoir-gold/30 transition-all duration-500 group relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div
+            className={getCardStyle('object')}
+            onMouseEnter={() => setActiveCard('object')}
+            onMouseLeave={() => setActiveCard(null)}
+          >
+            <div className={`absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${activeCard === 'object' ? 'opacity-100' : ''}`} />
 
             <div className="relative z-10">
-              <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-blue/40 border border-white/10 group-hover:border-memoir-gold/50 group-hover:scale-110 transition-all duration-500">
-                <Armchair className="w-8 h-8 text-memoir-gold" />
+              <div className={`w-16 h-16 mb-6 flex items-center justify-center rounded-full transition-all duration-500 ${activeCard === 'object' ? 'bg-white/10 text-white' : 'bg-memoir-blue/40 border border-white/10 text-memoir-gold'}`}>
+                <Armchair className="w-8 h-8" />
               </div>
-              <h3 className="text-white text-2xl font-serif italic mb-3 group-hover:text-memoir-gold transition-colors">
+              <h3 className={`text-2xl font-serif italic mb-3 transition-colors ${activeCard === 'object' ? 'text-white' : 'text-white group-hover:text-memoir-gold'}`}>
                 Cet objet a une âme
               </h3>
-              <p className="text-blue-100/70 text-sm mb-8 leading-relaxed">
+              <p className={`text-sm mb-8 leading-relaxed transition-colors ${activeCard === 'object' ? 'text-white/80' : 'text-blue-100/70'}`}>
                 Révéler son histoire cachée, la garder précieusement et la transmettre.
               </p>
               <Link
                 href="/dashboard/new?context=object_memory"
-                className="w-full py-3 px-6 rounded-xl border border-white/20 text-white/90 hover:bg-memoir-gold hover:border-memoir-gold hover:text-memoir-blue transition-all text-center text-sm font-medium flex items-center justify-center gap-2 group-hover:bg-white/5"
+                className={`w-full py-3 px-6 rounded-xl border transition-all text-center text-sm font-medium flex items-center justify-center gap-2 ${activeCard === 'object' ? 'bg-white text-[#5D4037] border-white hover:bg-white/90' : 'border-white/20 text-white/90 hover:bg-memoir-gold hover:border-memoir-gold hover:text-memoir-blue bg-transparent'}`}
               >
                 Créer <ArrowRight className="w-4 h-4" />
               </Link>
