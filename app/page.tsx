@@ -16,110 +16,125 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative min-h-[500px] h-[60vh] md:h-[600px] flex items-center justify-center overflow-hidden bg-memoir-bg">
+      <section className="relative min-h-[600px] h-[70vh] flex items-center justify-center overflow-hidden bg-memoir-blue">
         {/* Animated Background - Photo Vivante */}
         <div className="absolute inset-0 z-0 animate-alive overflow-hidden">
           <Image
             src="/image-site4.png"
             alt="Fleurs au soleil"
             fill
-            className="object-cover opacity-80"
+            className="object-cover opacity-60 mix-blend-overlay"
             priority
           />
-          {/* Effet de lumière/Soleil */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-white/20 via-white/40 to-white/10 opacity-60" />
+          {/* Effet de lumière "Vivant" - Dégradé chaud */}
+          <div className="absolute inset-0 bg-gradient-to-t from-memoir-blue via-transparent to-orange-100/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-memoir-blue/80 via-transparent to-memoir-blue/80" />
         </div>
 
-        {/* Overlay léger sans flou */}
-        <div className="absolute inset-0 bg-white/20 z-10"></div>
-
-        <div className="relative z-20 text-center px-6 w-full max-w-5xl mx-auto flex flex-col items-center gap-6">
-          <h1 className="text-memoir-blue text-7xl md:text-9xl font-serif italic font-semibold leading-tight drop-shadow-sm animate-fade-in -rotate-2">
+        <div className="relative z-20 text-center px-6 w-full max-w-5xl mx-auto flex flex-col items-center gap-8">
+          <h1 className="text-white text-7xl md:text-9xl font-serif italic font-semibold leading-tight drop-shadow-lg animate-fade-in -rotate-2">
             Commun Vivant
           </h1>
 
-          <div className="flex flex-col gap-2 animate-slide-up">
-            <p className="text-memoir-blue/80 text-lg md:text-2xl font-serif italic tracking-wide font-medium">
-              Comme un souvenir.
-            </p>
-            <p className="text-memoir-blue/80 text-lg md:text-2xl font-serif italic tracking-wide font-medium">
-              Comme une transmission.
-            </p>
-            <p className="text-memoir-blue/80 text-lg md:text-2xl font-serif italic tracking-wide font-medium">
-              Comme un lien.
+          <div className="flex flex-col gap-3 animate-slide-up">
+            <p className="text-memoir-gold/90 text-xl md:text-3xl font-serif italic tracking-wide font-medium drop-shadow-md">
+              Comme un souvenir. Comme une transmission. Comme un lien.
             </p>
           </div>
         </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-white/50">
+          <ArrowRight className="w-6 h-6 rotate-90" />
+        </div>
       </section>
 
-      {/* Question Centrale */}
-      <section className="bg-memoir-blue py-12 px-6 text-center">
-        <h2 className="text-memoir-gold text-2xl md:text-3xl font-serif italic mb-2">Pourquoi êtes-vous ici ?</h2>
-        <div className="w-16 h-px bg-memoir-gold/30 mx-auto"></div>
+      {/* Question Centrale avec Aura */}
+      <section className="relative bg-memoir-blue py-20 px-6 text-center overflow-hidden">
+        {/* Aura d'arrière plan */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-memoir-gold/10 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="relative z-10">
+          <h2 className="text-white text-3xl md:text-4xl font-serif italic mb-6">Pourquoi êtes-vous ici ?</h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-memoir-gold to-transparent mx-auto rounded-full"></div>
+        </div>
       </section>
-
-
-
 
       {/* Les 3 Cartes Usages */}
-      <section className="bg-memoir-blue pb-20 px-6 -mt-6" id="usages">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="relative bg-memoir-blue pb-32 px-6 -mt-10" id="usages">
+        {/* Formes organiques en arrière-plan */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
+
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
 
           {/* Carte 1 : Funéraire */}
-          <div className="flex flex-col bg-white/5 border border-memoir-gold/20 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:border-memoir-gold/50 transition-all duration-300 group">
-            <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-blue/50 border border-memoir-gold/30 group-hover:bg-memoir-gold/10 transition-colors">
-              <Flower2 className="w-8 h-8 text-memoir-gold" />
+          <div className="flex flex-col bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:shadow-memoir-gold/10 hover:border-memoir-gold/30 transition-all duration-500 group relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="relative z-10">
+              <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-blue/40 border border-white/10 group-hover:border-memoir-gold/50 group-hover:scale-110 transition-all duration-500">
+                <Flower2 className="w-8 h-8 text-memoir-gold" />
+              </div>
+              <h3 className="text-white text-2xl font-serif italic mb-3 group-hover:text-memoir-gold transition-colors">
+                Quelqu'un est parti
+              </h3>
+              <p className="text-blue-100/70 text-sm mb-8 leading-relaxed">
+                Créer un espace de mémoire partagé, accessible par tous pour honorer sa mémoire.
+              </p>
+              <Link
+                href="/dashboard/new?context=funeral"
+                className="w-full py-3 px-6 rounded-xl border border-white/20 text-white/90 hover:bg-memoir-gold hover:border-memoir-gold hover:text-memoir-blue transition-all text-center text-sm font-medium flex items-center justify-center gap-2 group-hover:bg-white/5"
+              >
+                Créer un mémorial <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
-            <h3 className="text-memoir-gold text-2xl font-serif italic mb-2">
-              Quelqu'un est parti
-            </h3>
-            <p className="text-memoir-light/70 text-sm mb-6 flex-grow">
-              Créer un espace de mémoire partagé, accessible par tous
-            </p>
-            <Link
-              href="/dashboard/new?context=funeral"
-              className="mt-auto w-full py-3 px-6 rounded border border-memoir-gold text-memoir-gold hover:bg-memoir-gold hover:text-memoir-blue transition-colors text-center text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2"
-            >
-              Créer un mémorial <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
 
-          {/* Carte 2 : Vivant */}
-          <div className="flex flex-col bg-white/5 border border-memoir-gold/20 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:border-memoir-gold/50 transition-all duration-300 group">
-            <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-blue/50 border border-memoir-gold/30 group-hover:bg-memoir-gold/10 transition-colors">
-              <BookOpen className="w-8 h-8 text-memoir-gold" />
+          {/* Carte 2 : Vivant (Mise en avant) */}
+          <div className="flex flex-col bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-md border border-memoir-gold/30 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:shadow-memoir-gold/20 hover:border-memoir-gold/60 transition-all duration-500 group relative overflow-hidden ring-1 ring-memoir-gold/20">
+            <div className="absolute inset-0 bg-gradient-to-br from-memoir-gold/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="relative z-10">
+              <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-gold/10 border border-memoir-gold/30 group-hover:bg-memoir-gold/20 group-hover:scale-110 transition-all duration-500">
+                <BookOpen className="w-8 h-8 text-memoir-gold" />
+              </div>
+              <h3 className="text-white text-2xl font-serif italic mb-3 group-hover:text-memoir-gold transition-colors">
+                Quelqu'un est vivant
+              </h3>
+              <p className="text-blue-100/70 text-sm mb-8 leading-relaxed">
+                Célébrer sa vie, maintenant. Raconter son histoire et partager ses souvenirs précieux.
+              </p>
+              <Link
+                href="/dashboard/new?context=living_story"
+                className="w-full py-3 px-6 rounded-xl bg-memoir-gold text-memoir-blue hover:bg-white hover:text-memoir-blue transition-all text-center text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-memoir-gold/20"
+              >
+                Créer une histoire <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
-            <h3 className="text-memoir-gold text-2xl font-serif italic mb-2">
-              Quelqu'un est vivant
-            </h3>
-            <p className="text-memoir-light/70 text-sm mb-6 flex-grow">
-              Célébrer sa vie, maintenant. Raconter son histoire et partager ses souvenirs.
-            </p>
-            <Link
-              href="/dashboard/new?context=living_story"
-              className="mt-auto w-full py-3 px-6 rounded border border-memoir-gold text-memoir-gold hover:bg-memoir-gold hover:text-memoir-blue transition-colors text-center text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2"
-            >
-              Créer une histoire <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
 
           {/* Carte 3 : Objet */}
-          <div className="flex flex-col bg-white/5 border border-memoir-gold/20 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:border-memoir-gold/50 transition-all duration-300 group">
-            <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-blue/50 border border-memoir-gold/30 group-hover:bg-memoir-gold/10 transition-colors">
-              <Armchair className="w-8 h-8 text-memoir-gold" />
+          <div className="flex flex-col bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-2xl hover:-translate-y-2 hover:shadow-2xl hover:shadow-memoir-gold/10 hover:border-memoir-gold/30 transition-all duration-500 group relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="relative z-10">
+              <div className="w-16 h-16 mb-6 flex items-center justify-center rounded-full bg-memoir-blue/40 border border-white/10 group-hover:border-memoir-gold/50 group-hover:scale-110 transition-all duration-500">
+                <Armchair className="w-8 h-8 text-memoir-gold" />
+              </div>
+              <h3 className="text-white text-2xl font-serif italic mb-3 group-hover:text-memoir-gold transition-colors">
+                Cet objet a une âme
+              </h3>
+              <p className="text-blue-100/70 text-sm mb-8 leading-relaxed">
+                Révéler son histoire cachée, la garder précieusement et la transmettre.
+              </p>
+              <Link
+                href="/dashboard/new?context=object_memory"
+                className="w-full py-3 px-6 rounded-xl border border-white/20 text-white/90 hover:bg-memoir-gold hover:border-memoir-gold hover:text-memoir-blue transition-all text-center text-sm font-medium flex items-center justify-center gap-2 group-hover:bg-white/5"
+              >
+                Créer <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
-            <h3 className="text-memoir-gold text-2xl font-serif italic mb-2">
-              Cet objet porte une histoire
-            </h3>
-            <p className="text-memoir-light/70 text-sm mb-6 flex-grow">
-              La raconter, la garder, la transmettre
-            </p>
-            <Link
-              href="/dashboard/new?context=object_memory"
-              className="mt-auto w-full py-3 px-6 rounded border border-memoir-gold text-memoir-gold hover:bg-memoir-gold hover:text-memoir-blue transition-colors text-center text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2"
-            >
-              Créer <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
 
         </div>
