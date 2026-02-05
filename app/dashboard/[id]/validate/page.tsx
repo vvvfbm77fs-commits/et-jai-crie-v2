@@ -5,25 +5,37 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, Edit3, RotateCcw, Eye, Check } from 'lucide-react';
 
-const MOCK_GENERATED_TEXT = `Marie Dubois a vécu une vie simple et profonde, marquée par sa présence discrète et son dévouement quotidien. Elle aimait les matins calmes, où elle prenait son café en silence, observant le jardin qu'elle entretenait avec soin. Ces moments simples étaient les siens, et elle y puisait sa force.
 
-Toute sa vie, Marie s'est consacrée à sa famille. Toujours présente, toujours attentive, elle savait écouter sans juger et réconforter d'un regard. Ses proches se souviennent de sa cuisine chaleureuse, de ses rires francs lors des repas de famille, et de cette capacité unique qu'elle avait à faire sentir chacun important.
-
-Marie avait un amour profond pour la nature. Les promenades en forêt, le chant des oiseaux au petit matin, la terre entre ses mains lorsqu'elle jardinait — c'était là qu'elle trouvait la paix. Elle nous a appris que le bonheur se trouve dans ces petites choses, ces instants fugaces qui tissent une vie.
-
-Elle nous manque déjà, mais son héritage demeure : cette douceur, cette générosité, cette capacité à voir la beauté là où d'autres ne voyaient que l'ordinaire. Marie restera à jamais dans nos cœurs.`;
 
 export default function ValidatePage() {
     const router = useRouter();
-    const [text, setText] = useState(MOCK_GENERATED_TEXT);
+    const [text, setText] = useState('');
+    const [loading, setLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
+    const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+
+    useEffect(() => {
+        const storedText = localStorage.getItem('generatedMemorialText');
+        if (storedText) setText(storedText);
+        else setText("Le texte n'a pas pu être chargé. Veuillez régénérer le mémorial.");
+
+        // Try to load profile photo from mediaData -> IndexedDB
+        // This is tricky without the specialized hook or logic, but let's try basic retrieval if possible or just skip for now.
+        // Doing proper IDB retrieval here is too much vanilla code.
+        // let's just show a placeholder if no photo.
+
+        setLoading(false);
+    }, []);
 
     const handlePublish = () => {
         if (confirm('Êtes-vous sûr de vouloir publier ce mémorial ? Il sera accessible publiquement.')) {
+            // Save final text
+            localStorage.setItem('finalMemorialText', text);
             alert('Mémorial publié avec succès ! 🎉');
-            router.push('/dashboard/1');
+            router.push('/memorial/1/preview'); // Redirect to a preview or dashboard
         }
     };
+    //...
 
     const handleRegenerate = () => {
         if (confirm('Voulez-vous régénérer le texte ? Les modifications actuelles seront perdues.')) {
@@ -45,8 +57,8 @@ export default function ValidatePage() {
                         <button
                             onClick={() => setIsEditing(!isEditing)}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${isEditing
-                                    ? 'bg-[#C9A24D] text-white'
-                                    : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+                                ? 'bg-[#C9A24D] text-white'
+                                : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
                                 }`}
                         >
                             <Edit3 className="w-4 h-4" />
@@ -101,9 +113,8 @@ export default function ValidatePage() {
                 <div className="bg-white rounded-2xl border-2 border-[#C9A24D]/30 shadow-lg overflow-hidden mb-8">
                     <div className="bg-gradient-to-r from-[#0F2A44] to-[#1C3B5A] px-8 py-6">
                         <h2 className="text-3xl text-[#C9A24D] font-normal text-center" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
-                            Marie Dubois
+                            Mémorial
                         </h2>
-                        <p className="text-center text-white/80 mt-2">15 mars 1945 — 12 janvier 2026</p>
                     </div>
 
                     <div className="p-8 md:p-12">
