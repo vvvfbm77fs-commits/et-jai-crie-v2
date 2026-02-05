@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Upload, X, Image as ImageIcon } from 'lucide-react';
+import { Upload, X, Image as ImageIcon, Check, ZoomIn } from 'lucide-react';
 import { savePhoto, getPhoto, deletePhoto, fileToBlob, blobToURL } from '@/lib/indexedDB';
+import Cropper from 'react-easy-crop';
+import { getCroppedImg } from '@/utils/cropImage';
 
 interface PhotoUploaderProps {
   photoId?: string;
@@ -28,19 +30,23 @@ export default function PhotoUploader({
   label = "Photo de profil",
   filter = 'none'
 }: PhotoUploaderProps) {
-
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+
+  // Cropping State
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
+  const [isCropping, setIsCropping] = useState(false);
+  const [tempFile, setTempFile] = useState<{ url: string; file: File } | null>(null);
 
   useEffect(() => {
     if (photoId) {
       loadPhoto(photoId);
     }
-
     return () => {
-      if (photoUrl) {
-        URL.revokeObjectURL(photoUrl);
-      }
+      if (photoUrl) URL.revokeObjectURL(photoUrl);
+      if (tempFile?.url) URL.revokeObjectURL(tempFile.url);
     };
   }, [photoId]);
 
@@ -56,7 +62,7 @@ export default function PhotoUploader({
     }
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -70,27 +76,41 @@ export default function PhotoUploader({
       return;
     }
 
-    setIsUploading(true);
+    const url = URL.createObjectURL(file);
+    setTempFile({ url, file });
+    setIsCropping(true);
+    setZoom(1);
+    setCrop({ x: 0, y: 0 });
+  };
 
+  const handleCropSave = async () => {
+    if (!tempFile || !croppedAreaPixels) return;
+
+    setIsUploading(true);
     try {
-      const blob = await fileToBlob(file);
+      const croppedBlob = await getCroppedImg(tempFile.url, croppedAreaPixels);
+      if (!croppedBlob) throw new Error("Erreur lors du recadrage");
+
       const id = `photo-profil-${memorialId}-${Date.now()}`;
 
       await savePhoto({
         id,
         memorialId,
         type: 'profile',
-        blob,
-        nom: file.name,
+        blob: croppedBlob,
+        nom: tempFile.file.name,
       });
 
-      if (photoUrl) {
-        URL.revokeObjectURL(photoUrl);
-      }
+      // Cleanup old URL if exists
+      if (photoUrl) URL.revokeObjectURL(photoUrl);
 
-      const url = blobToURL(blob);
-      setPhotoUrl(url);
+      const newUrl = blobToURL(croppedBlob);
+      setPhotoUrl(newUrl);
       onPhotoChange(id);
+
+      // Close cropper
+      setIsCropping(false);
+      setTempFile(null);
     } catch (error) {
       console.error('Erreur upload:', error);
       alert('Erreur lors de l\'upload de la photo');
@@ -103,9 +123,7 @@ export default function PhotoUploader({
     if (photoId) {
       try {
         await deletePhoto(photoId);
-        if (photoUrl) {
-          URL.revokeObjectURL(photoUrl);
-        }
+        if (photoUrl) URL.revokeObjectURL(photoUrl);
         setPhotoUrl(null);
         onPhotoChange(undefined);
       } catch (error) {
@@ -114,6 +132,58 @@ export default function PhotoUploader({
     }
   };
 
+  // Crop View
+  if (isCropping && tempFile) {
+    return (
+      <div className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-4">
+        <div className="relative w-full max-w-xl h-[60vh] bg-gray-900 rounded-lg overflow-hidden border border-white/10 mb-6">
+          <Cropper
+            image={tempFile.url}
+            crop={crop}
+            zoom={zoom}
+            aspect={1}
+            onCropChange={setCrop}
+            onCropComplete={(_, croppedPixels) => setCroppedAreaPixels(croppedPixels)}
+            onZoomChange={setZoom}
+          />
+        </div>
+
+        <div className="w-full max-w-md space-y-4">
+          <div className="flex items-center gap-2">
+            <ZoomIn className="text-white w-5 h-5" />
+            <input
+              type="range"
+              min={1}
+              max={3}
+              step={0.1}
+              value={zoom}
+              onChange={(e) => setZoom(Number(e.target.value))}
+              className="w-full accent-memoir-gold"
+            />
+          </div>
+
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={() => { setIsCropping(false); setTempFile(null); }}
+              className="px-6 py-2 text-white bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+              disabled={isUploading}
+            >
+              Annuler
+            </button>
+            <button
+              onClick={handleCropSave}
+              className="flex items-center gap-2 px-8 py-2 text-white bg-memoir-gold hover:bg-memoir-gold/90 rounded-lg transition-colors font-medium shadow-lg"
+              disabled={isUploading}
+            >
+              {isUploading ? 'Traitement...' : <><Check className="w-4 h-4" /> Valider</>}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Normal View
   return (
     <div className="space-y-3">
       {photoUrl ? (
