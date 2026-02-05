@@ -89,28 +89,14 @@ export default function TributeMemorial({ prenom, memorialId, accentColor, textC
                     disabled={userActions.candle}
                     className="group relative flex flex-col items-center gap-4 transition-transform hover:scale-105 disabled:hover:scale-100 disabled:opacity-80"
                 >
-                    <div className={`relative w-24 h-24 flex items-center justify-center rounded-full transition-all duration-500 ${userActions.candle ? 'bg-orange-50 shadow-[0_0_40px_rgba(255,165,0,0.3)]' : 'bg-black/5 hover:bg-orange-50/50'
+                    <div className={`relative w-28 h-28 flex items-center justify-center rounded-full transition-all duration-500 overflow-hidden ${userActions.candle ? 'bg-orange-50 shadow-[0_0_40px_rgba(255,165,0,0.3)]' : 'bg-black/5 hover:bg-orange-50/50'
                         }`}>
-                        {/* Custom Candle SVG */}
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                            className={`transition-all duration-700 ${userActions.candle ? 'scale-110' : 'grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100'}`}>
-                            {/* Candle Body */}
-                            <path d="M7 14V21C7 21.55 7.45 22 8 22H16C16.55 22 17 21.55 17 21V14H7Z" fill={userActions.candle ? "#E65100" : "#9E9E9E"} />
-                            <path d="M7 14H17V15H7V14Z" fill={userActions.candle ? "#FFB74D" : "#BDBDBD"} />
-                            {/* Flame - Animate if active */}
-                            {(userActions.candle || animating === 'candle') && (
-                                <path d="M12 2C12 2 8 8 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 8 12 2 12 2Z"
-                                    className="animate-pulse origin-bottom"
-                                    fill="#FF6D00"
-                                    style={{ transformBox: 'fill-box', transformOrigin: 'center bottom', animation: 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}
-                                />
-                            )}
-                            {!userActions.candle && animating !== 'candle' && (
-                                <path d="M12 2C12 2 8 8 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 8 12 2 12 2Z"
-                                    fill="#9E9E9E"
-                                />
-                            )}
-                        </svg>
+                        <img
+                            src="/icons/candle.png"
+                            alt="Allumer une bougie"
+                            className={`w-full h-full object-cover transition-all duration-700 ${userActions.candle ? 'scale-110 opacity-100' : 'grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100'}`}
+                            style={{ mixBlendMode: 'multiply' }}
+                        />
 
                         {/* Burst effect on click */}
                         {animating === 'candle' && (
@@ -131,18 +117,14 @@ export default function TributeMemorial({ prenom, memorialId, accentColor, textC
                     disabled={userActions.flower}
                     className="group relative flex flex-col items-center gap-4 transition-transform hover:scale-105 disabled:hover:scale-100 disabled:opacity-80"
                 >
-                    <div className={`relative w-24 h-24 flex items-center justify-center rounded-full transition-all duration-500 ${userActions.flower ? 'bg-pink-50 shadow-[0_0_40px_rgba(255,192,203,0.4)]' : 'bg-black/5 hover:bg-pink-50/50'
+                    <div className={`relative w-28 h-28 flex items-center justify-center rounded-full transition-all duration-500 overflow-hidden ${userActions.flower ? 'bg-pink-50 shadow-[0_0_40px_rgba(255,192,203,0.4)]' : 'bg-black/5 hover:bg-pink-50/50'
                         }`}>
-                        {/* Custom Flower SVG */}
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                            className={`transition-all duration-700 ${userActions.flower ? 'scale-110' : 'grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100'}`}>
-                            <path d="M12 5.5C14 7 17 9 17 12C17 15 14 17 12 18.5C10 17 7 15 7 12C7 9 10 7 12 5.5Z" fill={userActions.flower ? "#C2185B" : "#BDBDBD"} />
-                            <circle cx="12" cy="12" r="2" fill="white" fillOpacity="0.5" />
-                            <path d="M12 22C17.5228 22 22 17.5228 22 12H19C19 15.866 15.866 19 12 19V22Z" fill={userActions.flower ? "#F48FB1" : "#E0E0E0"} />
-                            <path d="M2 12C2 17.5228 6.47715 22 12 22V19C8.13401 19 5 15.866 5 12H2Z" fill={userActions.flower ? "#F48FB1" : "#E0E0E0"} />
-                            <path d="M12 2C6.47715 2 2 6.47715 2 12H5C5 8.13401 8.13401 5 12 5V2Z" fill={userActions.flower ? "#F48FB1" : "#E0E0E0"} />
-                            <path d="M22 12C22 6.47715 17.5228 2 12 2V5C15.866 5 19 8.13401 19 12H22Z" fill={userActions.flower ? "#F48FB1" : "#E0E0E0"} />
-                        </svg>
+                        <img
+                            src="/icons/flower.png"
+                            alt="Déposer une fleur"
+                            className={`w-full h-full object-cover transition-all duration-700 ${userActions.flower ? 'scale-110 opacity-100' : 'grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100'}`}
+                            style={{ mixBlendMode: 'multiply' }}
+                        />
 
                         {/* Burst effect on click */}
                         {animating === 'flower' && (
