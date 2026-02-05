@@ -116,13 +116,10 @@ function NewMemorialContent() {
         router.push(`/create/alma?context=${context}`);
     };
 
-    const handleStartAlma = () => {
-        router.push(`/create/alma?context=${context}`);
-    };
-
     if (loading) {
         return <div className="min-h-screen flex items-center justify-center">Chargement...</div>;
     }
+
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-[#F5F4F2] to-white">
