@@ -94,7 +94,7 @@ export default function TributeMemorial({ prenom, memorialId, accentColor, textC
                         <img
                             src="/icons/candle.png?v=4"
                             alt="Allumer une bougie"
-                            className={`w-full h-full object-cover transition-all duration-700 ${userActions.candle ? 'scale-110 opacity-100' : 'opacity-80 grayscale group-hover:grayscale-0 group-hover:opacity-100'}`}
+                            className={`w-full h-full object-cover transition-all duration-700 ${userActions.candle ? 'scale-110 opacity-100' : 'scale-110 opacity-90 group-hover:opacity-100'}`}
                         />
 
                         {/* Burst effect on click */}
@@ -121,7 +121,7 @@ export default function TributeMemorial({ prenom, memorialId, accentColor, textC
                         <img
                             src="/icons/flower.png?v=5"
                             alt="Déposer une fleur"
-                            className={`w-full h-full object-cover transition-all duration-700 ${userActions.flower ? 'scale-125 opacity-100' : 'scale-110 opacity-80 grayscale group-hover:grayscale-0 group-hover:opacity-100'}`}
+                            className={`w-full h-full object-cover transition-all duration-700 ${userActions.flower ? 'scale-125 opacity-100' : 'scale-125 opacity-90 group-hover:opacity-100'}`}
                         />
 
                         {/* Burst effect on click */}
