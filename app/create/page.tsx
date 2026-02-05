@@ -31,11 +31,16 @@ import { supabase } from '@/lib/supabase';
 function NewMemorialContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const context = searchParams.get('context') || 'funeral'; // 'funeral', 'living_story', 'object_memory'
+    const context = searchParams.get('context');
 
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!context) {
+            router.push('/create/selection');
+            return;
+        }
+
         const checkAuth = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             if (!session) {

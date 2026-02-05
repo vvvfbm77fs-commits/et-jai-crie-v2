@@ -80,7 +80,7 @@ export default function DashboardPage() {
                 {/* Create Button */}
                 <div className="mb-8">
                     <Link
-                        href="/#usages"
+                        href="/create/selection"
                         className="flex items-center gap-3 bg-[#C9A24D] text-[#0F2A44] px-8 py-4 rounded-xl hover:bg-[#E1C97A] transition-all shadow-lg hover:shadow-xl text-lg font-medium inline-flex"
                         style={{ fontFamily: 'Manrope, sans-serif' }}
                     >
@@ -100,7 +100,7 @@ export default function DashboardPage() {
                     <div className="text-center py-20">
                         <p className="text-gray-500 text-lg mb-6">Vous n'avez pas encore créé de Commun</p>
                         <Link
-                            href="/#usages"
+                            href="/create/selection"
                             className="inline-flex items-center gap-2 text-[#C9A24D] hover:text-[#E1C97A] transition-colors"
                         >
                             <Plus className="w-5 h-5" />

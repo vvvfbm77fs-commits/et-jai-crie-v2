@@ -9,4 +9,8 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables. Check .env.local');
 }
 
+if (!supabaseUrl.startsWith('https://')) {
+  console.warn('WARNING: Supabase URL does not start with https://. This may cause connection issues.');
+}
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
