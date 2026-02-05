@@ -70,6 +70,23 @@ export default function ValidatePage() {
         }
     };
 
+    const handlePublish = () => {
+        if (confirm('Êtes-vous sûr de vouloir publier ce mémorial ? Il sera accessible publiquement.')) {
+            // Save final text and state
+            const finalData = {
+                identite: questionnaireData,
+                medias: mediaData,
+                texteGenere: text,
+                template: selectedTemplate,
+                publishedAt: new Date().toISOString()
+            };
+            localStorage.setItem('memorialData_1', JSON.stringify(finalData));
+            localStorage.setItem('memorialPreviewData', JSON.stringify(finalData)); // Ensure preview uses final version
+            alert('Mémorial publié avec succès ! 🎉');
+            router.push('/memorial/1/preview');
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-[#F5F4F2] to-white">
             {/* Header */}

@@ -5,3 +5,4 @@ export { default as GalleryBlock } from './GalleryBlock';
 export { default as GoutsBlock } from './GoutsBlock';
 export { default as CandleBlock } from './CandleBlock';
 export { default as LinksBlock } from './LinksBlock';
+export { default as TributeBlock } from './TributeBlock';
