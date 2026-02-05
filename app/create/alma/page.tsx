@@ -12,6 +12,7 @@ function AlmaContent() {
   const name = searchParams.get('name') || undefined;
   const birthDate = searchParams.get('birthDate');
   const deathDate = searchParams.get('deathDate');
+  const genre = (searchParams.get('genre') as 'Elle' | 'Il' | 'Sans genre spécifié') || undefined;
 
   const calculateAge = (start?: string | null, end?: string | null) => {
     if (!start) return undefined;
