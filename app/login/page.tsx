@@ -11,9 +11,10 @@ function LoginContent() {
   const searchParams = useSearchParams();
   const inviteToken = searchParams.get('token');
 
-  const [mode, setMode] = useState<'login' | 'signup' | 'invite'>(
-    inviteToken ? 'invite' : 'login'
-  );
+  const initialMode = searchParams.get('mode') === 'signup' ? 'signup' :
+    inviteToken ? 'invite' : 'login_selection';
+
+  const [mode, setMode] = useState<'login_selection' | 'login_email' | 'signup' | 'invite'>(initialMode);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -26,7 +27,7 @@ function LoginContent() {
     setError('');
 
     try {
-      if (mode === 'login') {
+      if (mode === 'login_email') {
         const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password,
@@ -66,7 +67,7 @@ function LoginContent() {
         if (error) throw error;
 
         alert('Compte créé ! Vérifiez votre email pour confirmer.');
-        setMode('login');
+        setMode('login_email');
 
       } else if (mode === 'invite') {
         if (!inviteToken) throw new Error('Token manquant');
@@ -89,7 +90,8 @@ function LoginContent() {
             data: {
               name,
               funeral_home_id: invitation.funeral_home_id
-            }
+            },
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
           }
         });
 
@@ -123,7 +125,7 @@ function LoginContent() {
             className="w-28 h-28 mx-auto mb-4 rounded-full"
           />
           <h1 className="text-[#C9A24D] text-3xl font-bold" style={{ fontFamily: 'Manrope, sans-serif' }}>
-            {mode === 'login' ? 'Connexion' : mode === 'invite' ? 'Créer votre compte' : 'Inscription'}
+            {mode === 'login_selection' || mode === 'login_email' ? 'Connexion' : mode === 'invite' ? 'Créer votre compte' : 'Inscription'}
           </h1>
           {mode === 'invite' && (
             <p className="text-[#F5F4F2]/60 text-sm mt-2">
@@ -133,11 +135,11 @@ function LoginContent() {
         </div>
 
         {/* Mode sélection pour login */}
-        {mode === 'login' && !inviteToken ? (
+        {mode === 'login_selection' ? (
           <div className="space-y-4">
             {/* Boutons OAuth */}
             <button
-              onClick={() => setMode('signup')}
+              onClick={() => setMode('login_email')}
               className="w-full bg-white/10 border border-[#C9A24D]/30 text-white py-3 rounded-lg font-medium hover:bg-white/20 transition-colors flex items-center justify-center gap-2"
             >
               <Mail className="w-5 h-5" />
@@ -148,7 +150,7 @@ function LoginContent() {
               onClick={async () => {
                 const { error } = await supabase.auth.signInWithOAuth({
                   provider: 'google',
-                  options: { redirectTo: `${window.location.origin}/dashboard` }
+                  options: { redirectTo: `${window.location.origin}/auth/callback` }
                 });
                 if (error) setError(error.message);
               }}
@@ -167,7 +169,7 @@ function LoginContent() {
               onClick={async () => {
                 const { error } = await supabase.auth.signInWithOAuth({
                   provider: 'apple',
-                  options: { redirectTo: `${window.location.origin}/dashboard` }
+                  options: { redirectTo: `${window.location.origin}/auth/callback` }
                 });
                 if (error) setError(error.message);
               }}
@@ -181,18 +183,18 @@ function LoginContent() {
 
             <div className="text-center mt-4">
               <p className="text-white/60 text-sm">
-                Vous avez déjà un compte ?{' '}
+                Pas encore de compte ?{' '}
                 <button
                   onClick={() => setMode('signup')}
                   className="text-[#C9A24D] hover:underline"
                 >
-                  Connectez-vous
+                  S'inscrire
                 </button>
               </p>
             </div>
           </div>
         ) : (
-          // Formulaire email/password pour signup et invite
+          // Formulaire email/password pour login_email, signup et invite
           <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-[#C9A24D]/20">
             {error && (
               <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg text-red-200 text-sm">
@@ -256,21 +258,56 @@ function LoginContent() {
                 disabled={loading}
                 className="w-full bg-[#C9A24D] text-[#0F2A44] py-3 rounded-lg font-medium hover:bg-[#E1C97A] transition-colors disabled:opacity-50"
               >
-                {loading ? 'Chargement...' : 'Créer mon compte'}
+                {loading ? 'Chargement...' : mode === 'login_email' ? 'Se connecter' : 'Créer mon compte'}
               </button>
             </div>
 
-            {mode === 'signup' && (
-              <div className="text-center mt-4">
-                <button
-                  type="button"
-                  onClick={() => setMode('login')}
-                  className="text-white/60 hover:text-[#C9A24D] transition-colors text-sm"
-                >
-                  Déjà un compte ? Connectez-vous
-                </button>
-              </div>
-            )}
+            <div className="text-center mt-6 space-y-2">
+              {mode === 'login_email' ? (
+                <>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => setMode('signup')}
+                      className="text-white/60 hover:text-[#C9A24D] transition-colors text-sm"
+                    >
+                      Pas de compte ? Créer un compte
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => router.push('/mot-de-passe-oublie')}
+                      className="text-white/40 hover:text-[#C9A24D] transition-colors text-xs"
+                    >
+                      Mot de passe oublié ?
+                    </button>
+                  </div>
+                </>
+              ) : mode === 'signup' ? (
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setMode('login_email')}
+                    className="text-white/60 hover:text-[#C9A24D] transition-colors text-sm"
+                  >
+                    Déjà un compte ? Connectez-vous
+                  </button>
+                </div>
+              ) : null}
+
+              {mode !== 'invite' && (
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setMode('login_selection')}
+                    className="text-white/40 hover:text-white transition-colors text-xs"
+                  >
+                    Autre méthode de connexion
+                  </button>
+                </div>
+              )}
+            </div>
           </form>
         )}
 
