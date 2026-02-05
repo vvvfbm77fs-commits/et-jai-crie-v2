@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, Edit3, RotateCcw, Eye, Check } from 'lucide-react';
-
+import { getPhoto, blobToURL } from '@/lib/indexedDB';
 
 
 export default function ValidatePage() {
@@ -23,6 +23,23 @@ export default function ValidatePage() {
         // This is tricky without the specialized hook or logic, but let's try basic retrieval if possible or just skip for now.
         // Doing proper IDB retrieval here is too much vanilla code.
         // let's just show a placeholder if no photo.
+        const loadPhoto = async () => {
+            try {
+                const mediaDataRaw = localStorage.getItem('mediaData');
+                if (mediaDataRaw) {
+                    const mediaData = JSON.parse(mediaDataRaw);
+                    if (mediaData.profilePhotoId) {
+                        const photo = await getPhoto(mediaData.profilePhotoId);
+                        if (photo) {
+                            setProfilePhoto(blobToURL(photo.blob));
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error("Erreur chargement photo", e);
+            }
+        };
+        loadPhoto();
 
         setLoading(false);
     }, []);
