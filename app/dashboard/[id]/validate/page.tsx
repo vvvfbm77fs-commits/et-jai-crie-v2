@@ -6,6 +6,9 @@ import Link from 'next/link';
 import { ChevronLeft, Edit3, RotateCcw, Eye, Check } from 'lucide-react';
 import { getPhoto, blobToURL } from '@/lib/indexedDB';
 import { TEMPLATES } from '@/lib/templates';
+import LayoutSelector from '@/components/LayoutSelector';
+import BlockOrderEditor from '@/components/BlockOrderEditor';
+import { BlockType } from '@/lib/layouts';
 
 
 export default function ValidatePage() {
@@ -18,13 +21,24 @@ export default function ValidatePage() {
     const [mediaData, setMediaData] = useState<any>(null);
     const [selectedTemplate, setSelectedTemplate] = useState('bleu-dore');
 
+    // Customization State
+    const [layout, setLayout] = useState('classic');
+    const [blockOrder, setBlockOrder] = useState<BlockType[]>(['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links']);
+
     useEffect(() => {
         const storedText = localStorage.getItem('generatedMemorialText');
-        if (storedText) setText(storedText);
-        else setText("Le texte n'a pas pu être chargé. Veuillez régénérer le mémorial.");
+        if (storedText) {
+            // Clean instructions like *[...]* and trim extra whitespace
+            const cleaned = storedText.replace(/\*\[.*?\]\*/g, '').trim();
+            setText(cleaned);
+        } else {
+            setText("Le texte n'a pas pu être chargé. Veuillez régénérer le mémorial.");
+        }
 
         const qData = localStorage.getItem('questionnaireData');
-        if (qData) setQuestionnaireData(JSON.parse(qData));
+        if (qData) {
+            setQuestionnaireData(JSON.parse(qData));
+        }
 
         const loadPhoto = async () => {
             try {
@@ -48,21 +62,25 @@ export default function ValidatePage() {
         setLoading(false);
     }, []);
 
-    const handlePreview = () => {
-        // Save all data for preview
-        const previewData = {
-            identite: questionnaireData,
-            medias: mediaData,
+    const saveState = () => {
+        const data = {
+            identite: questionnaireData || { prenom: 'Le Défunt', nom: '' }, // Fallback to ensure blocks render
+            medias: mediaData || {},
             texteGenere: text,
             template: selectedTemplate,
-            // Add defaults for other blocks
-            gouts: {},
+            layout: layout,
+            blockOrder: blockOrder,
             message: "Un espace pour célébrer la vie.",
+            publishedAt: new Date().toISOString()
         };
-        localStorage.setItem('memorialPreviewData', JSON.stringify(previewData));
+        localStorage.setItem('memorialPreviewData', JSON.stringify(data));
+        return data;
+    }
+
+    const handlePreview = () => {
+        saveState();
         router.push('/memorial/1/preview');
     };
-    //...
 
     const handleRegenerate = () => {
         if (confirm('Voulez-vous régénérer le texte ? Les modifications actuelles seront perdues.')) {
@@ -72,16 +90,11 @@ export default function ValidatePage() {
 
     const handlePublish = () => {
         if (confirm('Êtes-vous sûr de vouloir publier ce mémorial ? Il sera accessible publiquement.')) {
-            // Save final text and state
-            const finalData = {
-                identite: questionnaireData,
-                medias: mediaData,
-                texteGenere: text,
-                template: selectedTemplate,
-                publishedAt: new Date().toISOString()
-            };
-            localStorage.setItem('memorialData_1', JSON.stringify(finalData));
-            localStorage.setItem('memorialPreviewData', JSON.stringify(finalData)); // Ensure preview uses final version
+            const data = saveState();
+            localStorage.setItem('memorialData_1', JSON.stringify(data));
+            // Also update preview data so the "final" view works
+            localStorage.setItem('memorialPreviewData', JSON.stringify(data));
+
             alert('Mémorial publié avec succès ! 🎉');
             router.push('/memorial/1/preview');
         }
@@ -106,15 +119,15 @@ export default function ValidatePage() {
                                 }`}
                         >
                             <Edit3 className="w-4 h-4" />
-                            <span className="hidden md:inline">{isEditing ? 'Aperçu' : 'Modifier'}</span>
+                            <span className="hidden md:inline">{isEditing ? 'Aperçu' : 'Modifier le texte'}</span>
                         </button>
 
                         <button
-                            onClick={handleRegenerate}
+                            onClick={handlePreview}
                             className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700"
                         >
-                            <RotateCcw className="w-4 h-4" />
-                            <span className="hidden md:inline">Régénérer</span>
+                            <Eye className="w-4 h-4" />
+                            <span className="hidden md:inline">Aperçu complet</span>
                         </button>
 
                         <button
@@ -129,13 +142,13 @@ export default function ValidatePage() {
             </header>
 
             {/* Main Content */}
-            <main className="max-w-4xl mx-auto px-6 py-12">
+            <main className="max-w-5xl mx-auto px-6 py-12">
                 <div className="mb-8">
                     <h1 className="text-4xl md:text-5xl text-[#0F2A44] mb-3 font-normal" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
-                        Validation du mémorial
+                        Validation & Personnalisation
                     </h1>
                     <p className="text-lg text-gray-600 italic">
-                        Relisez le texte généré et modifiez-le si nécessaire avant publication
+                        Relisez le texte, choisissez le design et organisez les éléments de la page.
                     </p>
                 </div>
 
@@ -153,117 +166,98 @@ export default function ValidatePage() {
                     </div>
                 </div>
 
-                {/* Text Editor / Preview */}
-                <div className="bg-white rounded-2xl border-2 border-[#C9A24D]/30 shadow-lg overflow-hidden mb-8">
-                    {profilePhoto ? (
-                        <div className="relative h-64 w-full bg-gray-900">
-                            <img src={profilePhoto} alt="Défunt" className="w-full h-full object-cover opacity-80" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-90" />
-                            <div className="absolute bottom-6 left-0 right-0 text-center">
-                                <h2 className="text-3xl text-[#C9A24D] font-normal" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
-                                    Mémorial
-                                </h2>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Left Column: Text Editor */}
+                    <div className="lg:col-span-2 space-y-8">
+                        {/* Text Editor / Preview */}
+                        <div className="bg-white rounded-2xl border-2 border-[#C9A24D]/30 shadow-lg overflow-hidden">
+                            {profilePhoto ? (
+                                <div className="relative h-64 w-full bg-gray-900">
+                                    <img src={profilePhoto} alt="Défunt" className="w-full h-full object-cover opacity-80" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-90" />
+                                    <div className="absolute bottom-6 left-0 right-0 text-center">
+                                        <h2 className="text-3xl text-[#C9A24D] font-normal" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
+                                            Mémorial
+                                        </h2>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="bg-gradient-to-r from-[#0F2A44] to-[#1C3B5A] px-8 py-6">
+                                    <h2 className="text-3xl text-[#C9A24D] font-normal text-center" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
+                                        Mémorial
+                                    </h2>
+                                </div>
+                            )}
+
+                            <div className="p-8 md:p-12">
+                                {isEditing ? (
+                                    <textarea
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                        className="w-full min-h-[500px] text-lg leading-relaxed text-[#0F2A44] focus:outline-none resize-none"
+                                        style={{ fontFamily: 'Georgia, serif' }}
+                                    />
+                                ) : (
+                                    <div className="prose prose-lg max-w-none">
+                                        {text.split('\n\n').map((paragraph, index) => (
+                                            <p key={index} className="text-lg leading-relaxed text-[#0F2A44] mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                                                {paragraph}
+                                            </p>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         </div>
-                    ) : (
-                        <div className="bg-gradient-to-r from-[#0F2A44] to-[#1C3B5A] px-8 py-6">
-                            <h2 className="text-3xl text-[#C9A24D] font-normal text-center" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
-                                Mémorial
-                            </h2>
-                        </div>
-                    )}
+                    </div>
 
-                    <div className="p-8 md:p-12">
-                        {isEditing ? (
-                            <textarea
-                                value={text}
-                                onChange={(e) => setText(e.target.value)}
-                                className="w-full min-h-[500px] text-lg leading-relaxed text-[#0F2A44] focus:outline-none resize-none"
-                                style={{ fontFamily: 'Georgia, serif' }}
-                            />
-                        ) : (
-                            <div className="prose prose-lg max-w-none">
-                                {text.split('\n\n').map((paragraph, index) => (
-                                    <p key={index} className="text-lg leading-relaxed text-[#0F2A44] mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-                                        {paragraph}
-                                    </p>
+                    {/* Right Column: Customization Tools */}
+                    <div className="lg:col-span-1 space-y-8">
+
+                        {/* 1. Template Selection */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h2 className="text-lg font-semibold text-[#0F2A44] mb-4 flex items-center gap-2">
+                                <span>🎨</span> Style & Ambiance
+                            </h2>
+                            <div className="grid grid-cols-1 gap-3">
+                                {TEMPLATES.map((t) => (
+                                    <button
+                                        key={t.id}
+                                        onClick={() => setSelectedTemplate(t.id)}
+                                        className={`p-3 rounded-lg border text-left transition-all flex items-center gap-3 ${selectedTemplate === t.id
+                                                ? 'border-memoir-gold bg-memoir-gold/5 ring-1 ring-memoir-gold'
+                                                : 'border-gray-200 hover:border-memoir-gold/50'
+                                            }`}
+                                    >
+                                        <div className="w-10 h-10 rounded-full flex items-center justify-center border shadow-sm"
+                                            style={{ backgroundColor: t.colors.bg, borderColor: t.colors.accent }}>
+                                            <span className="text-xs font-bold" style={{ color: t.colors.text }}>Aa</span>
+                                        </div>
+                                        <span className="font-medium text-[#0F2A44] text-sm">{t.name}</span>
+                                    </button>
                                 ))}
                             </div>
-                        )}
-                    </div>
-                </div>
+                        </div>
 
-                {/* Template Selection */}
-                <div className="bg-white rounded-2xl border border-[#C9A24D]/20 p-8 mb-8">
-                    <h2 className="text-xl text-[#0F2A44] font-medium mb-6">Personnaliser l'apparence</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {TEMPLATES.map((t) => (
-                            <button
-                                key={t.id}
-                                onClick={() => setSelectedTemplate(t.id)}
-                                className={`p-4 rounded-xl border-2 text-left transition-all ${selectedTemplate === t.id
-                                    ? 'border-memoir-gold bg-memoir-gold/5'
-                                    : 'border-gray-200 hover:border-memoir-gold/50'
-                                    }`}
-                            >
-                                <div className="h-20 w-full mb-3 rounded-lg shadow-sm flex items-center justify-center text-2xl"
-                                    style={{ backgroundColor: t.colors.bg, borderColor: t.colors.accent }}>
-                                    <span style={{ color: t.colors.text }}>Aa</span>
-                                </div>
-                                <h3 className="font-medium text-[#0F2A44]">{t.name}</h3>
-                            </button>
-                        ))}
-                    </div>
-                </div>
+                        {/* 2. Layout Selection */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h2 className="text-lg font-semibold text-[#0F2A44] mb-4 flex items-center gap-2">
+                                <span>📐</span> Mise en page
+                            </h2>
+                            <LayoutSelector selectedLayout={layout} onLayoutChange={setLayout} />
+                        </div>
 
-                {/* Actions */}
-                <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-                    <button
-                        onClick={() => router.push('/dashboard/1')}
-                        className="text-gray-600 hover:text-[#0F2A44] transition-colors"
-                    >
-                        Sauvegarder comme brouillon
-                    </button>
+                        {/* 3. Block Order */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <h2 className="text-lg font-semibold text-[#0F2A44] mb-4 flex items-center gap-2">
+                                <span>🏗️</span> Organisation
+                            </h2>
+                            <BlockOrderEditor blocks={blockOrder} onOrderChange={setBlockOrder} />
+                        </div>
 
-                    <div className="flex gap-3">
-                        <button
-                            onClick={handleRegenerate}
-                            className="flex items-center gap-2 px-6 py-3 border-2 border-[#C9A24D] text-[#C9A24D] rounded-xl hover:bg-[#C9A24D]/5 transition-colors font-medium"
-                        >
-                            <RotateCcw className="w-5 h-5" />
-                            <span>Régénérer</span>
-                        </button>
-
-                        <button
-                            onClick={handlePreview}
-                            className="flex items-center gap-2 px-6 py-3 bg-[#0F2A44] text-white rounded-xl hover:bg-[#1a416a] transition-colors font-medium"
-                        >
-                            <Eye className="w-5 h-5" />
-                            <span>Voir l'aperçu complet</span>
-                        </button>
-
-                        <button
-                            onClick={handlePublish}
-                            className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-xl hover:shadow-xl transition-all font-medium text-lg"
-                        >
-                            <Check className="w-5 h-5" />
-                            <span>Publier le mémorial</span>
-                        </button>
-                    </div>
-                </div>
-
-                {/* Info Box */}
-                <div className="mt-8 bg-blue-50 border-l-4 border-blue-400 p-6 rounded-lg">
-                    <div className="flex gap-3">
-                        <div className="text-blue-600 text-2xl">ℹ️</div>
-                        <div>
-                            <h3 className="text-blue-900 font-medium mb-2">Après publication</h3>
-                            <ul className="text-sm text-blue-800 leading-relaxed space-y-1">
-                                <li>• Le mémorial sera accessible via une URL publique</li>
-                                <li>• Les visiteurs pourront laisser des messages, flammes et fleurs</li>
-                                <li>• Vous pourrez modérer les contributions publiques</li>
-                                <li>• Le texte restera modifiable même après publication</li>
-                            </ul>
+                        <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
+                            <p className="text-sm text-blue-800">
+                                💡 Vous pourrez toujours modifier ces éléments plus tard dans votre tableau de bord.
+                            </p>
                         </div>
                     </div>
                 </div>
