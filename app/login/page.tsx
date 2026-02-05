@@ -45,7 +45,12 @@ function LoginContent() {
         } else if (userData?.role === 'funeral_partner') {
           router.push('/dashboard-pro');
         } else {
-          router.push('/dashboard');
+          const returnUrl = searchParams.get('returnUrl');
+          if (returnUrl) {
+            router.push(decodeURIComponent(returnUrl));
+          } else {
+            router.push('/dashboard');
+          }
         }
 
       } else if (mode === 'signup') {

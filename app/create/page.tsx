@@ -26,10 +26,27 @@ const LITERARY_STYLES = [
     },
 ];
 
+import { supabase } from '@/lib/supabase';
+
 function NewMemorialContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const context = searchParams.get('context') || 'funeral'; // 'funeral', 'living_story', 'object_memory'
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                const returnUrl = encodeURIComponent(`/create?context=${context}`);
+                router.push(`/login?returnUrl=${returnUrl}`);
+            } else {
+                setLoading(false);
+            }
+        };
+        checkAuth();
+    }, [context, router]);
 
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
@@ -98,6 +115,14 @@ function NewMemorialContent() {
     const handleStartAlma = () => {
         router.push(`/create/alma?context=${context}`);
     };
+
+    const handleStartAlma = () => {
+        router.push(`/create/alma?context=${context}`);
+    };
+
+    if (loading) {
+        return <div className="min-h-screen flex items-center justify-center">Chargement...</div>;
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-[#F5F4F2] to-white">
