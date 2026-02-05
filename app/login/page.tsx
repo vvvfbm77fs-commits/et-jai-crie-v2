@@ -66,7 +66,7 @@ function LoginContent() {
 
         if (error) throw error;
 
-        alert('Compte créé ! Vérifiez votre email pour confirmer.');
+        alert('Compte créé ! Regardez vos e-mails (et vos spams !) pour confirmer.');
         setMode('login_email');
 
       } else if (mode === 'invite') {
@@ -102,11 +102,16 @@ function LoginContent() {
           .update({ used: true })
           .eq('id', invitation.id);
 
-        alert('Compte créé avec succès !');
+        alert('Compte créé ! Regardez vos e-mails (et vos spams !) pour confirmer.');
         router.push('/dashboard');
       }
     } catch (error: any) {
-      setError(error.message || 'Une erreur est survenue');
+      console.error('Login error:', error);
+      let msg = error.message || 'Une erreur est survenue';
+      if (msg.includes('Failed to fetch')) {
+        msg = 'Erreur de connexion au serveur (Failed to fetch). Vérifiez votre connexion internet et la configuration Supabase.';
+      }
+      setError(msg);
     } finally {
       setLoading(false);
     }
