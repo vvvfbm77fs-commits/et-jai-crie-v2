@@ -101,7 +101,7 @@ export default function HomePage() {
                 Créer un espace de mémoire partagé, accessible par tous pour honorer sa mémoire.
               </p>
               <Link
-                href="/dashboard/new?context=funeral"
+                href="/create?context=funeral"
                 className={`w-full py-3 px-6 rounded-xl border transition-all text-center text-sm font-medium flex items-center justify-center gap-2 ${activeCard === 'funeral' ? 'bg-white text-[#1a1a2e] border-white hover:bg-white/90' : 'border-white/20 text-white/90 hover:bg-memoir-gold hover:border-memoir-gold hover:text-memoir-blue bg-transparent'}`}
               >
                 Créer un mémorial <ArrowRight className="w-4 h-4" />
@@ -128,7 +128,7 @@ export default function HomePage() {
                 Célébrer sa vie, maintenant. Raconter son histoire et partager ses souvenirs précieux.
               </p>
               <Link
-                href="/dashboard/new?context=living_story"
+                href="/create?context=living_story"
                 className={`w-full py-3 px-6 rounded-xl transition-all text-center text-sm font-bold flex items-center justify-center gap-2 shadow-lg ${activeCard === 'living' ? 'bg-memoir-blue text-white hover:bg-memoir-blue/90' : 'bg-memoir-gold text-memoir-blue hover:bg-white'}`}
               >
                 Créer une histoire <ArrowRight className="w-4 h-4" />
@@ -155,7 +155,7 @@ export default function HomePage() {
                 Révéler son histoire cachée, la garder précieusement et la transmettre.
               </p>
               <Link
-                href="/dashboard/new?context=object_memory"
+                href="/create?context=object_memory"
                 className={`w-full py-3 px-6 rounded-xl border transition-all text-center text-sm font-medium flex items-center justify-center gap-2 ${activeCard === 'object' ? 'bg-white text-[#5D4037] border-white hover:bg-white/90' : 'border-white/20 text-white/90 hover:bg-memoir-gold hover:border-memoir-gold hover:text-memoir-blue bg-transparent'}`}
               >
                 Créer <ArrowRight className="w-4 h-4" />
@@ -240,7 +240,7 @@ export default function HomePage() {
                 <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>QR code numérique inclus</li>
                 <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Options: contributeurs, livre d'or</li>
               </ul>
-              <Link href="/dashboard/new?context=funeral" className="block w-full text-center bg-memoir-blue text-white py-3 rounded hover:bg-memoir-blue/90 transition-colors">
+              <Link href="/create?context=funeral" className="block w-full text-center bg-memoir-blue text-white py-3 rounded hover:bg-memoir-blue/90 transition-colors">
                 Créer un mémorial
               </Link>
             </div>
@@ -265,7 +265,7 @@ export default function HomePage() {
                 <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Téléchargement PDF</li>
                 <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Options: contributeurs multiples</li>
               </ul>
-              <Link href="/dashboard/new?context=living_story" className="block w-full text-center bg-memoir-gold text-memoir-blue py-3 rounded hover:bg-memoir-gold/80 transition-colors font-medium">
+              <Link href="/create?context=living_story" className="block w-full text-center bg-memoir-gold text-memoir-blue py-3 rounded hover:bg-memoir-gold/80 transition-colors font-medium">
                 Créer une histoire
               </Link>
             </div>
@@ -289,7 +289,7 @@ export default function HomePage() {
                 <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>QR code pour l'objet</li>
                 <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-memoir-gold"></div>Options: contributeurs</li>
               </ul>
-              <Link href="/dashboard/new?context=object_memory" className="block w-full text-center bg-memoir-blue text-white py-3 rounded hover:bg-memoir-blue/90 transition-colors">
+              <Link href="/create?context=object_memory" className="block w-full text-center bg-memoir-blue text-white py-3 rounded hover:bg-memoir-blue/90 transition-colors">
                 Créer
               </Link>
             </div>
@@ -300,7 +300,7 @@ export default function HomePage() {
             <p className="text-white/80 mb-8 max-w-2xl mx-auto">
               Découvrez nos offres partenaires dédiées : abonnement annuel, commissions sur les upsells et les supports physiques, outils de gestion simplifiés.
             </p>
-            <Link href="/partner" className="inline-block border border-memoir-gold text-memoir-gold px-8 py-3 rounded hover:bg-memoir-gold hover:text-memoir-blue transition-colors">
+            <Link href="/partenaires" className="inline-block border border-memoir-gold text-memoir-gold px-8 py-3 rounded hover:bg-memoir-gold hover:text-memoir-blue transition-colors">
               Devenir partenaire
             </Link>
           </div>
@@ -309,7 +309,7 @@ export default function HomePage() {
 
       {/* Section Modèles */}
       {/* Section Objets & Supports */}
-      <section className="bg-memoir-blue py-16 md:py-24 px-6" id="objets">
+      <section className="bg-memoir-blue py-16 md:py-24 px-6" id="supports">
         <h2 className="text-memoir-gold text-4xl md:text-5xl text-center mb-6 font-normal font-serif italic">
           Du numérique au physique
         </h2>
@@ -352,11 +352,12 @@ export default function HomePage() {
                 Plaque funéraire avec QR, médaillon avec NFC, étiquette pour meuble... Choisissez le support qui vous convient.
               </p>
               <div className="flex justify-center lg:justify-start">
-                <button
-                  className="bg-memoir-gold text-memoir-blue py-3 md:py-4 px-10 rounded-lg text-lg font-medium hover:bg-memoir-gold/80 transition-colors w-fit shadow-lg font-sans"
+                <Link
+                  href="/supports-physiques"
+                  className="bg-memoir-gold text-memoir-blue py-3 md:py-4 px-10 rounded-lg text-lg font-medium hover:bg-memoir-gold/80 transition-colors w-fit shadow-lg font-sans inline-block"
                 >
                   Voir les supports
-                </button>
+                </Link>
               </div>
             </div>
           </div>
