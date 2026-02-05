@@ -58,9 +58,7 @@ export default function HomePage() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-white/50">
-          <ArrowRight className="w-6 h-6 rotate-90" />
-        </div>
+
       </section>
 
       {/* Question Centrale avec Aura */}
