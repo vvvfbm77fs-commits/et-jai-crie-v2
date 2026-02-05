@@ -90,13 +90,32 @@ function NewMemorialContent() {
         setStep(step + 1);
     };
 
+    const saveAndNavigate = (path: string) => {
+        const nameParts = formData.name.trim().split(/\s+/);
+        const prenom = nameParts[0] || '';
+        const nom = nameParts.slice(1).join(' ') || '';
+
+        const dataToSave = {
+            ...formData,
+            prenom,
+            nom,
+            style: selectedStyle,
+            context
+        };
+
+        localStorage.setItem('questionnaireData', JSON.stringify(dataToSave));
+        // Also save to 'onboarding_data' just in case other components use it
+        localStorage.setItem('onboarding_data', JSON.stringify(dataToSave));
+
+        router.push(`${path}?context=${context}`);
+    };
+
     const handleStartQuestionnaire = () => {
-        // Redirect with context preserved
-        router.push(`/questionnaire?context=${context}`);
+        saveAndNavigate('/questionnaire');
     };
 
     const handleStartAlma = () => {
-        router.push(`/alma?context=${context}`);
+        saveAndNavigate('/alma');
     };
 
     return (
