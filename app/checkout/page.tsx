@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, CreditCard, Lock, Check } from 'lucide-react';
 import Image from 'next/image';
 import ValidationModal from '@/components/ValidationModal';
 
-export default function CheckoutPage() {
+function CheckoutContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const context = searchParams.get('context') || 'funeral';
@@ -183,5 +183,13 @@ export default function CheckoutPage() {
                 )}
             </main>
         </div>
+    );
+}
+
+export default function CheckoutPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Chargement du paiement...</div>}>
+            <CheckoutContent />
+        </Suspense>
     );
 }
