@@ -34,8 +34,8 @@ export default function Header() {
                             <a href="/" className="hover:text-memoir-gold transition-colors">Accueil</a>
                             <a href="/#usages" className="hover:text-memoir-gold transition-colors">Usages</a>
                             <a href="/#comment-ca-marche" className="hover:text-memoir-gold transition-colors">Comment ça marche</a>
-                            <a href="/#objets" className="hover:text-memoir-gold transition-colors">Objets & supports</a>
-                            <a href="/#apropos" className="hover:text-memoir-gold transition-colors">À propos</a>
+                            <a href="/#supports" className="hover:text-memoir-gold transition-colors">Objets & supports</a>
+                            <a href="/a-propos" className="hover:text-memoir-gold transition-colors">À propos</a>
                         </nav>
                     </div>
 
@@ -48,9 +48,16 @@ export default function Header() {
                         </div>
 
                         <div className="flex gap-3">
+                            <a
+                                href="/login"
+                                className="text-memoir-light/70 hover:text-memoir-gold transition-colors text-sm font-medium px-4 flex items-center"
+                                style={{ fontFamily: 'Manrope, sans-serif' }}
+                            >
+                                Espace Pro
+                            </a>
                             <button
                                 onClick={() => router.push('/login')}
-                                className="text-memoir-light hover:text-memoir-gold transition-colors text-sm font-medium px-4"
+                                className="text-memoir-light hover:text-memoir-gold transition-colors text-sm font-medium px-4 border border-memoir-gold/30 rounded py-2 hover:bg-memoir-gold/10"
                                 style={{ fontFamily: 'Manrope, sans-serif' }}
                             >
                                 Se connecter
@@ -87,13 +94,21 @@ export default function Header() {
                         <a href="/" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Accueil</a>
                         <a href="/#usages" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Usages</a>
                         <a href="/#comment-ca-marche" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Comment ça marche</a>
-                        <a href="/#objets" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Objets & supports</a>
-                        <a href="/#apropos" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">À propos</a>
+                        <a href="/#supports" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Objets & supports</a>
+                        <a href="/a-propos" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">À propos</a>
                     </nav>
 
                     <div className="h-px bg-memoir-gold/20 w-full my-4"></div>
 
                     <div className="flex flex-col gap-4 items-center w-full">
+                        <a
+                            href="/login"
+                            onClick={toggleMenu}
+                            className="text-memoir-light/70 hover:text-memoir-gold transition-colors text-lg font-medium"
+                            style={{ fontFamily: 'Manrope, sans-serif' }}
+                        >
+                            Espace Pro
+                        </a>
                         <button
                             onClick={() => { router.push('/login'); toggleMenu(); }}
                             className="bg-memoir-gold text-memoir-blue px-6 py-3 rounded hover:bg-[#E1C97A] transition-colors text-lg font-medium w-full text-center"
