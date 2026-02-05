@@ -1,6 +1,6 @@
 // Configuration des layouts de page
 
-export type BlockType = 
+export type BlockType =
   | 'profile'
   | 'text'
   | 'messages'
@@ -8,7 +8,10 @@ export type BlockType =
   | 'gouts'
   | 'candle'
   | 'links'
-  | 'quote';
+  | 'quote'
+  | 'family'
+  | 'location'
+  | 'contribute';
 
 export interface BlockConfig {
   id: BlockType;
@@ -32,11 +35,14 @@ export interface LayoutConfig {
 export const AVAILABLE_BLOCKS: BlockConfig[] = [
   { id: 'profile', label: 'Photo & Nom', required: true },
   { id: 'text', label: 'Texte principal', required: true },
-  { id: 'messages', label: 'Messages personnels' },
   { id: 'gallery', label: 'Galerie photos' },
+  { id: 'family', label: 'Arbre Généalogique' },
+  { id: 'location', label: 'Cérémonie & Lieu' },
   { id: 'gouts', label: 'Goûts & Musique' },
-  { id: 'candle', label: 'Bougie' },
-  { id: 'links', label: 'Liens web' },
+  { id: 'messages', label: 'Messages & Témoignages' },
+  { id: 'candle', label: 'Espace Hommage' },
+  { id: 'contribute', label: 'Contribution Visiteur' },
+  { id: 'links', label: 'Liens & Cagnottes' },
   { id: 'quote', label: 'Citation' },
 ];
 
@@ -46,17 +52,17 @@ export const PRESET_LAYOUTS: LayoutConfig[] = [
     name: 'Classique',
     description: 'Une colonne, lecture linéaire',
     columns: 1,
-    blocks: ['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links'],
+    blocks: ['profile', 'quote', 'text', 'family', 'location', 'gallery', 'gouts', 'messages', 'candle', 'contribute', 'links'],
   },
   {
     id: 'editorial',
     name: 'Éditorial',
     description: 'Deux colonnes élégantes',
     columns: 2,
-    blocks: ['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links'],
+    blocks: ['profile', 'quote', 'text', 'family', 'location', 'gallery', 'gouts', 'messages', 'candle', 'contribute', 'links'],
     columnBlocks: {
-      left: ['profile', 'gouts', 'candle'],
-      right: ['text', 'messages'],
+      left: ['profile', 'family', 'location', 'candle', 'contribute'],
+      right: ['quote', 'text', 'gallery', 'gouts', 'messages', 'links'],
     },
   },
   {
@@ -64,10 +70,10 @@ export const PRESET_LAYOUTS: LayoutConfig[] = [
     name: 'Magazine',
     description: 'Asymétrique, moderne',
     columns: 2,
-    blocks: ['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links'],
+    blocks: ['profile', 'quote', 'text', 'family', 'location', 'gallery', 'gouts', 'messages', 'candle', 'contribute', 'links'],
     columnBlocks: {
-      left: ['text', 'messages', 'gallery'],
-      right: ['profile', 'gouts', 'links'],
+      left: ['text', 'gallery', 'messages'],
+      right: ['profile', 'quote', 'family', 'location', 'gouts', 'candle', 'contribute', 'links'],
     },
   },
   {
@@ -75,11 +81,11 @@ export const PRESET_LAYOUTS: LayoutConfig[] = [
     name: 'Triptyque',
     description: 'Trois colonnes (desktop uniquement)',
     columns: 3,
-    blocks: ['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links'],
+    blocks: ['profile', 'quote', 'text', 'family', 'location', 'gallery', 'gouts', 'messages', 'candle', 'contribute', 'links'],
     columnBlocks: {
-      left: ['gouts', 'candle'],
-      center: ['profile', 'text'],
-      right: ['messages', 'links'],
+      left: ['profile', 'family', 'location', 'candle', 'contribute'],
+      center: ['quote', 'text', 'gallery'],
+      right: ['gouts', 'messages', 'links'],
     },
   },
 ];

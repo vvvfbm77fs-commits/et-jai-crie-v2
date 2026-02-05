@@ -23,7 +23,7 @@ export default function ValidatePage() {
 
     // Customization State
     const [layout, setLayout] = useState('classic');
-    const [blockOrder, setBlockOrder] = useState<BlockType[]>(['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links']);
+    const [blockOrder, setBlockOrder] = useState<BlockType[]>(['profile', 'quote', 'text', 'family', 'location', 'gallery', 'gouts', 'messages', 'candle', 'contribute', 'links']);
 
     useEffect(() => {
         const storedText = localStorage.getItem('generatedMemorialText');
@@ -64,7 +64,11 @@ export default function ValidatePage() {
 
     const saveState = () => {
         const data = {
-            identite: questionnaireData || { prenom: 'Le Défunt', nom: '' }, // Fallback to ensure blocks render
+            identite: {
+                prenom: questionnaireData?.prenom || questionnaireData?.defunt?.prenom || 'Prénom',
+                nom: questionnaireData?.nom || questionnaireData?.defunt?.nom || 'Nom',
+                ...questionnaireData
+            },
             medias: mediaData || {},
             texteGenere: text,
             template: selectedTemplate,
@@ -224,8 +228,8 @@ export default function ValidatePage() {
                                         key={t.id}
                                         onClick={() => setSelectedTemplate(t.id)}
                                         className={`p-3 rounded-lg border text-left transition-all flex items-center gap-3 ${selectedTemplate === t.id
-                                                ? 'border-memoir-gold bg-memoir-gold/5 ring-1 ring-memoir-gold'
-                                                : 'border-gray-200 hover:border-memoir-gold/50'
+                                            ? 'border-memoir-gold bg-memoir-gold/5 ring-1 ring-memoir-gold'
+                                            : 'border-gray-200 hover:border-memoir-gold/50'
                                             }`}
                                     >
                                         <div className="w-10 h-10 rounded-full flex items-center justify-center border shadow-sm"
