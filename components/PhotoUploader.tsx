@@ -28,19 +28,9 @@ export default function PhotoUploader({
   label = "Photo de profil",
   filter = 'none'
 }: PhotoUploaderProps) {
-  // ...
-  // ...
-  <div className="relative">
-    <img
-      src={photoUrl}
-      alt={label}
-      className="w-full h-64 object-cover transition-all duration-300"
-      style={{ filter: getFilterStyle(filter) }}
-    />
-    <button
-      // ...
-      const [photoUrl, setPhotoUrl] = useState<string | null>(null);
-    const [isUploading, setIsUploading] = useState(false);
+
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (photoId) {
@@ -49,7 +39,7 @@ export default function PhotoUploader({
 
     return () => {
       if (photoUrl) {
-      URL.revokeObjectURL(photoUrl);
+        URL.revokeObjectURL(photoUrl);
       }
     };
   }, [photoId]);
@@ -57,32 +47,32 @@ export default function PhotoUploader({
   const loadPhoto = async (id: string) => {
     try {
       const photo = await getPhoto(id);
-    if (photo) {
+      if (photo) {
         const url = blobToURL(photo.blob);
-    setPhotoUrl(url);
+        setPhotoUrl(url);
       }
     } catch (error) {
       console.error('Erreur chargement photo:', error);
     }
   };
 
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-      if (!file) return;
+    if (!file) return;
 
-      if (!file.type.startsWith('image/')) {
-        alert('Veuillez sélectionner une image');
+    if (!file.type.startsWith('image/')) {
+      alert('Veuillez sélectionner une image');
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
-        alert('L\'image est trop grande (maximum 10 Mo)');
+      alert('L\'image est trop grande (maximum 10 Mo)');
       return;
     }
 
-      setIsUploading(true);
+    setIsUploading(true);
 
-      try {
+    try {
       const blob = await fileToBlob(file);
       const id = `photo-profil-${memorialId}-${Date.now()}`;
 
@@ -90,8 +80,8 @@ export default function PhotoUploader({
         id,
         memorialId,
         type: 'profile',
-      blob,
-      nom: file.name,
+        blob,
+        nom: file.name,
       });
 
       if (photoUrl) {
@@ -102,10 +92,10 @@ export default function PhotoUploader({
       setPhotoUrl(url);
       onPhotoChange(id);
     } catch (error) {
-        console.error('Erreur upload:', error);
+      console.error('Erreur upload:', error);
       alert('Erreur lors de l\'upload de la photo');
     } finally {
-        setIsUploading(false);
+      setIsUploading(false);
     }
   };
 
@@ -113,74 +103,74 @@ export default function PhotoUploader({
     if (photoId) {
       try {
         await deletePhoto(photoId);
-      if (photoUrl) {
-        URL.revokeObjectURL(photoUrl);
+        if (photoUrl) {
+          URL.revokeObjectURL(photoUrl);
         }
-      setPhotoUrl(null);
-      onPhotoChange(undefined);
+        setPhotoUrl(null);
+        onPhotoChange(undefined);
       } catch (error) {
         console.error('Erreur suppression:', error);
       }
     }
   };
 
-      return (
-      <div className="space-y-3">
-        {photoUrl ? (
-          <div className="border-2 border-memoir-gold/30 rounded-lg overflow-hidden bg-memoir-gold/5">
-            <div className="relative">
-              <img
-                src={photoUrl}
-                alt={label}
-                className="w-full h-64 object-cover transition-all duration-300"
-                style={{ filter: getFilterStyle(filter) }}
-              />
-              <button
-                onClick={handleRemove}
-                className="absolute top-2 right-2 p-2 bg-red-500 hover:bg-red-600 rounded-full transition-colors shadow-lg"
-              >
-                <X className="w-4 h-4 text-white" />
-              </button>
-            </div>
-            <div className="p-3 text-center">
-              <p className="text-sm text-memoir-blue/70">
-                Cliquez sur la croix pour changer la photo
-              </p>
+  return (
+    <div className="space-y-3">
+      {photoUrl ? (
+        <div className="border-2 border-memoir-gold/30 rounded-lg overflow-hidden bg-memoir-gold/5">
+          <div className="relative">
+            <img
+              src={photoUrl}
+              alt={label}
+              className="w-full h-64 object-cover transition-all duration-300"
+              style={{ filter: getFilterStyle(filter) }}
+            />
+            <button
+              onClick={handleRemove}
+              className="absolute top-2 right-2 p-2 bg-red-500 hover:bg-red-600 rounded-full transition-colors shadow-lg"
+            >
+              <X className="w-4 h-4 text-white" />
+            </button>
+          </div>
+          <div className="p-3 text-center">
+            <p className="text-sm text-memoir-blue/70">
+              Cliquez sur la croix pour changer la photo
+            </p>
+          </div>
+        </div>
+      ) : (
+        <label className="cursor-pointer">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            disabled={isUploading}
+            className="hidden"
+          />
+          <div className="border-2 border-dashed border-memoir-blue/20 rounded-lg p-8 hover:border-memoir-gold/50 transition-colors bg-memoir-blue/5 hover:bg-memoir-gold/5">
+            <div className="flex flex-col items-center gap-3">
+              {isUploading ? (
+                <>
+                  <div className="animate-spin w-8 h-8 border-4 border-memoir-gold border-t-transparent rounded-full" />
+                  <p className="text-sm text-memoir-blue/70">Chargement...</p>
+                </>
+              ) : (
+                <>
+                  <ImageIcon className="w-12 h-12 text-memoir-gold" />
+                  <div className="text-center">
+                    <p className="font-medium text-memoir-gold mb-1">
+                      Ajouter une {label.toLowerCase()}
+                    </p>
+                    <p className="text-xs text-memoir-blue/50">
+                      JPG, PNG, WebP (max 10 Mo)
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
           </div>
-        ) : (
-          <label className="cursor-pointer">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              disabled={isUploading}
-              className="hidden"
-            />
-            <div className="border-2 border-dashed border-memoir-blue/20 rounded-lg p-8 hover:border-memoir-gold/50 transition-colors bg-memoir-blue/5 hover:bg-memoir-gold/5">
-              <div className="flex flex-col items-center gap-3">
-                {isUploading ? (
-                  <>
-                    <div className="animate-spin w-8 h-8 border-4 border-memoir-gold border-t-transparent rounded-full" />
-                    <p className="text-sm text-memoir-blue/70">Chargement...</p>
-                  </>
-                ) : (
-                  <>
-                    <ImageIcon className="w-12 h-12 text-memoir-gold" />
-                    <div className="text-center">
-                      <p className="font-medium text-memoir-gold mb-1">
-                        Ajouter une {label.toLowerCase()}
-                      </p>
-                      <p className="text-xs text-memoir-blue/50">
-                        JPG, PNG, WebP (max 10 Mo)
-                      </p>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          </label>
-        )}
-      </div>
-      );
+        </label>
+      )}
+    </div>
+  );
 }
