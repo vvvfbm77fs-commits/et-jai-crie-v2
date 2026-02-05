@@ -41,6 +41,8 @@ const ADJECTIVE_MAPPING: Record<string, { m: string, f: string, n: string }> = {
   'indépendant·e': { m: 'Il était indépendant', f: 'Elle était indépendante', n: 'C\'était quelqu\'un d\'indépendant' },
 };
 
+const QUICK_TAG_CLASS = "text-xs px-3 py-1.5 bg-white text-memoir-blue/80 rounded-lg border border-memoir-gold/10 hover:border-memoir-gold hover:text-memoir-gold transition-all text-left shadow-sm";
+
 export default function AlmaChat({ userName = 'Aline', context = 'funeral', genre, onSuggestion }: AlmaChatProps) {
   // ... keys ...
 

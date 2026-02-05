@@ -42,15 +42,35 @@ function NewMemorialContent() {
         }
 
         const checkAuth = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
-                const returnUrl = encodeURIComponent(`/create?context=${context}`);
-                router.push(`/login?returnUrl=${returnUrl}`);
-            } else {
-                setLoading(false);
+            try {
+                const { data: { session }, error } = await supabase.auth.getSession();
+                if (error) {
+                    console.error("Auth check error:", error);
+                    // On error, we still let them proceed or redirect? 
+                    // Let's assume safely logged out if error, so redirect to login
+                    const returnUrl = encodeURIComponent(`/create?context=${context}`);
+                    router.push(`/login?returnUrl=${returnUrl}`);
+                } else if (!session) {
+                    const returnUrl = encodeURIComponent(`/create?context=${context}`);
+                    router.push(`/login?returnUrl=${returnUrl}`);
+                } else {
+                    setLoading(false);
+                }
+            } catch (err) {
+                console.error("Auth Exception:", err);
+                setLoading(false); // Fallback to allow showing content (or maybe redirect?)
             }
         };
+
+        // Safety timeout
+        const timer = setTimeout(() => {
+            console.log("Auth check timed out, forcing load");
+            setLoading(false);
+        }, 3000);
+
         checkAuth();
+
+        return () => clearTimeout(timer);
     }, [context, router]);
 
     const [step, setStep] = useState(1);
