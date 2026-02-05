@@ -87,15 +87,14 @@ export default function TributeMemorial({ prenom, memorialId, accentColor, textC
                 <button
                     onClick={() => handleAction('candle')}
                     disabled={userActions.candle}
-                    className="group relative flex flex-col items-center gap-4 transition-transform hover:scale-105 disabled:hover:scale-100 disabled:opacity-80"
+                    className="group relative flex flex-col items-center gap-4 transition-transform hover:scale-105 disabled:hover:scale-100 disabled:opacity-90"
                 >
-                    <div className={`relative w-28 h-28 flex items-center justify-center rounded-full transition-all duration-500 overflow-hidden ${userActions.candle ? 'bg-orange-50 shadow-[0_0_40px_rgba(255,165,0,0.3)]' : 'bg-black/5 hover:bg-orange-50/50'
+                    <div className={`relative w-28 h-28 flex items-center justify-center rounded-full transition-all duration-500 overflow-hidden bg-white border-4 ${userActions.candle ? 'border-orange-100 shadow-[0_0_40px_rgba(255,165,0,0.4)]' : 'border-transparent shadow-sm group-hover:shadow-md'
                         }`}>
                         <img
                             src="/icons/candle.png"
                             alt="Allumer une bougie"
-                            className={`w-full h-full object-cover transition-all duration-700 ${userActions.candle ? 'scale-110 opacity-100' : 'grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100'}`}
-                            style={{ mixBlendMode: 'multiply' }}
+                            className={`w-full h-full object-cover transition-all duration-700 ${userActions.candle ? 'scale-110 opacity-100' : 'opacity-80 grayscale group-hover:grayscale-0 group-hover:opacity-100'}`}
                         />
 
                         {/* Burst effect on click */}
@@ -115,15 +114,14 @@ export default function TributeMemorial({ prenom, memorialId, accentColor, textC
                 <button
                     onClick={() => handleAction('flower')}
                     disabled={userActions.flower}
-                    className="group relative flex flex-col items-center gap-4 transition-transform hover:scale-105 disabled:hover:scale-100 disabled:opacity-80"
+                    className="group relative flex flex-col items-center gap-4 transition-transform hover:scale-105 disabled:hover:scale-100 disabled:opacity-90"
                 >
-                    <div className={`relative w-28 h-28 flex items-center justify-center rounded-full transition-all duration-500 overflow-hidden ${userActions.flower ? 'bg-pink-50 shadow-[0_0_40px_rgba(255,192,203,0.4)]' : 'bg-black/5 hover:bg-pink-50/50'
+                    <div className={`relative w-28 h-28 flex items-center justify-center rounded-full transition-all duration-500 overflow-hidden bg-white border-4 ${userActions.flower ? 'border-pink-100 shadow-[0_0_40px_rgba(255,192,203,0.4)]' : 'border-transparent shadow-sm group-hover:shadow-md'
                         }`}>
                         <img
                             src="/icons/flower.png"
                             alt="Déposer une fleur"
-                            className={`w-full h-full object-cover transition-all duration-700 ${userActions.flower ? 'scale-110 opacity-100' : 'grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100'}`}
-                            style={{ mixBlendMode: 'multiply' }}
+                            className={`w-full h-full object-cover transition-all duration-700 ${userActions.flower ? 'scale-110 opacity-100' : 'opacity-80 grayscale group-hover:grayscale-0 group-hover:opacity-100'}`}
                         />
 
                         {/* Burst effect on click */}
