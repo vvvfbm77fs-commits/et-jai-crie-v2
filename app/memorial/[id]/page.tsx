@@ -13,8 +13,11 @@ import {
   MessagesBlock,
   GalleryBlock,
   GoutsBlock,
-  CandleBlock,
+  TributeBlock,
   LinksBlock,
+  FamilyBlock,
+  LocationBlock,
+  ContributeBlock,
 } from '@/components/memorial-blocks';
 import { getPhoto, blobToURL } from '@/lib/indexedDB';
 import { getTemplate } from '@/lib/templates';
@@ -154,7 +157,8 @@ export default function MemorialPage() {
   const isLightBg = ['sepia-terre', 'encre-manuscrit'].includes(template || '');
   const memorialId = params?.id as string;
   const finalLayout = layout || 'classic';
-  const finalBlockOrder: BlockType[] = blockOrder || ['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links'];
+  const defaultBlockOrder: BlockType[] = ['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links'];
+  const finalBlockOrder: BlockType[] = blockOrder || defaultBlockOrder;
 
   const blocks = {
     profile: (
@@ -197,7 +201,7 @@ export default function MemorialPage() {
       />
     ),
     candle: (
-      <CandleBlock
+      <TributeBlock
         prenom={identite?.prenom || ''}
         memorialId={memorialId}
         template={currentTemplate}
@@ -207,6 +211,24 @@ export default function MemorialPage() {
       <LinksBlock
         liens={liensWeb || []}
         template={currentTemplate}
+      />
+    ),
+    family: (
+      <FamilyBlock
+        template={currentTemplate}
+        isLightBg={isLightBg}
+      />
+    ),
+    location: (
+      <LocationBlock
+        template={currentTemplate}
+        isLightBg={isLightBg}
+      />
+    ),
+    contribute: (
+      <ContributeBlock
+        template={currentTemplate}
+        isLightBg={isLightBg}
       />
     ),
     quote: null,
