@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, Edit3, RotateCcw, Eye, Check } from 'lucide-react';
 import { getPhoto, blobToURL } from '@/lib/indexedDB';
+import { TEMPLATES } from '@/lib/templates';
 
 
 export default function ValidatePage() {
@@ -13,23 +14,26 @@ export default function ValidatePage() {
     const [loading, setLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
     const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+    const [questionnaireData, setQuestionnaireData] = useState<any>(null);
+    const [mediaData, setMediaData] = useState<any>(null);
+    const [selectedTemplate, setSelectedTemplate] = useState('bleu-dore');
 
     useEffect(() => {
         const storedText = localStorage.getItem('generatedMemorialText');
         if (storedText) setText(storedText);
         else setText("Le texte n'a pas pu être chargé. Veuillez régénérer le mémorial.");
 
-        // Try to load profile photo from mediaData -> IndexedDB
-        // This is tricky without the specialized hook or logic, but let's try basic retrieval if possible or just skip for now.
-        // Doing proper IDB retrieval here is too much vanilla code.
-        // let's just show a placeholder if no photo.
+        const qData = localStorage.getItem('questionnaireData');
+        if (qData) setQuestionnaireData(JSON.parse(qData));
+
         const loadPhoto = async () => {
             try {
                 const mediaDataRaw = localStorage.getItem('mediaData');
                 if (mediaDataRaw) {
-                    const mediaData = JSON.parse(mediaDataRaw);
-                    if (mediaData.profilePhotoId) {
-                        const photo = await getPhoto(mediaData.profilePhotoId);
+                    const mData = JSON.parse(mediaDataRaw);
+                    setMediaData(mData);
+                    if (mData.profilePhotoId) {
+                        const photo = await getPhoto(mData.profilePhotoId);
                         if (photo) {
                             setProfilePhoto(blobToURL(photo.blob));
                         }
@@ -44,13 +48,19 @@ export default function ValidatePage() {
         setLoading(false);
     }, []);
 
-    const handlePublish = () => {
-        if (confirm('Êtes-vous sûr de vouloir publier ce mémorial ? Il sera accessible publiquement.')) {
-            // Save final text
-            localStorage.setItem('finalMemorialText', text);
-            alert('Mémorial publié avec succès ! 🎉');
-            router.push('/memorial/1/preview'); // Redirect to a preview or dashboard
-        }
+    const handlePreview = () => {
+        // Save all data for preview
+        const previewData = {
+            identite: questionnaireData,
+            medias: mediaData,
+            texteGenere: text,
+            template: selectedTemplate,
+            // Add defaults for other blocks
+            gouts: {},
+            message: "Un espace pour célébrer la vie.",
+        };
+        localStorage.setItem('memorialPreviewData', JSON.stringify(previewData));
+        router.push('/memorial/1/preview');
     };
     //...
 
@@ -166,6 +176,29 @@ export default function ValidatePage() {
                     </div>
                 </div>
 
+                {/* Template Selection */}
+                <div className="bg-white rounded-2xl border border-[#C9A24D]/20 p-8 mb-8">
+                    <h2 className="text-xl text-[#0F2A44] font-medium mb-6">Personnaliser l'apparence</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {TEMPLATES.map((t) => (
+                            <button
+                                key={t.id}
+                                onClick={() => setSelectedTemplate(t.id)}
+                                className={`p-4 rounded-xl border-2 text-left transition-all ${selectedTemplate === t.id
+                                    ? 'border-memoir-gold bg-memoir-gold/5'
+                                    : 'border-gray-200 hover:border-memoir-gold/50'
+                                    }`}
+                            >
+                                <div className="h-20 w-full mb-3 rounded-lg shadow-sm flex items-center justify-center text-2xl"
+                                    style={{ backgroundColor: t.colors.bg, borderColor: t.colors.accent }}>
+                                    <span style={{ color: t.colors.text }}>Aa</span>
+                                </div>
+                                <h3 className="font-medium text-[#0F2A44]">{t.name}</h3>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
                 {/* Actions */}
                 <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
                     <button
@@ -182,6 +215,14 @@ export default function ValidatePage() {
                         >
                             <RotateCcw className="w-5 h-5" />
                             <span>Régénérer</span>
+                        </button>
+
+                        <button
+                            onClick={handlePreview}
+                            className="flex items-center gap-2 px-6 py-3 bg-[#0F2A44] text-white rounded-xl hover:bg-[#1a416a] transition-colors font-medium"
+                        >
+                            <Eye className="w-5 h-5" />
+                            <span>Voir l'aperçu complet</span>
                         </button>
 
                         <button
