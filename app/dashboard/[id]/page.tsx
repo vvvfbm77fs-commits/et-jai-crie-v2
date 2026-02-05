@@ -99,7 +99,7 @@ export default function MemorialDashboard() {
                     </div>
 
                     <button
-                        onClick={() => window.open(`/memorial/${id}`, '_blank')}
+                        onClick={() => window.open(`/memorial/${id}/preview`, '_blank')}
                         className="flex items-center gap-2 text-[#C9A24D] hover:underline text-sm"
                     >
                         Voir le mémorial public <ExternalLink className="w-3 h-3" />
