@@ -138,7 +138,14 @@ function NewMemorialContent() {
     };
 
     const handleStartAlma = () => {
-        router.push(`/create/alma?context=${context}`);
+        const params = new URLSearchParams();
+        if (context) params.set('context', context);
+        if (formData.name) params.set('name', formData.name);
+        if (formData.birthDate) params.set('birthDate', formData.birthDate);
+        if (formData.deathDate) params.set('deathDate', formData.deathDate);
+        if (formData.objectType) params.set('objectType', formData.objectType);
+
+        router.push(`/create/alma?${params.toString()}`);
     };
 
     if (loading) {

@@ -9,8 +9,23 @@ function AlmaContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const context = (searchParams.get('context') as 'funeral' | 'living_story' | 'object_memory') || 'funeral';
-  const genre = searchParams.get('genre') || undefined;
+  const name = searchParams.get('name') || undefined;
+  const birthDate = searchParams.get('birthDate');
+  const deathDate = searchParams.get('deathDate');
 
+  const calculateAge = (start?: string | null, end?: string | null) => {
+    if (!start) return undefined;
+    const startDate = new Date(start);
+    const endDate = end ? new Date(end) : new Date();
+    let age = endDate.getFullYear() - startDate.getFullYear();
+    const m = endDate.getMonth() - startDate.getMonth();
+    if (m < 0 || (m === 0 && endDate.getDate() < startDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
+  const age = calculateAge(birthDate, deathDate);
 
   return (
     <div className="h-screen flex flex-col bg-memoir-bg">
@@ -40,7 +55,7 @@ function AlmaContent() {
       {/* Alma Chat pleine hauteur */}
       <div className="flex-1 overflow-hidden">
         <div className="max-w-7xl mx-auto h-full">
-          <AlmaChat context={context} genre={genre} />
+          <AlmaChat context={context} genre={genre} subjectName={name} age={age} />
         </div>
       </div>
     </div>

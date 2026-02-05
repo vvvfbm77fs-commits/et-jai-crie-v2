@@ -14,6 +14,8 @@ interface AlmaChatProps {
   context?: 'funeral' | 'living_story' | 'object_memory';
   onSuggestion?: (suggestion: string) => void;
   genre?: 'Elle' | 'Il' | 'Sans genre spécifié';
+  subjectName?: string;
+  age?: number;
 }
 
 const ADJECTIVE_MAPPING: Record<string, { m: string, f: string, n: string }> = {
@@ -43,7 +45,7 @@ const ADJECTIVE_MAPPING: Record<string, { m: string, f: string, n: string }> = {
 
 const QUICK_TAG_CLASS = "text-xs px-3 py-1.5 bg-white text-memoir-blue/80 rounded-lg border border-memoir-gold/10 hover:border-memoir-gold hover:text-memoir-gold transition-all text-left shadow-sm";
 
-export default function AlmaChat({ userName = 'Aline', context = 'funeral', genre, onSuggestion }: AlmaChatProps) {
+export default function AlmaChat({ userName = 'Aline', context = 'funeral', genre, onSuggestion, subjectName, age }: AlmaChatProps) {
   // ... keys ...
 
   // Helper to get suggestions
@@ -95,14 +97,24 @@ export default function AlmaChat({ userName = 'Aline', context = 'funeral', genr
     let initialContent = `Bonjour ${userName}. Je suis Alma. `;
     switch (context) {
       case 'living_story':
-        initialContent += "Je suis là pour vous aider à raconter votre histoire ou celle d'un proche. Par quel souvenir aimeriez-vous commencer ?";
+        initialContent += subjectName
+          ? `Je suis là pour vous aider à raconter l'histoire de ${subjectName}. Par quel souvenir aimeriez-vous commencer ?`
+          : "Je suis là pour vous aider à raconter votre histoire ou celle d'un proche. Par quel souvenir aimeriez-vous commencer ?";
         break;
       case 'object_memory':
-        initialContent += "Je suis là pour révéler l'histoire de cet objet. Dîtes-moi, quel est cet objet et d'où vient-il ?";
+        initialContent += subjectName
+          ? `Je suis là pour révéler l'histoire de : ${subjectName}. Dîtes-moi, d'où vient cet objet ?`
+          : "Je suis là pour révéler l'histoire de cet objet. Dîtes-moi, quel est cet objet et d'où vient-il ?";
         break;
       case 'funeral':
       default:
-        initialContent += "Ici, vous pouvez parler de la personne qui compte pour vous, à votre rythme. Par où aimeriez-vous commencer ?";
+        if (subjectName) {
+          initialContent += `Nous allons rendre hommage à ${subjectName}`;
+          if (age !== undefined) initialContent += ` (${age} ans)`;
+          initialContent += ". Prenez votre temps pour me parler de la personne qu'il/elle était. Par quoi aimeriez-vous commencer ?";
+        } else {
+          initialContent += "Ici, vous pouvez parler de la personne qui compte pour vous, à votre rythme. Par où aimeriez-vous commencer ?";
+        }
         break;
     }
 
