@@ -81,6 +81,7 @@ export default function MediasPage() {
               onPhotoChange={setProfilePhotoId}
               memorialId={memorialId}
               label="Photo de profil"
+              filter={selectedFilter}
             />
           </div>
 
