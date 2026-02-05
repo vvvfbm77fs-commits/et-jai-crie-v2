@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, MapPin, Save, Search, Globe, Lock } from 'lucide-react';
@@ -15,12 +15,12 @@ const OBJECT_TYPES = [
     { id: 'object', name: 'Objet (Plaque / Bijou)', icon: '💎' },
 ];
 
-export default function GeolocationPage() {
+function GeolocationContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     // Simulation du rôle via URL ou état global (pour MVP)
     // En prod, cela viendrait du contexte d'auth
-    const isPro = searchParams.get('role') === 'pro' || document.referrer.includes('admin');
+    const isPro = searchParams.get('role') === 'pro' || (typeof document !== 'undefined' && document.referrer.includes('admin'));
 
     const [locationType, setLocationType] = useState(isPro ? 'cemetery' : 'object');
     const [address, setAddress] = useState('');
@@ -229,5 +229,13 @@ export default function GeolocationPage() {
                 </div>
             </main>
         </div>
+    );
+}
+
+export default function GeolocationPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Chargement...</div>}>
+            <GeolocationContent />
+        </Suspense>
     );
 }
