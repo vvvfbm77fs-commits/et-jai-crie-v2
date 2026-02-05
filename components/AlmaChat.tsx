@@ -13,11 +13,66 @@ interface AlmaChatProps {
   userName?: string;
   context?: 'funeral' | 'living_story' | 'object_memory';
   onSuggestion?: (suggestion: string) => void;
+  genre?: 'Elle' | 'Il' | 'Sans genre spécifié';
 }
 
-const QUICK_TAG_CLASS = "text-xs px-3 py-1.5 bg-white text-memoir-blue/80 rounded-lg border border-memoir-gold/10 hover:border-memoir-gold hover:text-memoir-gold transition-all text-left shadow-sm";
+const ADJECTIVE_MAPPING: Record<string, { m: string, f: string, n: string }> = {
+  'discret·e': { m: 'Il était discret', f: 'Elle était discrète', n: 'C\'était quelqu\'un de discret' },
+  'généreux·se': { m: 'Il était généreux', f: 'Elle était généreuse', n: 'C\'était quelqu\'un de généreux' },
+  'drôle': { m: 'Il était très drôle', f: 'Elle était très drôle', n: 'C\'était quelqu\'un de très drôle' },
+  'engagé·e': { m: 'Il était engagé', f: 'Elle était engagée', n: 'C\'était quelqu\'un d\'engagé' },
+  'réservé·e': { m: 'Il était réservé', f: 'Elle était réservée', n: 'C\'était quelqu\'un de réservé' },
+  'passionné·e': { m: 'Il était passionné', f: 'Elle était passionnée', n: 'C\'était quelqu\'un de passionné' },
+  'libre': { m: 'Il était libre', f: 'Elle était libre', n: 'C\'était un esprit libre' },
+  'protecteur·rice': { m: 'Il était protecteur', f: 'Elle était protectrice', n: 'C\'était quelqu\'un de protecteur' },
+  'créatif·ve': { m: 'Il était créatif', f: 'Elle était créative', n: 'C\'était quelqu\'un de créatif' },
+  'pragmatique': { m: 'Il était pragmatique', f: 'Elle était pragmatique', n: 'C\'était quelqu\'un de pragmatique' },
+  'curieux·se': { m: 'Il était curieux', f: 'Elle était curieuse', n: 'C\'était quelqu\'un de curieux' },
+  'patient·e': { m: 'Il était patient', f: 'Elle était patiente', n: 'C\'était quelqu\'un de patient' },
+  'exigeant·e': { m: 'Il était exigeant', f: 'Elle était exigeante', n: 'C\'était quelqu\'un d\'exigeant' },
+  'tendre': { m: 'Il était tendre', f: 'Elle était tendre', n: 'C\'était quelqu\'un de tendre' },
+  'entier·e': { m: 'Il était entier', f: 'Elle était entière', n: 'C\'était quelqu\'un d\'entier' },
+  'solaire': { m: 'Il était solaire', f: 'Elle était solaire', n: 'C\'était une personnalité solaire' },
+  'pudique': { m: 'Il était pudique', f: 'Elle était pudique', n: 'C\'était quelqu\'un de pudique' },
+  'audacieux·se': { m: 'Il était audacieux', f: 'Elle était audacieuse', n: 'C\'était quelqu\'un d\'audacieux' },
+  'calme': { m: 'Il était calme', f: 'Elle était calme', n: 'C\'était quelqu\'un de calme' },
+  'énergique': { m: 'Il était énergique', f: 'Elle était énergique', n: 'C\'était quelqu\'un d\'énergique' },
+  'rassurant·e': { m: 'Il était rassurant', f: 'Elle était rassurante', n: 'C\'était quelqu\'un de rassurant' },
+  'indépendant·e': { m: 'Il était indépendant', f: 'Elle était indépendante', n: 'C\'était quelqu\'un d\'indépendant' },
+};
 
-export default function AlmaChat({ userName = 'Aline', context = 'funeral', onSuggestion }: AlmaChatProps) {
+export default function AlmaChat({ userName = 'Aline', context = 'funeral', genre, onSuggestion }: AlmaChatProps) {
+  // ... keys ...
+
+  // Helper to get suggestions
+  const getSuggestions = () => {
+    const isFem = genre === 'Elle';
+    const isMasc = genre === 'Il';
+    const genderKey = isFem ? 'f' : isMasc ? 'm' : 'n';
+
+    const adjectifs = Object.values(ADJECTIVE_MAPPING).map(v => v[genderKey]);
+
+    // ... values ...
+    const subject = isFem ? 'Elle' : isMasc ? 'Il' : 'Cette personne';
+    const object = isFem ? 'elle' : isMasc ? 'lui' : 'elle/lui';
+    const possessif = isFem ? 'son/sa' : isMasc ? 'son/sa' : 'son/sa'; // French possessives depend on the object, not the subject, mostly.
+
+    return {
+      adjectifs,
+      valeurs: ["La famille avant tout", "La valeur travail", "L'honnêteté", "La fidélité en amitié", "Le respect des autres", "La transmission", "La simplicité", "La justice", "L'entraide"].map(v => `Pour ${object}, c'était important : ${v}`),
+      passions: ["La musique", "Les voyages", "Jardiner", "Cuisiner pour les autres", "La lecture", "La nature", "La mer", "La montagne", "Bricoler", "Les animaux", "L'histoire", "Le cinéma"].map(v => `${subject} aimait passionnément ${v.toLowerCase()}`),
+      souvenirs: ["Il/Elle avait toujours une blague", "Son rire était contagieux", "Ses expressions cultes", "Les repas de famille", "Nos vacances ensemble"].map(v => {
+        let s = v;
+        if (isFem) s = s.replace('Il/Elle', 'Elle').replace('Il', 'Elle');
+        else if (isMasc) s = s.replace('Il/Elle', 'Il');
+        else s = s.replace('Il/Elle', 'Cette personne');
+        return `Je me souviens de ça : ${s}`;
+      })
+    };
+  };
+
+  const suggestions = getSuggestions();
+
   const [messages, setMessages] = useState<Message[]>(() => {
     // Charger la conversation sauvegardée au démarrage
     if (typeof window !== 'undefined') {
@@ -392,77 +447,7 @@ export default function AlmaChat({ userName = 'Aline', context = 'funeral', onSu
           </div>
 
           <div className="space-y-6 pb-20">
-            {/* 1. Identité & Caractère */}
-            <div className="space-y-2">
-              <h4 className="text-[10px] font-bold text-memoir-gold uppercase tracking-widest pl-1">Sa nature profonde</h4>
-              <div className="flex flex-wrap gap-2">
-                {["Il était solaire", "Elle était discrète", "Une force de la nature", "Toujours optimiste", "Un caractère entier", "La générosité même", "Un pilier pour nous", "Quelqu'un de sage", "Un esprit libre", "Très protecteur", "Une grande sensibilité"].map(phrase => (
-                  <button key={phrase} onClick={() => handleQuickSend(phrase)} className={QUICK_TAG_CLASS}>
-                    {phrase}
-                  </button>
-                ))}
-              </div>
-            </div>
 
-            {/* 2. Valeurs */}
-            <div className="space-y-2">
-              <h4 className="text-[10px] font-bold text-memoir-gold uppercase tracking-widest pl-1">Ses valeurs</h4>
-              <div className="flex flex-wrap gap-2">
-                {["La famille avant tout", "La valeur travail", "L'honnêteté", "La fidélité en amitié", "Le respect des autres", "La transmission", "La simplicité", "La justice", "L'entraide"].map(phrase => (
-                  <button key={phrase} onClick={() => handleQuickSend(`Pour lui/elle, c'était important : ${phrase}`)} className={QUICK_TAG_CLASS}>
-                    {phrase}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* 3. Passions & Goûts */}
-            <div className="space-y-2">
-              <h4 className="text-[10px] font-bold text-memoir-gold uppercase tracking-widest pl-1">Ses amours</h4>
-              <div className="flex flex-wrap gap-2">
-                {["La musique", "Les voyages", "Jardiner", "Cuisiner pour les autres", "La lecture", "La nature", "La mer", "La montagne", "Bricoler", "Les animaux", "L'histoire", "Le cinéma"].map(theme => (
-                  <button key={theme} onClick={() => handleQuickSend(`Il/Elle aimait passionnément ${theme.toLowerCase()}`)} className={QUICK_TAG_CLASS}>
-                    {theme}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* 4. Humour & Souvenirs */}
-            <div className="space-y-2">
-              <h4 className="text-[10px] font-bold text-memoir-gold uppercase tracking-widest pl-1">Sourires & Anecdotes</h4>
-              <div className="flex flex-wrap gap-2">
-                {["Il avait toujours une blague", "Son rire était contagieux", "Il faisait des bêtises drôles", "Ses expressions cultes", "Les repas de famille", "Nos vacances ensemble", "Les fêtes de Noël"].map(phrase => (
-                  <button key={phrase} onClick={() => handleQuickSend(`Je me souviens de ça : ${phrase}`)} className={QUICK_TAG_CLASS}>
-                    {phrase}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* 5. Parcours de vie */}
-            <div className="space-y-2">
-              <h4 className="text-[10px] font-bold text-memoir-gold uppercase tracking-widest pl-1">Son parcours</h4>
-              <div className="flex flex-wrap gap-2">
-                {["Son métier était sa passion", "Il a beaucoup voyagé", "Il est parti de rien", "Une vie de labeur", "Ses engagements associatifs", "Sa réussite professionnelle", "Les épreuves traversées"].map(phrase => (
-                  <button key={phrase} onClick={() => handleQuickSend(`À propos de son parcours : ${phrase}`)} className={QUICK_TAG_CLASS}>
-                    {phrase}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* 6. Liens */}
-            <div className="space-y-2">
-              <h4 className="text-[10px] font-bold text-memoir-gold uppercase tracking-widest pl-1">Nos liens</h4>
-              <div className="flex flex-wrap gap-2">
-                {["Une grande complicité", "Mon meilleur ami", "Un guide pour moi", "On se disait tout", "Des hauts et des bas", "Un amour inconditionnel"].map(phrase => (
-                  <button key={phrase} onClick={() => handleQuickSend(`Notre relation c'était : ${phrase}`)} className={QUICK_TAG_CLASS}>
-                    {phrase}
-                  </button>
-                ))}
-              </div>
-            </div>
 
           </div>
         </div >

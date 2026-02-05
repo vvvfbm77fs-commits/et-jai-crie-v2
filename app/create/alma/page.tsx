@@ -9,6 +9,8 @@ function AlmaContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const context = (searchParams.get('context') as 'funeral' | 'living_story' | 'object_memory') || 'funeral';
+  const genre = searchParams.get('genre') || undefined;
+
 
   return (
     <div className="h-screen flex flex-col bg-memoir-bg">
@@ -38,7 +40,7 @@ function AlmaContent() {
       {/* Alma Chat pleine hauteur */}
       <div className="flex-1 overflow-hidden">
         <div className="max-w-7xl mx-auto h-full">
-          <AlmaChat context={context} />
+          <AlmaChat context={context} genre={genre} />
         </div>
       </div>
     </div>
