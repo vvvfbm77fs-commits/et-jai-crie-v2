@@ -252,3 +252,5 @@ const GeneratePage = () => {
         </div>
     );
 }
+
+export default GeneratePage;
