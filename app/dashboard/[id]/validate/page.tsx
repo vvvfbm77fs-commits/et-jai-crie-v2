@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, Edit3, RotateCcw, Eye, Check } from 'lucide-react';
@@ -102,7 +102,7 @@ export default function ValidatePage() {
                         <div>
                             <h3 className="text-green-900 font-medium mb-1">Mémorial généré avec succès</h3>
                             <p className="text-sm text-green-800">
-                                Le texte ci-dessous a été créé en synthétisant {MOCK_GENERATED_TEXT.split('\n\n').length} témoignages.
+                                Le texte ci-dessous a été créé en synthétisant votre conversation avec Alma.
                                 Vous pouvez le modifier avant de le publier.
                             </p>
                         </div>
