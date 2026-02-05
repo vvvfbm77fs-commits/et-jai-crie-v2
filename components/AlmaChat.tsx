@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Send, Sparkles, Lightbulb, X } from 'lucide-react';
+import { Send, Sparkles, Lightbulb, X, RotateCcw } from 'lucide-react';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -362,6 +362,18 @@ export default function AlmaChat({ userName = 'Aline', context = 'funeral', genr
                 title="Inspiration"
               >
                 <Lightbulb className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => {
+                  if (confirm('Tout effacer et recommencer ?')) {
+                    localStorage.removeItem(`almaConversation_${context}`);
+                    window.location.reload();
+                  }
+                }}
+                className="hidden sm:block p-2 text-memoir-blue/40 hover:text-red-500 transition-colors"
+                title="Recommencer à zéro"
+              >
+                <RotateCcw className="w-4 h-4" />
               </button>
               <button
                 onClick={() => window.location.href = '/questionnaire'}
