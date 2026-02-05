@@ -447,8 +447,53 @@ export default function AlmaChat({ userName = 'Aline', context = 'funeral', genr
           </div>
 
           <div className="space-y-6 pb-20">
+            {/* 1. Identité & Caractère */}
+            <div className="space-y-2">
+              <h4 className="text-[10px] font-bold text-memoir-gold uppercase tracking-widest pl-1">Sa nature profonde</h4>
+              <div className="flex flex-wrap gap-2">
+                {suggestions.adjectifs.map((phrase, i) => (
+                  <button key={i} onClick={() => handleQuickSend(phrase)} className={QUICK_TAG_CLASS}>
+                    {phrase}
+                  </button>
+                ))}
+              </div>
+            </div>
 
+            {/* 2. Valeurs */}
+            <div className="space-y-2">
+              <h4 className="text-[10px] font-bold text-memoir-gold uppercase tracking-widest pl-1">Ses valeurs</h4>
+              <div className="flex flex-wrap gap-2">
+                {suggestions.valeurs.map((phrase, i) => (
+                  <button key={i} onClick={() => handleQuickSend(phrase)} className={QUICK_TAG_CLASS}>
+                    {phrase.split(': ')[1] || phrase}
+                  </button>
+                ))}
+              </div>
+            </div>
 
+            {/* 3. Passions & Goûts */}
+            <div className="space-y-2">
+              <h4 className="text-[10px] font-bold text-memoir-gold uppercase tracking-widest pl-1">Ses amours</h4>
+              <div className="flex flex-wrap gap-2">
+                {suggestions.passions.map((phrase, i) => (
+                  <button key={i} onClick={() => handleQuickSend(phrase)} className={QUICK_TAG_CLASS}>
+                    {phrase.replace(/.*aimait passionnément /, '')}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 4. Humour & Souvenirs */}
+            <div className="space-y-2">
+              <h4 className="text-[10px] font-bold text-memoir-gold uppercase tracking-widest pl-1">Sourires & Anecdotes</h4>
+              <div className="flex flex-wrap gap-2">
+                {suggestions.souvenirs.map((phrase, i) => (
+                  <button key={i} onClick={() => handleQuickSend(phrase)} className={QUICK_TAG_CLASS}>
+                    {phrase.replace('Je me souviens de ça : ', '')}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div >
       </div >
