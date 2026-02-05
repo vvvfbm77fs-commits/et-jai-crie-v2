@@ -11,37 +11,92 @@ const MOCK_TESTIMONIES = [
     { name: 'Paul Martin', status: 'pending' },
 ];
 
-export default function GeneratePage() {
+const GeneratePage = () => {
     const router = useRouter();
     const [isGenerating, setIsGenerating] = useState(false);
     const [progress, setProgress] = useState(0);
     const [currentStep, setCurrentStep] = useState('');
+    const [realData, setRealData] = useState<any>(null);
 
-    const completedTestimonies = MOCK_TESTIMONIES.filter(t => t.status === 'complete');
-    const canGenerate = completedTestimonies.length >= 1;
+    useEffect(() => {
+        // Gather all data
+        const loadData = () => {
+            const context = localStorage.getItem('context') || 'funeral'; // We should probably have saved this context somewhere if possible, or try all.
+            // Try to find any alma conversation
+            const almaFuneral = localStorage.getItem('almaConversation_funeral');
+            const almaLiving = localStorage.getItem('almaConversation_living_story');
+            const almaObject = localStorage.getItem('almaConversation_object_memory');
 
-    const handleGenerate = () => {
+            const almaData = almaFuneral || almaLiving || almaObject;
+
+            const mediaData = localStorage.getItem('mediaData');
+
+            // For basic info, we might have lost it if not saved.
+            // But Alma conversation usually contains the name in the first messages if we parse it, or we rely on Alma content.
+
+            setRealData({
+                alma: almaData ? JSON.parse(almaData) : null,
+                media: mediaData ? JSON.parse(mediaData) : null
+            });
+        };
+        loadData();
+    }, []);
+
+    const handleGenerate = async () => {
         setIsGenerating(true);
         setProgress(0);
 
-        // Simulate AI generation steps
+        // Steps for UI
         const steps = [
-            { text: 'Analyse des témoignages...', duration: 2000 },
-            { text: 'Identification des thèmes communs...', duration: 2500 },
-            { text: 'Harmonisation des voix...', duration: 2000 },
-            { text: 'Rédaction du texte synthétisé...', duration: 3000 },
-            { text: 'Finalisation...', duration: 1500 },
+            { text: 'Analyse des souvenirs et de la conversation...', duration: 2000 },
+            { text: 'Identification des traits de caractère...', duration: 2500 },
+            { text: 'Rédaction de l\'hommage...', duration: 3000 },
+            { text: 'Mise en forme finale...', duration: 1500 },
         ];
 
+        // Start UI animation in parallel
         let currentProgress = 0;
         let stepIndex = 0;
 
-        const runStep = () => {
+        // We will run the API call in background
+        const generatePromise = (async () => {
+            if (!realData?.alma) return "Texte par défaut (erreur de récupération des données).";
+
+            // Format conversation for prompt
+            const conversationText = realData.alma.map((m: any) => `${m.role}: ${m.content}`).join('\n');
+            const prompt = `
+            Rédige un hommage funéraire émouvant et fidèle basé sur cette conversation avec Alma (l'IA biographe).
+            Le texte doit être bien structuré, touchant, et refléter la personnalité décrite.
+            Utilise un ton solennel mais chaleureux.
+            
+            CONVERSATION :
+            ${conversationText}
+            `;
+
+            try {
+                const res = await fetch('/api/generate-memorial', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+                const data = await res.json();
+                return data.text;
+            } catch (e) {
+                console.error(e);
+                return "Erreur lors de la génération.";
+            }
+        })();
+
+        const runStep = async () => {
             if (stepIndex >= steps.length) {
-                // Generation complete
-                setTimeout(() => {
-                    router.push('/dashboard/1/validate');
-                }, 500);
+                // Wait for generation to finish if it hasn't
+                const text = await generatePromise;
+
+                // Save generated text
+                localStorage.setItem('generatedMemorialText', text);
+
+                // Redirect
+                router.push('/dashboard/1/validate');
                 return;
             }
 
@@ -49,16 +104,25 @@ export default function GeneratePage() {
             setCurrentStep(step.text);
 
             const progressIncrement = 100 / steps.length;
-            const interval = setInterval(() => {
-                currentProgress += 2;
-                setProgress(Math.min(currentProgress, (stepIndex + 1) * progressIncrement));
-            }, step.duration / (progressIncrement / 2));
 
-            setTimeout(() => {
-                clearInterval(interval);
-                stepIndex++;
-                runStep();
-            }, step.duration);
+            // Animate progress bar for this step
+            // We blindly animate for 'duration'
+            const startTime = Date.now();
+            const animate = () => {
+                const elapsed = Date.now() - startTime;
+                const p = Math.min(elapsed / step.duration, 1);
+                // current overall progress
+                const baseProgress = stepIndex * progressIncrement;
+                const stepProgress = p * progressIncrement;
+                setProgress(baseProgress + stepProgress);
+
+                if (p < 1) requestAnimationFrame(animate);
+                else {
+                    stepIndex++;
+                    runStep();
+                }
+            };
+            animate();
         };
 
         runStep();
@@ -90,7 +154,7 @@ export default function GeneratePage() {
                     </div>
 
                     <div className="text-sm text-gray-500 italic">
-                        <p>Cette opération prend généralement 30 à 60 secondes</p>
+                        <p>Cette opération prend généralement quelques secondes</p>
                         <p className="mt-1">Merci de patienter...</p>
                     </div>
                 </div>
@@ -103,9 +167,9 @@ export default function GeneratePage() {
             {/* Header */}
             <header className="bg-white border-b border-[#C9A24D]/20 sticky top-0 z-40 shadow-sm">
                 <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <Link href="/dashboard/1" className="flex items-center gap-2 text-[#0F2A44] hover:text-[#C9A24D] transition-colors">
+                    <Link href="/medias" className="flex items-center gap-2 text-[#0F2A44] hover:text-[#C9A24D] transition-colors">
                         <ChevronLeft className="w-5 h-5" />
-                        <span>Retour</span>
+                        <span>Retour aux médias</span>
                     </Link>
                 </div>
             </header>
@@ -120,7 +184,7 @@ export default function GeneratePage() {
                         Générer le mémorial
                     </h1>
                     <p className="text-xl text-gray-600 italic max-w-2xl mx-auto">
-                        Nous allons créer un texte unique en synthétisant tous les témoignages recueillis
+                        Nous allons créer un texte unique en synthétisant votre conversation avec Alma.
                     </p>
                 </div>
 
@@ -129,15 +193,17 @@ export default function GeneratePage() {
                     <div className="bg-white rounded-xl border border-[#C9A24D]/20 p-6 text-center">
                         <Users className="w-8 h-8 text-[#C9A24D] mx-auto mb-3" />
                         <p className="text-3xl font-medium text-[#0F2A44] mb-1">
-                            {completedTestimonies.length}
+                            {realData?.alma ? '1' : '0'}
                         </p>
-                        <p className="text-sm text-gray-600">Témoignages complétés</p>
+                        <p className="text-sm text-gray-600">Conversation Alma</p>
                     </div>
 
                     <div className="bg-white rounded-xl border border-[#C9A24D]/20 p-6 text-center">
                         <FileText className="w-8 h-8 text-[#C9A24D] mx-auto mb-3" />
-                        <p className="text-3xl font-medium text-[#0F2A44] mb-1">Sobre</p>
-                        <p className="text-sm text-gray-600">Style littéraire choisi</p>
+                        <p className="text-3xl font-medium text-[#0F2A44] mb-1">
+                            {realData?.media?.galleryPhotos?.length || 0}
+                        </p>
+                        <p className="text-sm text-gray-600">Photos ajoutées</p>
                     </div>
 
                     <div className="bg-white rounded-xl border border-[#C9A24D]/20 p-6 text-center">
@@ -147,30 +213,6 @@ export default function GeneratePage() {
                     </div>
                 </div>
 
-                {/* Testimonies List */}
-                <div className="bg-white rounded-2xl border border-[#C9A24D]/20 p-8 mb-8">
-                    <h2 className="text-xl text-[#0F2A44] font-medium mb-6">Témoignages à intégrer</h2>
-                    <div className="space-y-3">
-                        {MOCK_TESTIMONIES.map((testimony, index) => (
-                            <div
-                                key={index}
-                                className="flex items-center justify-between p-4 border border-gray-200 rounded-lg"
-                            >
-                                <div className="flex items-center gap-3">
-                                    {testimony.status === 'complete' ? (
-                                        <CheckCircle className="w-5 h-5 text-green-600" />
-                                    ) : (
-                                        <div className="w-5 h-5 rounded-full border-2 border-gray-300" />
-                                    )}
-                                    <span className="text-[#0F2A44]">{testimony.name}</span>
-                                </div>
-                                <span className={`text-sm ${testimony.status === 'complete' ? 'text-green-600' : 'text-gray-400'}`}>
-                                    {testimony.status === 'complete' ? 'Complété' : 'En attente'}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
 
                 {/* Info Box */}
                 <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-lg mb-8">
@@ -179,9 +221,9 @@ export default function GeneratePage() {
                         <div>
                             <h3 className="text-blue-900 font-medium mb-2">Comment fonctionne la génération ?</h3>
                             <ul className="text-sm text-blue-800 leading-relaxed space-y-1">
-                                <li>• L'IA analyse tous les témoignages complétés</li>
+                                <li>• L'IA analyse votre conversation avec Alma</li>
                                 <li>• Elle identifie les thèmes, anecdotes et valeurs communes</li>
-                                <li>• Le texte est rédigé dans le style littéraire choisi</li>
+                                <li>• Le texte est rédigé dans un style solennel et poétique</li>
                                 <li>• Vous pourrez ensuite le relire, modifier et approuver</li>
                             </ul>
                         </div>
@@ -190,10 +232,10 @@ export default function GeneratePage() {
 
                 {/* Action */}
                 <div className="text-center">
-                    {!canGenerate ? (
+                    {!realData?.alma ? (
                         <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-6">
                             <p className="text-amber-800">
-                                Vous devez avoir au moins un témoignage complété pour générer le mémorial
+                                Aucune conversation Alma trouvée. Veuillez recommencer le processus.
                             </p>
                         </div>
                     ) : (
