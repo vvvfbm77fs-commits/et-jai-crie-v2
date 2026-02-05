@@ -128,11 +128,23 @@ export default function ValidatePage() {
 
                 {/* Text Editor / Preview */}
                 <div className="bg-white rounded-2xl border-2 border-[#C9A24D]/30 shadow-lg overflow-hidden mb-8">
-                    <div className="bg-gradient-to-r from-[#0F2A44] to-[#1C3B5A] px-8 py-6">
-                        <h2 className="text-3xl text-[#C9A24D] font-normal text-center" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
-                            Mémorial
-                        </h2>
-                    </div>
+                    {profilePhoto ? (
+                        <div className="relative h-64 w-full bg-gray-900">
+                            <img src={profilePhoto} alt="Défunt" className="w-full h-full object-cover opacity-80" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-90" />
+                            <div className="absolute bottom-6 left-0 right-0 text-center">
+                                <h2 className="text-3xl text-[#C9A24D] font-normal" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
+                                    Mémorial
+                                </h2>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="bg-gradient-to-r from-[#0F2A44] to-[#1C3B5A] px-8 py-6">
+                            <h2 className="text-3xl text-[#C9A24D] font-normal text-center" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
+                                Mémorial
+                            </h2>
+                        </div>
+                    )}
 
                     <div className="p-8 md:p-12">
                         {isEditing ? (
