@@ -333,46 +333,61 @@ export default function HomePage() {
       </section>
 
       {/* Du numérique au physique */}
-      <section className="bg-memoir-bg py-32 px-6 overflow-hidden text-center">
-        <div className="max-w-4xl mx-auto space-y-12">
-          <div>
-            <h2 className="text-memoir-blue text-3xl md:text-5xl font-serif italic uppercase tracking-wider mb-6">
-              Du numérique <br /> <span className="text-memoir-gold">au physique</span><span className="text-memoir-neon">.</span>
-            </h2>
-            <p className="text-memoir-blue/60 text-xl font-light leading-relaxed">
-              Un lien simple — puce NFC ou QR code — permet d’accéder à la mémoire là où cela fait sens.
-            </p>
+      <section className="bg-memoir-bg py-32 px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+          {/* Image Side */}
+          <div className="relative h-[600px] w-full rounded-[40px] overflow-hidden shadow-2xl skew-y-1 lg:order-2">
+            <Image
+              src="/marielle-ursua-wRrhYoqYIvM-unsplash.jpg"
+              alt="Souvenir physique"
+              fill
+              className="object-cover hover:scale-105 transition-transform duration-1000"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-memoir-blue/40 to-transparent" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-            {/* Box Objet */}
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-memoir-blue/5 hover:border-memoir-neon/30 transition-all group">
-              <div className="w-12 h-12 bg-memoir-neon/10 text-memoir-neon rounded-xl flex items-center justify-center mb-6 text-2xl">🏺</div>
-              <h3 className="text-xl font-serif italic text-memoir-blue mb-4">Pour les objets</h3>
-              <p className="text-sm font-bold text-memoir-neon uppercase tracking-wide mb-6">Puce NFC discrète incluse</p>
-              <ul className="space-y-2 text-sm text-memoir-blue/70 mb-8">
-                <li>• Noire, Ø25mm</li>
-                <li>• Anti-métal (compatible tous supports)</li>
-                <li>• Se colle sous/derrière l'objet</li>
-                <li>• Lecture instantanée au smartphone</li>
-              </ul>
-              <Link href="/supports-physiques" className="text-sm font-bold underline decoration-memoir-neon/30 hover:decoration-memoir-neon text-memoir-blue transition-all">En savoir plus</Link>
+          {/* Text Content Side */}
+          <div className="space-y-12 lg:order-1 text-center lg:text-left">
+            <div>
+              <h2 className="text-memoir-blue text-3xl md:text-5xl font-serif italic uppercase tracking-wider mb-6">
+                Du numérique <br /> <span className="text-memoir-gold">au physique</span><span className="text-memoir-neon">.</span>
+              </h2>
+              <p className="text-memoir-blue/60 text-xl font-light leading-relaxed">
+                Un lien simple — puce NFC ou QR code — permet d’accéder à la mémoire là où cela fait sens.
+                Retrouvez l'émotion d'un souvenir tangible.
+              </p>
             </div>
 
-            {/* Box Personne */}
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-memoir-blue/5 hover:border-memoir-gold/30 transition-all group">
-              <div className="w-12 h-12 bg-memoir-gold/10 text-memoir-gold rounded-xl flex items-center justify-center mb-6 text-2xl">👤</div>
-              <h3 className="text-xl font-serif italic text-memoir-blue mb-4">Pour les personnes</h3>
-              <p className="text-sm font-bold text-memoir-gold uppercase tracking-wide mb-6">Plaque QR élégante incluse</p>
-              <ul className="space-y-2 text-sm text-memoir-blue/70 mb-8">
-                <li>• Format mini-plaque</li>
-                <li>• À fixer sur tombe, cadre, lieu symbolique</li>
-                <li>• Scannable par tous les smartphones</li>
-                <li>• Résistant aux intempéries</li>
-              </ul>
-              <Link href="/supports-physiques" className="text-sm font-bold underline decoration-memoir-gold/30 hover:decoration-memoir-gold text-memoir-blue transition-all">En savoir plus</Link>
+            <div className="grid grid-cols-1 gap-6 text-left">
+              {/* Box Objet */}
+              <div className="bg-white p-8 rounded-3xl shadow-sm border border-memoir-blue/5 hover:border-memoir-neon/30 transition-all group flex items-start gap-6">
+                <div className="w-14 h-14 bg-memoir-neon/10 text-memoir-neon rounded-2xl flex items-center justify-center text-3xl shrink-0">🏺</div>
+                <div>
+                  <h3 className="text-xl font-serif italic text-memoir-blue mb-2">Pour les objets</h3>
+                  <p className="text-xs font-bold text-memoir-neon uppercase tracking-wide mb-3">Puce NFC discrète incluse</p>
+                  <p className="text-sm text-memoir-blue/70 leading-relaxed mb-4">
+                    Une puce invisible (Ø25mm) qui se colle sous l'objet. Il suffit d'approcher son téléphone pour lire son histoire.
+                  </p>
+                  <Link href="/supports-physiques" className="text-sm font-bold underline decoration-memoir-neon/30 hover:decoration-memoir-neon text-memoir-blue transition-all">En savoir plus</Link>
+                </div>
+              </div>
+
+              {/* Box Personne */}
+              <div className="bg-white p-8 rounded-3xl shadow-sm border border-memoir-blue/5 hover:border-memoir-gold/30 transition-all group flex items-start gap-6">
+                <div className="w-14 h-14 bg-memoir-gold/10 text-memoir-gold rounded-2xl flex items-center justify-center text-3xl shrink-0">👤</div>
+                <div>
+                  <h3 className="text-xl font-serif italic text-memoir-blue mb-2">Pour les personnes</h3>
+                  <p className="text-xs font-bold text-memoir-gold uppercase tracking-wide mb-3">Plaque QR élégante incluse</p>
+                  <p className="text-sm text-memoir-blue/70 leading-relaxed mb-4">
+                    Une mini-plaque esthétique et résistante, à apposer sur un sépulture ou un lieu de mémoire.
+                  </p>
+                  <Link href="/supports-physiques" className="text-sm font-bold underline decoration-memoir-gold/30 hover:decoration-memoir-gold text-memoir-blue transition-all">En savoir plus</Link>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
       </section>
 
