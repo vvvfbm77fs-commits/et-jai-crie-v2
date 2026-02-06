@@ -43,7 +43,7 @@ export default function HomePage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
 
           {/* Text Content */}
-          <div className="order-2 lg:order-1 flex flex-col items-center lg:items-start text-center lg:text-left space-y-8 animate-fade-in">
+          <div className="order-2 lg:order-1 flex flex-col items-center lg:items-start text-center lg:text-left space-y-8 animate-fade-in mt-4">
             <span className="inline-block px-4 py-1.5 bg-memoir-blue/10 text-memoir-blue rounded-full text-xs font-bold tracking-widest uppercase border border-memoir-blue/20">
               Créer un mémorial numérique
             </span>
