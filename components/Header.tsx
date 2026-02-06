@@ -34,7 +34,8 @@ export default function Header() {
                             <Link href="/" className="hover:text-memoir-gold transition-colors">Accueil</Link>
                             <Link href="/#usages" className="hover:text-memoir-gold transition-colors">Usages</Link>
                             <Link href="/#comment-ca-marche" className="hover:text-memoir-gold transition-colors">Comment ça marche</Link>
-                            <Link href="/#supports" className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
+                            <Link href="/supports-physiques" className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
+                            <Link href="/faq" className="hover:text-memoir-gold transition-colors">FAQ</Link>
                             <Link href="/a-propos" className="hover:text-memoir-gold transition-colors">À propos</Link>
                         </nav>
                     </div>
@@ -94,7 +95,8 @@ export default function Header() {
                         <Link href="/" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Accueil</Link>
                         <Link href="/#usages" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Usages</Link>
                         <Link href="/#comment-ca-marche" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Comment ça marche</Link>
-                        <Link href="/#supports" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
+                        <Link href="/supports-physiques" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
+                        <Link href="/faq" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">FAQ</Link>
                         <Link href="/a-propos" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">À propos</Link>
                     </nav>
 

@@ -139,32 +139,7 @@ export default function HomePage() {
           </div>
 
           {/* En Confiance Merged Block */}
-          <div className="bg-memoir-bg rounded-3xl p-10 md:p-16 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-memoir-gold/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
 
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
-              <div className="md:w-1/3 text-center md:text-left space-y-4">
-                <h3 className="text-memoir-gold text-sm font-bold tracking-[0.2em] uppercase">En Confiance</h3>
-                <h4 className="text-memoir-blue text-2xl font-serif italic font-bold">Votre intimité est notre priorité.</h4>
-              </div>
-
-              <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-8">
-                {[
-                  "Vous choisissez ce qui est visible ou non",
-                  "Vous décidez qui peut contribuer",
-                  "Vos données restent les vôtres",
-                  "Le droit à l’oubli est garanti"
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-4">
-                    <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-sm text-memoir-green-light shrink-0 mt-0.5">
-                      <CheckCircle className="w-4 h-4 text-memoir-gold" />
-                    </div>
-                    <p className="text-memoir-blue font-medium text-sm leading-relaxed">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
 
         </div>
       </section>
@@ -178,160 +153,273 @@ export default function HomePage() {
               Quel lien souhaitez-vous préserver <span className="text-memoir-neon">?</span>
             </h2>
             <p className="text-memoir-blue/60 text-lg md:text-xl font-light leading-relaxed">
-              Choisissez l’usage qui correspond à votre démarche.
-              <br />Chaque espace est conçu avec la même attention et la même délicatesse.
+              Choisissez l’usage qui correspond à votre démarche.<br />
+              Chaque espace est conçu avec la même attention et la même délicatesse.
             </p>
             <div className="w-24 h-1 bg-memoir-neon mx-auto rounded-full"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {/* Carte 1 : Funéraire */}
-            <div
-              className={getCardStyle('funeral')}
-              onMouseEnter={() => setActiveCard('funeral')}
-              onMouseLeave={() => setActiveCard(null)}
-            >
-              <div className="relative z-10 flex flex-col h-full">
-                <div className={`w-16 h-16 mb-8 flex items-center justify-center rounded-2xl transition-all duration-500 ${activeCard === 'funeral' ? 'bg-white/20 text-white' : 'bg-memoir-blue/5 border border-memoir-blue/10 text-memoir-blue'}`}>
-                  <Flower2 className="w-8 h-8" />
-                </div>
-                <h3 className={`text-2xl font-serif italic mb-4 transition-colors ${activeCard === 'funeral' ? 'text-white' : 'text-memoir-blue group-hover:text-memoir-neon'}`}>
-                  Hommage funéraire
-                </h3>
-                <p className={`text-base mb-10 leading-relaxed transition-colors flex-grow ${activeCard === 'funeral' ? 'text-white/80' : 'text-memoir-blue/60'}`}>
-                  Un espace de mémoire partagé pour honorer une personne disparue
-                  et rassembler les messages, souvenirs et témoignages de ses proches.
-                </p>
-                <Link
-                  href="/create?context=funeral"
-                  className={`w-full py-4 px-6 rounded-2xl border transition-all text-center text-sm font-bold flex items-center justify-center gap-2 ${activeCard === 'funeral' ? 'bg-white text-memoir-blue border-white shadow-xl' : 'border-memoir-blue/10 text-memoir-blue hover:bg-memoir-blue hover:text-white'}`}
-                >
-                  Créer un hommage <ArrowRight className="w-4 h-4" />
-                </Link>
+            <div className="bg-white rounded-[32px] p-8 flex flex-col items-center text-left shadow-lg border border-white/20 relative group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="w-16 h-16 mb-6 bg-memoir-blue/5 rounded-2xl flex items-center justify-center text-memoir-blue group-hover:bg-memoir-blue group-hover:text-white transition-colors">
+                <Flower2 className="w-8 h-8" />
               </div>
+              <h3 className="text-2xl font-serif italic text-memoir-blue mb-2">Hommage funéraire</h3>
+              <p className="text-memoir-blue/60 text-sm mb-6 min-h-[60px]">Un espace de mémoire partagé pour honorer une personne disparue.</p>
+
+              <div className="mb-6 w-full pt-6 border-t border-memoir-blue/5">
+                <p className="text-4xl font-bold text-memoir-blue mb-1">79€</p>
+                <p className="text-xs text-memoir-blue/40 uppercase tracking-wide">Plaque QR incluse • Hébergement 5 ans</p>
+              </div>
+
+              <ul className="w-full space-y-3 mb-8 flex-grow">
+                {["Questionnaire guidé (9 étapes)", "Génération IA personnalisée", "Jusqu'à 15 photos + musique", "Livre d'or illimité", "Contributions (5 personnes)", "Plaque QR élégante incluse"].map((feat, i) => (
+                  <li key={i} className="flex gap-3 text-sm text-memoir-blue/70">
+                    <CheckCircle className="w-4 h-4 text-memoir-gold flex-shrink-0" />
+                    <span className="text-left">{feat}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Link href="/create?context=funeral" className="w-full py-4 text-center rounded-full bg-memoir-blue text-white font-bold shadow-lg hover:bg-memoir-blue/90 transition-all">Créer un hommage</Link>
             </div>
 
             {/* Carte 2 : Vivant */}
-            <div
-              className={getCardStyle('living')}
-              onMouseEnter={() => setActiveCard('living')}
-              onMouseLeave={() => setActiveCard(null)}
-            >
-              <div className="relative z-10 flex flex-col h-full">
-                <div className={`w-16 h-16 mb-8 flex items-center justify-center rounded-2xl transition-all duration-500 ${activeCard === 'living' ? 'bg-memoir-blue/10 text-memoir-blue' : 'bg-memoir-gold/10 border border-memoir-gold/20 text-memoir-gold'}`}>
-                  <BookOpen className="w-8 h-8" />
-                </div>
-                <h3 className={`text-2xl font-serif italic mb-4 transition-colors ${activeCard === 'living' ? 'text-memoir-blue' : 'text-memoir-blue group-hover:text-memoir-neon'}`}>
-                  Récit de vie vivant
-                </h3>
-                <p className={`text-base mb-10 leading-relaxed transition-colors flex-grow ${activeCard === 'living' ? 'text-memoir-blue/80' : 'text-memoir-blue/60'}`}>
-                  Transmettre une histoire, partager des valeurs,
-                  célébrer un parcours de vie dès maintenant, en famille ou entre ami·es.
-                </p>
-                <Link
-                  href="/create?context=living_story"
-                  className={`w-full py-4 px-6 rounded-2xl border transition-all text-center text-sm font-bold flex items-center justify-center gap-2 ${activeCard === 'living' ? 'bg-memoir-blue text-white shadow-2xl' : 'border-memoir-gold/20 text-memoir-gold hover:bg-memoir-gold hover:text-white'}`}
-                >
-                  Démarrer un récit <ArrowRight className="w-4 h-4" />
-                </Link>
+            <div className="bg-gradient-to-br from-white to-memoir-gold/5 rounded-[32px] p-8 flex flex-col items-center text-left shadow-lg border border-memoir-gold/20 relative group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="absolute top-0 right-0 bg-memoir-gold text-white text-[10px] uppercase font-bold px-3 py-1 rounded-bl-xl">Nouveau</div>
+              <div className="w-16 h-16 mb-6 bg-memoir-gold/10 rounded-2xl flex items-center justify-center text-memoir-gold group-hover:bg-memoir-gold group-hover:text-white transition-colors">
+                <BookOpen className="w-8 h-8" />
               </div>
+              <h3 className="text-2xl font-serif italic text-memoir-blue mb-2">Récit de vie vivant</h3>
+              <p className="text-memoir-blue/60 text-sm mb-6 min-h-[60px]">Célébrer un parcours de vie dès maintenant, en famille ou entre ami·es.</p>
+
+              <div className="mb-6 w-full pt-6 border-t border-memoir-gold/10">
+                <p className="text-4xl font-bold text-memoir-blue mb-1">79€</p>
+                <p className="text-xs text-memoir-blue/40 uppercase tracking-wide">Plaque QR incluse • Hébergement 5 ans</p>
+              </div>
+
+              <ul className="w-full space-y-3 mb-8 flex-grow">
+                {["Questionnaire guidé (9 étapes)", "Génération IA personnalisée", "Jusqu'à 15 photos + musique", "Cœurs et encouragements", "Contributions (5 personnes)", "Plaque QR pour cadre/lieu"].map((feat, i) => (
+                  <li key={i} className="flex gap-3 text-sm text-memoir-blue/70">
+                    <CheckCircle className="w-4 h-4 text-memoir-gold flex-shrink-0" />
+                    <span className="text-left">{feat}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Link href="/create?context=living_story" className="w-full py-4 text-center rounded-full bg-memoir-gold text-white font-bold shadow-lg hover:bg-memoir-gold/90 transition-all">Démarrer un récit</Link>
             </div>
 
             {/* Carte 3 : Objet */}
-            <div
-              className={getCardStyle('object')}
-              onMouseEnter={() => setActiveCard('object')}
-              onMouseLeave={() => setActiveCard(null)}
-            >
-              <div className="relative z-10 flex flex-col h-full">
-                <div className={`w-16 h-16 mb-8 flex items-center justify-center rounded-2xl transition-all duration-500 ${activeCard === 'object' ? 'bg-white/20 text-white' : 'bg-memoir-neon/10 border border-memoir-neon/20 text-memoir-neon'}`}>
-                  <Armchair className="w-8 h-8" />
+            <div className="bg-white rounded-[32px] p-8 flex flex-col items-center text-left shadow-lg border border-white/20 relative group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="w-16 h-16 mb-6 bg-memoir-neon/5 rounded-2xl flex items-center justify-center text-memoir-neon group-hover:bg-memoir-neon group-hover:text-white transition-colors">
+                <Armchair className="w-8 h-8" />
+              </div>
+              <h3 className="text-2xl font-serif italic text-memoir-blue mb-2">Mémoire d'objet</h3>
+              <p className="text-memoir-blue/60 text-sm mb-6 min-h-[60px]">Révélez ce qu’il représente, conservez son origine, transmettez son héritage.</p>
+
+              <div className="mb-6 w-full pt-6 border-t border-memoir-blue/5">
+                <p className="text-4xl font-bold text-memoir-blue mb-1">15€</p>
+                <p className="text-xs text-memoir-blue/40 uppercase tracking-wide">Puce NFC incluse • Hébergement 5 ans</p>
+              </div>
+
+              <ul className="w-full space-y-3 mb-8 flex-grow">
+                {["Questionnaire simplifié", "Génération IA (sobre/narratif)", "Jusqu'à 5 photos", "Livre d'or pour témoignages", "Puce NFC anti-métal incluse", "Tarifs dégressifs (dès 3 objets)"].map((feat, i) => (
+                  <li key={i} className="flex gap-3 text-sm text-memoir-blue/70">
+                    <CheckCircle className="w-4 h-4 text-memoir-neon flex-shrink-0" />
+                    <span className="text-left">{feat}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Link href="/create?context=object_memory" className="w-full py-4 text-center rounded-full border border-memoir-neon text-memoir-neon font-bold hover:bg-memoir-neon hover:text-white transition-all">Immortaliser un objet</Link>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Pack Transmission */}
+      <section className="bg-white py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-memoir-blue rounded-[40px] p-10 md:p-20 relative overflow-hidden text-center text-white">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+
+            <div className="relative z-10 max-w-3xl mx-auto space-y-8">
+              <span className="inline-block px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold tracking-widest uppercase border border-white/20">Offre Spéciale</span>
+              <h2 className="text-4xl md:text-6xl font-serif italic">Pack Transmission</h2>
+              <p className="text-xl text-white/80 font-light leading-relaxed">
+                Racontez l'histoire d'une personne <strong className="text-memoir-gold">ET</strong> de ses objets précieux dans un récit unifié.
+                <br />Idéal pour héritage familial, déménagement ou transmission anticipée.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8 text-left max-w-2xl mx-auto">
+                <div className="bg-white/10 p-6 rounded-2xl border border-white/10 hover:bg-white/20 transition-colors">
+                  <h3 className="text-xl font-bold mb-2">Pack Essentiel</h3>
+                  <p className="text-3xl font-serif italic mb-4">109€ <span className="text-sm font-sans opacity-60 line-through">129€</span></p>
+                  <ul className="space-y-2 text-sm opacity-80 mb-6">
+                    <li>✓ 1 Mémoire de Personne</li>
+                    <li>✓ 5 Mémoires d'Objets</li>
+                    <li>✓ Plaque QR + 5 Puces NFC</li>
+                  </ul>
+                  <Link href="/create?context=transmission" className="block w-full py-3 text-center bg-white text-memoir-blue font-bold rounded-full hover:scale-105 transition-transform">Choisir ce pack</Link>
                 </div>
-                <h3 className={`text-2xl font-serif italic mb-4 transition-colors ${activeCard === 'object' ? 'text-white' : 'text-memoir-blue group-hover:text-memoir-neon'}`}>
-                  Mémoire d'objet
-                </h3>
-                <p className={`text-base mb-10 leading-relaxed transition-colors flex-grow ${activeCard === 'object' ? 'text-white/80' : 'text-memoir-blue/60'}`}>
-                  Chaque objet a une histoire.
-                  Révélez ce qu’il représente, conservez son origine, transmettez son héritage.
-                </p>
-                <Link
-                  href="/create?context=object_memory"
-                  className={`w-full py-4 px-6 rounded-2xl border transition-all text-center text-sm font-bold flex items-center justify-center gap-2 ${activeCard === 'object' ? 'bg-white text-memoir-blue border-white shadow-xl' : 'border-memoir-blue/10 text-memoir-blue hover:bg-memoir-blue hover:text-white'}`}
-                >
-                  Immortaliser un objet <ArrowRight className="w-4 h-4" />
-                </Link>
+                <div className="bg-memoir-gold/20 p-6 rounded-2xl border border-memoir-gold/30 hover:bg-memoir-gold/30 transition-colors relative overflow-hidden">
+                  <div className="absolute top-0 right-0 bg-memoir-gold text-memoir-blue text-[10px] font-bold px-3 py-1 rounded-bl-xl">Best Seller</div>
+                  <h3 className="text-xl font-bold mb-2 text-memoir-gold">Pack Étendu</h3>
+                  <p className="text-3xl font-serif italic mb-4 text-white">139€ <span className="text-sm font-sans opacity-60 line-through">179€</span></p>
+                  <ul className="space-y-2 text-sm opacity-80 mb-6">
+                    <li>✓ 1 Mémoire de Personne</li>
+                    <li>✓ 10 Mémoires d'Objets</li>
+                    <li>✓ Plaque QR + 10 Puces NFC</li>
+                  </ul>
+                  <Link href="/create?context=transmission_extended" className="block w-full py-3 text-center bg-memoir-gold text-memoir-blue font-bold rounded-full hover:scale-105 transition-transform">Choisir ce pack</Link>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Numérique Seul */}
+      <section className="bg-memoir-bg py-20 px-6 text-center">
+        <div className="max-w-3xl mx-auto space-y-6">
+          <h2 className="text-memoir-blue text-2xl font-serif italic">Vous n'avez pas besoin de support physique ?</h2>
+          <div className="bg-white p-8 rounded-3xl border border-memoir-blue/5 shadow-sm inline-block max-w-xl w-full">
+            <h3 className="text-xl font-bold text-memoir-blue mb-2">Mémoire Numérique Seule</h3>
+            <p className="text-4xl font-serif text-memoir-blue mb-4">69€ <span className="text-xl text-memoir-blue/40 line-through">79€</span></p>
+            <p className="text-memoir-blue/60 mb-6 text-sm">Tout le contenu complet, accessible par lien partageable.<br />Sans plaque ni puce.</p>
+            <Link href="/create?context=digital_only" className="inline-block px-8 py-3 rounded-full border border-memoir-blue text-memoir-blue font-bold hover:bg-memoir-blue hover:text-white transition-all">Créer une mémoire numérique</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* IA Alma */}
+      <section className="bg-white py-32 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-tr from-memoir-gold/20 to-memoir-neon/20 rounded-full blur-[100px]" />
+            <div className="relative z-10 bg-white/80 backdrop-blur-xl p-8 rounded-[40px] border border-white/50 shadow-2xl skew-y-3">
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-memoir-blue text-white rounded-full flex items-center justify-center font-serif italic text-xl">A</div>
+                  <div>
+                    <p className="text-sm uppercase tracking-widest text-memoir-blue/40 font-bold">L'Assistant</p>
+                    <p className="font-serif text-xl text-memoir-blue">Alma</p>
+                  </div>
+                </div>
+                <p className="text-lg font-serif italic text-memoir-blue/80">"Racontez-moi simplement ce qui vous vient. Je me charge de trouver les mots justes."</p>
+                <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
+                  <div className="h-full w-2/3 bg-memoir-gold rounded-full animate-pulse" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-8">
+            <span className="inline-block px-4 py-1.5 bg-memoir-blue/5 text-memoir-blue rounded-full text-xs font-bold tracking-widest uppercase">Intelligence Artificielle</span>
+            <h2 className="text-4xl md:text-5xl font-serif italic text-memoir-blue">Une IA au service de <br /><span className="text-memoir-gold">votre mémoire</span>.</h2>
+            <p className="text-memoir-blue/60 text-lg leading-relaxed">
+              Pas de page blanche intimidante. <strong>Alma</strong> vous guide pas à pas et compose un récit digne à partir de vos réponses.
+              L'intelligence artificielle au service de l'authenticité humaine.
+            </p>
+
+            <div className="space-y-6">
+              {[
+                { title: "Trois tonalités possibles", desc: "Sobre et factuel, narratif et humain, ou poétique et sensible." },
+                { title: "Respect absolu de vos mots", desc: "Aucune invention, aucun artifice. Seule votre vérité compte." },
+                { title: "Vous validez avant publication", desc: "Relisez, ajustez, modifiez jusqu'à ce que ce soit juste." }
+              ].map((item, i) => (
+                <div key={i} className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-memoir-gold/10 flex items-center justify-center text-memoir-gold shrink-0">
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-memoir-blue">{item.title}</h4>
+                    <p className="text-memoir-blue/60 text-sm">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Du numérique au physique */}
+      <section className="bg-memoir-bg py-32 px-6 overflow-hidden text-center">
+        <div className="max-w-4xl mx-auto space-y-12">
+          <div>
+            <h2 className="text-memoir-blue text-3xl md:text-5xl font-serif italic uppercase tracking-wider mb-6">
+              Du numérique <br /> <span className="text-memoir-gold">au physique</span><span className="text-memoir-neon">.</span>
+            </h2>
+            <p className="text-memoir-blue/60 text-xl font-light leading-relaxed">
+              Un lien simple — puce NFC ou QR code — permet d’accéder à la mémoire là où cela fait sens.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+            {/* Box Objet */}
+            <div className="bg-white p-8 rounded-3xl shadow-sm border border-memoir-blue/5 hover:border-memoir-neon/30 transition-all group">
+              <div className="w-12 h-12 bg-memoir-neon/10 text-memoir-neon rounded-xl flex items-center justify-center mb-6 text-2xl">🏺</div>
+              <h3 className="text-xl font-serif italic text-memoir-blue mb-4">Pour les objets</h3>
+              <p className="text-sm font-bold text-memoir-neon uppercase tracking-wide mb-6">Puce NFC discrète incluse</p>
+              <ul className="space-y-2 text-sm text-memoir-blue/70 mb-8">
+                <li>• Noire, Ø25mm</li>
+                <li>• Anti-métal (compatible tous supports)</li>
+                <li>• Se colle sous/derrière l'objet</li>
+                <li>• Lecture instantanée au smartphone</li>
+              </ul>
+              <Link href="/supports-physiques" className="text-sm font-bold underline decoration-memoir-neon/30 hover:decoration-memoir-neon text-memoir-blue transition-all">En savoir plus</Link>
+            </div>
+
+            {/* Box Personne */}
+            <div className="bg-white p-8 rounded-3xl shadow-sm border border-memoir-blue/5 hover:border-memoir-gold/30 transition-all group">
+              <div className="w-12 h-12 bg-memoir-gold/10 text-memoir-gold rounded-xl flex items-center justify-center mb-6 text-2xl">👤</div>
+              <h3 className="text-xl font-serif italic text-memoir-blue mb-4">Pour les personnes</h3>
+              <p className="text-sm font-bold text-memoir-gold uppercase tracking-wide mb-6">Plaque QR élégante incluse</p>
+              <ul className="space-y-2 text-sm text-memoir-blue/70 mb-8">
+                <li>• Format mini-plaque</li>
+                <li>• À fixer sur tombe, cadre, lieu symbolique</li>
+                <li>• Scannable par tous les smartphones</li>
+                <li>• Résistant aux intempéries</li>
+              </ul>
+              <Link href="/supports-physiques" className="text-sm font-bold underline decoration-memoir-gold/30 hover:decoration-memoir-gold text-memoir-blue transition-all">En savoir plus</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Intimité */}
+      <section className="bg-white py-24 px-6 border-t border-memoir-blue/5">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+          <div className="md:w-1/3">
+            <h3 className="text-memoir-gold text-sm font-bold tracking-[0.2em] uppercase mb-4">En Confiance</h3>
+            <h4 className="text-memoir-blue text-3xl font-serif italic font-bold">Votre intimité est notre priorité.</h4>
+          </div>
+          <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {[
+              "Vous choisissez ce qui est visible ou non",
+              "Vous décidez qui peut contribuer",
+              "Vos données restent les vôtres",
+              "Le droit à l’oubli est garanti"
+            ].map((item, idx) => (
+              <div key={idx} className="flex items-start gap-4">
+                <div className="w-6 h-6 rounded-full bg-memoir-bg flex items-center justify-center shadow-sm text-memoir-blue shrink-0 mt-0.5">
+                  <CheckCircle className="w-4 h-4" />
+                </div>
+                <p className="text-memoir-blue font-medium text-sm leading-relaxed">{item}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* À quoi ressemble un espace de mémoire ? */}
-      <section className="bg-white py-32 px-6">
-        <div className="max-w-4xl mx-auto text-center space-y-10">
-          <h2 className="text-memoir-blue text-3xl md:text-5xl font-serif italic uppercase tracking-wider">
-            À quoi ressemble un espace de mémoire <span className="text-memoir-neon">?</span>
-          </h2>
-          <p className="text-memoir-blue/60 text-xl font-light leading-relaxed max-w-2xl mx-auto">
-            Un espace simple et sensible, composé de mots, de photos, parfois de sons.
-            Rien de superflu. Juste l’essentiel.
-          </p>
-          <div>
-            <Link href="/exemple" className="inline-flex items-center gap-2 bg-memoir-blue text-white px-10 py-4 rounded-full font-medium hover:bg-memoir-blue/90 shadow-lg hover:shadow-xl transition-all">
-              Voir un exemple <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
+
 
       {/* Du numérique au physique (Supports) */}
-      <section className="bg-memoir-bg py-32 px-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <div className="order-2 lg:order-1 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-memoir-gold/20 rounded-full blur-[80px] pointer-events-none" />
-            <div className="relative z-10 grid grid-cols-2 gap-4">
-              <div className="relative h-[300px] md:h-[400px] rounded-3xl overflow-hidden shadow-2xl translate-y-8">
-                <Image
-                  src="/image-site1.png"
-                  alt="Mémorial numérique"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-700"
-                />
-              </div>
-              <div className="relative h-[300px] md:h-[400px] rounded-3xl overflow-hidden shadow-2xl">
-                <Image
-                  src="/image-site5.png"
-                  alt="Plaque commémorative"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-700"
-                />
-              </div>
-            </div>
-          </div>
 
-          <div className="order-1 lg:order-2 space-y-8 text-center lg:text-left">
-            <h2 className="text-memoir-blue text-3xl md:text-5xl font-serif italic uppercase tracking-wider">
-              Du numérique <br /> <span className="text-memoir-gold">au physique</span><span className="text-memoir-neon">.</span>
-            </h2>
-            <div className="space-y-6 text-memoir-blue/60 text-lg font-light leading-relaxed">
-              <p>
-                Votre espace mémoire peut aussi exister ailleurs.
-                Sur un objet, un meuble, un lieu, une plaque, un détail.
-              </p>
-              <p>
-                Un lien, un QR code ou une puce NFC permet d’y accéder simplement,
-                là où cela fait sens.
-              </p>
-            </div>
-
-            <div className="pt-4">
-              <Link href="/supports-physiques" className="text-memoir-blue border-b border-memoir-blue pb-1 hover:text-memoir-gold hover:border-memoir-gold transition-colors font-medium">
-                Découvrir nos supports gravés
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Espace Pro */}
       <section className="bg-white py-32 px-6">
