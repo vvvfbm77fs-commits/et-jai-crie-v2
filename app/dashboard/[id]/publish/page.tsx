@@ -1,11 +1,13 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { ArrowLeft, Share2, CheckCircle, Lock } from 'lucide-react';
 import Link from 'next/link';
 
 export default function PublishPage() {
     const router = useRouter();
+    const params = useParams();
+    const id = params?.id as string;
 
     return (
         <div className="min-h-screen bg-[#F5F4F2] flex items-center justify-center p-6">
@@ -40,7 +42,7 @@ export default function PublishPage() {
                         Gérer la confidentialité
                     </button>
 
-                    <Link href="/dashboard/1" className="block text-sm text-gray-400 hover:text-gray-600 mt-6 underline">
+                    <Link href={`/dashboard/${id}`} className="block text-sm text-gray-400 hover:text-gray-600 mt-6 underline">
                         Retour au tableau de bord
                     </Link>
                 </div>

@@ -60,7 +60,10 @@ export default function LocationBlock({ template, isLightBg }: LocationBlockProp
                 </div>
 
                 <div className="h-48 bg-black/10 rounded-lg flex items-center justify-center border border-dashed border-black/20 overflow-hidden relative">
-                    <div className="absolute inset-0 opacity-10 bg-[url('https://www.google.com/maps/vt/pb=!1m5!1m4!1i12!2i2048!3i1360!4i256!2m3!1e0!2sm!3i382107330!3m8!2sen!3sUS!5e1105!12m4!1e68!2m2!1sset!2sRoadmap!4e0!5m1!1e0!23i4111425')] bg-cover" />
+                    <div
+                        className="absolute inset-0 opacity-10 bg-cover"
+                        style={{ backgroundImage: `url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1000&auto=format&fit=crop')` }}
+                    />
                     <span className="relative z-10 text-sm italic opacity-50" style={{ color: template.colors.text }}>Carte interactive</span>
                 </div>
             </div>

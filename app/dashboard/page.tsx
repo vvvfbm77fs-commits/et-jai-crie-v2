@@ -54,13 +54,13 @@ export default function DashboardPage() {
                     </Link>
 
                     <div className="flex items-center gap-4">
-                        <button className="p-2 text-[#0F2A44] hover:text-[#C9A24D] transition-colors">
+                        <Link href="/dashboard/settings" className="p-2 text-[#0F2A44] hover:text-[#C9A24D] transition-colors">
                             <Settings className="w-5 h-5" />
-                        </button>
-                        <button className="flex items-center gap-2 text-[#0F2A44] hover:text-[#C9A24D] transition-colors">
+                        </Link>
+                        <Link href="/dashboard/account" className="flex items-center gap-2 text-[#0F2A44] hover:text-[#C9A24D] transition-colors">
                             <User className="w-5 h-5" />
                             <span className="hidden md:inline text-sm">Mon compte</span>
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </header>

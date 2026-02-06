@@ -50,23 +50,41 @@ export default function AlmaChat({ userName = 'Aline', context = 'funeral', genr
 
   // Helper to get suggestions
   const getSuggestions = () => {
+    if (context === 'object_memory') {
+      return {
+        adjectifs: ["Patine ancienne", "Design moderne", "Fait main", "Bois massif", "Héritage familial", "Trouvaille de brocante", "Objet de voyage", "Souvenir d'enfance"],
+        valeurs: ["La transmission", "Le sens du beau", "L'artisanat", "L'histoire des lieux", "La solidité", "La nostalgie", "Le quotidien", "La rareté"].map(v => `Cet objet représente : ${v}`),
+        passions: ["Décorer", "Raconter une époque", "Habiter l'espace", "Servir tous les jours", "Être contemplé", "Traverser le temps"].map(v => `L'objet sert à ${v.toLowerCase()}`),
+        souvenirs: ["Il était dans le salon de mes grands-parents", "Je l'ai reçu pour mes 20 ans", "Il a une fissure qui raconte son histoire", "Il sent bon la cire", "Il ne nous quitte jamais"].map(v => `Souvenir de l'objet : ${v}`)
+      };
+    }
+
+    const isLiving = context === 'living_story';
     const isFem = genre === 'Elle';
     const isMasc = genre === 'Il';
     const genderKey = isFem ? 'f' : isMasc ? 'm' : 'n';
 
-    const adjectifs = Object.values(ADJECTIVE_MAPPING).map(v => v[genderKey]);
+    const adjectifs = Object.values(ADJECTIVE_MAPPING).map(v => {
+      let text = v[genderKey];
+      if (isLiving) {
+        text = text.replace('était', 'est').replace("C'était", "C'est");
+      }
+      return text;
+    });
 
-    // ... values ...
     const subject = isFem ? 'Elle' : isMasc ? 'Il' : 'Cette personne';
     const object = isFem ? 'elle' : isMasc ? 'lui' : 'elle/lui';
-    const possessif = isFem ? 'son/sa' : isMasc ? 'son/sa' : 'son/sa'; // French possessives depend on the object, not the subject, mostly.
+    const passionVerb = isLiving ? 'aime' : 'aimait';
 
     return {
       adjectifs,
-      valeurs: ["La famille avant tout", "La valeur travail", "L'honnêteté", "La fidélité en amitié", "Le respect des autres", "La transmission", "La simplicité", "La justice", "L'entraide"].map(v => `Pour ${object}, c'était important : ${v}`),
-      passions: ["La musique", "Les voyages", "Jardiner", "Cuisiner pour les autres", "La lecture", "La nature", "La mer", "La montagne", "Bricoler", "Les animaux", "L'histoire", "Le cinéma"].map(v => `${subject} aimait passionnément ${v.toLowerCase()}`),
-      souvenirs: ["Il/Elle avait toujours une blague", "Son rire était contagieux", "Ses expressions cultes", "Les repas de famille", "Nos vacances ensemble"].map(v => {
+      valeurs: ["La famille avant tout", "La valeur travail", "L'honnêteté", "La fidélité en amitié", "Le respect des autres", "La transmission", "La simplicité", "La justice", "L'entraide"].map(v => `Pour ${object}, c'${isLiving ? 'est' : 'était'} important : ${v}`),
+      passions: ["La musique", "Les voyages", "Jardiner", "Cuisiner pour les autres", "La lecture", "La nature", "La mer", "La montagne", "Bricoler", "Les animaux", "L'histoire", "Le cinéma"].map(v => `${subject} ${passionVerb} passionnément ${v.toLowerCase()}`),
+      souvenirs: ["Chaque jour est une aventure", "Son rire est contagieux", "Ses expressions cultes", "Les repas de famille", "Nos vacances ensemble"].map(v => {
         let s = v;
+        if (!isLiving) {
+          s = s.replace('est', 'était').replace('Chaque jour est', 'C\'était');
+        }
         if (isFem) s = s.replace('Il/Elle', 'Elle').replace('Il', 'Elle');
         else if (isMasc) s = s.replace('Il/Elle', 'Il');
         else s = s.replace('Il/Elle', 'Cette personne');
@@ -164,6 +182,8 @@ export default function AlmaChat({ userName = 'Aline', context = 'funeral', genr
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: input,
+          context: context,
+          subjectName: subjectName,
           conversationHistory: messages.map(m => ({
             role: m.role,
             content: m.content,
@@ -240,6 +260,8 @@ export default function AlmaChat({ userName = 'Aline', context = 'funeral', genr
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             message: text,
+            context: context,
+            subjectName: subjectName,
             conversationHistory: [...messages, userMessage].map(m => ({
               role: m.role,
               content: m.content,

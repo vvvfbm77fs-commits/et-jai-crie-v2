@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, Sparkles, Users, FileText, CheckCircle } from 'lucide-react';
 
@@ -13,6 +13,8 @@ const MOCK_TESTIMONIES = [
 
 const GeneratePage = () => {
     const router = useRouter();
+    const params = useParams();
+    const id = params?.id as string;
     const [isGenerating, setIsGenerating] = useState(false);
     const [progress, setProgress] = useState(0);
     const [currentStep, setCurrentStep] = useState('');
@@ -62,14 +64,48 @@ const GeneratePage = () => {
         const generatePromise = (async () => {
             if (!realData?.alma) return "Texte par défaut (erreur de récupération des données).";
 
-            // Format conversation for prompt
-            const conversationText = realData.alma.map((m: any) => `${m.role}: ${m.content}`).join('\n');
+            const context = localStorage.getItem('context') || 'funeral';
+            const conversationHistory = realData?.alma || [];
+            const conversationText = conversationHistory
+                .map((m: any) => `${m.role === 'user' ? 'Utilisateur' : 'Alma'}: ${m.content}`)
+                .join('\n');
+
+            let dynamicConsignes = '';
+            let goal = '';
+
+            if (context === 'object_memory') {
+                goal = "Rédige l'histoire d'un objet précieux pour une page de mémoire.";
+                dynamicConsignes = `
+                - L'objet est le personnage principal. Raconte son origine, sa matière et ce qu'il symbolise.
+                - Utilise un ton narratif, presque comme un conte ou une fiche de musée habitée.
+                - Ne parle pas de "décès" ou de "disparition" sauf si c'est explicitement lié à l'histoire de l'objet.
+                `;
+            } else if (context === 'living_story') {
+                goal = "Rédige un récit de vie (biographie) célébrant une personne vivante.";
+                dynamicConsignes = `
+                - Utilise le PRÉSENT. La personne est bien vivante, c'est un hommage à son parcours actuel.
+                - Évite tout ton mélancolique ou funèbre. C'est une célébration de la vie, des passions et de l'avenir.
+                `;
+            } else {
+                goal = "Rédige un texte d'hommage pour un mémorial numérique (page web de souvenir) suite à un départ.";
+                dynamicConsignes = `
+                - IMPORTANT : Ce texte NE DOIT PAS être un discours ou une oraison funèbre à lire lors d'une cérémonie.
+                - Évite ABSOLUMENT les formules de type "Nous sommes réunis aujourd'hui", "En ce jour de deuil", "Adieu".
+                - Il doit s'agir d'un récit de vie intemporel, structuré et touchant, destiné à être lu sur internet par les proches au fil du temps.
+                `;
+            }
+
             const prompt = `
-            Rédige un hommage funéraire émouvant et fidèle basé sur cette conversation avec Alma (l'IA biographe).
-            Le texte doit être bien structuré, touchant, et refléter la personnalité décrite.
-            Utilise un ton solennel mais chaleureux.
+            OBJECTIF : ${goal}
             
-            CONVERSATION :
+            CONSIGNES GÉNÉRALES :
+            - Utilise un ton solennel, chaleureux et narratif. 
+            - Divise le texte en paragraphes thématiques clairs avec des titres élégants.
+            - Le texte doit être fidèle aux anecdotes et traits de caractère décrits dans la conversation ci-dessous.
+            - Prends en compte l'ambiance suggérée par les souvenirs (couleurs, odeurs, paysages) pour créer une atmosphère immersive.
+            ${dynamicConsignes}
+            
+            CONVERSATION ALMA :
             ${conversationText}
             `;
 
@@ -96,7 +132,7 @@ const GeneratePage = () => {
                 localStorage.setItem('generatedMemorialText', text);
 
                 // Redirect
-                router.push('/dashboard/1/validate');
+                router.push(`/dashboard/${id}/validate`);
                 return;
             }
 

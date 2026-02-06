@@ -78,8 +78,31 @@ export const TEMPLATES: TemplateConfig[] = [
       block: 'mb-16',
     },
   },
+  {
+    id: 'custom',
+    name: 'Personnalisé',
+    typography: 'sans-serif',
+    colors: {
+      bg: '#ffffff',
+      text: '#000000',
+      accent: '#C9A24D',
+      textSecondary: '#666666',
+    },
+    fonts: {
+      heading: 'font-normal tracking-wide',
+      body: 'font-normal leading-relaxed',
+    },
+    spacing: {
+      section: 'mb-20',
+      block: 'mb-12',
+    },
+  }
 ];
 
-export function getTemplate(id: string): TemplateConfig {
-  return TEMPLATES.find(t => t.id === id) || TEMPLATES[0];
+export function getTemplate(id: string, customColors?: TemplateConfig['colors']): TemplateConfig {
+  const base = TEMPLATES.find(t => t.id === id) || TEMPLATES[0];
+  if (id === 'custom' && customColors) {
+    return { ...base, colors: customColors };
+  }
+  return base;
 }

@@ -8,10 +8,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'memoir-bg': '#F5F4F2',   // Beige
-        'memoir-blue': '#0F2A44', // Bleu Nuit (plus de violet)
-        'memoir-gold': '#C9A24D', // Or
-        'memoir-light': '#F5F4F2', // Alias pour le texte clair (Beige)
+        'memoir-bg': '#F6F2EC',   // Beige (Fond)
+        'memoir-blue': '#1C5462', // Bleu Paon (Structure)
+        'memoir-gold': '#C6A65E', // Or Mat (Valeur)
+        'memoir-neon': '#EE135D', // Rose Fluo (Geste)
+        'memoir-light': '#F6F2EC', // Alias pour le texte clair (Beige)
       },
       fontFamily: {
         sans: ['var(--font-sans)'],

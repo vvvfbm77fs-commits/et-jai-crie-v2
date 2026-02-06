@@ -13,7 +13,7 @@ export default function Header() {
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     return (
-        <header className="sticky top-0 z-50 w-full bg-memoir-blue/95 backdrop-blur-md py-4 transition-all duration-300 shadow-lg border-b border-memoir-gold/10">
+        <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl py-4 transition-all duration-300 shadow-sm border-b border-memoir-gold/20">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Desktop Header Layout */}
                 <div className="hidden md:flex items-center justify-between">
@@ -30,34 +30,34 @@ export default function Header() {
                             />
                         </Link>
 
-                        <nav className="flex gap-8 text-memoir-light text-base font-light tracking-wide" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                            <a href="/" className="hover:text-memoir-gold transition-colors">Accueil</a>
-                            <a href="/#usages" className="hover:text-memoir-gold transition-colors">Usages</a>
-                            <a href="/#comment-ca-marche" className="hover:text-memoir-gold transition-colors">Comment ça marche</a>
-                            <a href="/#supports" className="hover:text-memoir-gold transition-colors">Objets & supports</a>
-                            <a href="/a-propos" className="hover:text-memoir-gold transition-colors">À propos</a>
+                        <nav className="flex gap-8 text-memoir-blue text-base font-light tracking-wide" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                            <Link href="/" className="hover:text-memoir-gold transition-colors">Accueil</Link>
+                            <Link href="/#usages" className="hover:text-memoir-gold transition-colors">Usages</Link>
+                            <Link href="/#comment-ca-marche" className="hover:text-memoir-gold transition-colors">Comment ça marche</Link>
+                            <Link href="/#supports" className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
+                            <Link href="/a-propos" className="hover:text-memoir-gold transition-colors">À propos</Link>
                         </nav>
                     </div>
 
                     {/* Partie Droite : Actions */}
                     <div className="flex items-center gap-6">
                         {/* Socials discrets */}
-                        <div className="flex gap-4 text-memoir-gold/80 border-r border-memoir-gold/20 pr-6">
-                            <Instagram className="w-4 h-4 hover:text-memoir-gold transition-colors cursor-pointer" />
-                            <Facebook className="w-4 h-4 hover:text-memoir-gold transition-colors cursor-pointer" />
+                        <div className="flex gap-4 text-memoir-gold border-r border-memoir-gold/20 pr-6">
+                            <Instagram className="w-4 h-4 hover:text-memoir-blue transition-colors cursor-pointer" />
+                            <Facebook className="w-4 h-4 hover:text-memoir-blue transition-colors cursor-pointer" />
                         </div>
 
                         <div className="flex gap-3">
-                            <a
+                            <Link
                                 href="/login"
-                                className="text-memoir-light/70 hover:text-memoir-gold transition-colors text-sm font-medium px-4 flex items-center"
+                                className="text-memoir-blue/70 hover:text-memoir-gold transition-colors text-sm font-medium px-4 flex items-center"
                                 style={{ fontFamily: 'Manrope, sans-serif' }}
                             >
                                 Espace Pro
-                            </a>
+                            </Link>
                             <button
                                 onClick={() => router.push('/login')}
-                                className="text-memoir-light hover:text-memoir-gold transition-colors text-sm font-medium px-4 border border-memoir-gold/30 rounded py-2 hover:bg-memoir-gold/10"
+                                className="text-memoir-blue hover:text-white transition-all text-sm font-medium px-6 border border-memoir-blue/20 rounded-full py-2 hover:bg-memoir-blue"
                                 style={{ fontFamily: 'Manrope, sans-serif' }}
                             >
                                 Se connecter
@@ -89,29 +89,29 @@ export default function Header() {
 
             {/* Mobile Menu Overlay */}
             {isMenuOpen && (
-                <div className="md:hidden absolute top-full left-0 w-full bg-memoir-blue border-t border-memoir-gold/20 shadow-xl px-6 py-8 flex flex-col gap-6 animate-in slide-in-from-top-5 duration-200 h-screen">
-                    <nav className="flex flex-col items-center gap-6 text-memoir-light text-xl font-light" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                        <a href="/" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Accueil</a>
-                        <a href="/#usages" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Usages</a>
-                        <a href="/#comment-ca-marche" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Comment ça marche</a>
-                        <a href="/#supports" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Objets & supports</a>
-                        <a href="/a-propos" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">À propos</a>
+                <div className="md:hidden absolute top-full left-0 w-full bg-white border-t border-memoir-gold/20 shadow-xl px-6 py-8 flex flex-col gap-6 animate-in slide-in-from-top-5 duration-200 h-screen">
+                    <nav className="flex flex-col items-center gap-6 text-memoir-blue text-xl font-light" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                        <Link href="/" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Accueil</Link>
+                        <Link href="/#usages" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Usages</Link>
+                        <Link href="/#comment-ca-marche" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Comment ça marche</Link>
+                        <Link href="/#supports" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
+                        <Link href="/a-propos" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">À propos</Link>
                     </nav>
 
                     <div className="h-px bg-memoir-gold/20 w-full my-4"></div>
 
                     <div className="flex flex-col gap-4 items-center w-full">
-                        <a
+                        <Link
                             href="/login"
                             onClick={toggleMenu}
-                            className="text-memoir-light/70 hover:text-memoir-gold transition-colors text-lg font-medium"
+                            className="text-memoir-blue/70 hover:text-memoir-gold transition-colors text-lg font-medium"
                             style={{ fontFamily: 'Manrope, sans-serif' }}
                         >
                             Espace Pro
-                        </a>
+                        </Link>
                         <button
                             onClick={() => { router.push('/login'); toggleMenu(); }}
-                            className="bg-memoir-gold text-memoir-blue px-6 py-3 rounded hover:bg-[#E1C97A] transition-colors text-lg font-medium w-full text-center"
+                            className="bg-memoir-blue text-white px-6 py-4 rounded-full hover:bg-memoir-blue/90 transition-colors text-lg font-medium w-full text-center"
                             style={{ fontFamily: 'Manrope, sans-serif' }}
                         >
                             Se connecter

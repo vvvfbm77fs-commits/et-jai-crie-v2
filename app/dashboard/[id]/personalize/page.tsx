@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, Save, Eye, Type, Flame, Video, Palette as PaletteIcon, Layout, ChevronUp, ChevronDown, Check, X, AlertOctagon } from 'lucide-react';
 import MemorialPreview from '@/components/MemorialPreview';
@@ -59,6 +59,8 @@ const TEXT_STYLES = [
 
 export default function PersonalizePage() {
     const router = useRouter();
+    const params = useParams();
+    const id = params?.id as string;
 
     // STATES
     const [selectedTemplate, setSelectedTemplate] = useState('magazine'); // Default to new template for demo
@@ -117,14 +119,14 @@ export default function PersonalizePage() {
 
     const handleConfirmPublish = () => {
         // Here we would save everything
-        router.push('/dashboard/1/publish');
+        router.push(`/dashboard/${id}/publish`);
     };
 
     return (
         <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
             {/* Header */}
             <header className="bg-white border-b border-gray-200 px-6 py-3 flex justify-between items-center shrink-0 z-30 shadow-sm">
-                <Link href="/dashboard/1" className="flex items-center gap-2 text-gray-600 hover:text-[#0F2A44] text-sm">
+                <Link href={`/dashboard/${id}`} className="flex items-center gap-2 text-gray-600 hover:text-[#0F2A44] text-sm">
                     <ChevronLeft className="w-4 h-4" />
                     <span>Retour</span>
                 </Link>

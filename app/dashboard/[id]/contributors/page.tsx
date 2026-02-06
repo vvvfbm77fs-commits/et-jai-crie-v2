@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, Mail, UserPlus, CheckCircle, Clock, Send } from 'lucide-react';
 import StatusBadge from '@/components/StatusBadge';
@@ -28,6 +28,8 @@ const MOCK_CONTRIBUTORS = [
 
 export default function ContributorsPage() {
     const router = useRouter();
+    const params = useParams();
+    const id = params?.id as string;
     const [contributors, setContributors] = useState(MOCK_CONTRIBUTORS);
     const [showInviteModal, setShowInviteModal] = useState(false);
     const [newEmail, setNewEmail] = useState('');
@@ -58,7 +60,7 @@ export default function ContributorsPage() {
             {/* Header */}
             <header className="bg-white border-b border-[#C9A24D]/20 sticky top-0 z-40 shadow-sm">
                 <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <Link href="/dashboard/1" className="flex items-center gap-2 text-[#0F2A44] hover:text-[#C9A24D] transition-colors">
+                    <Link href={`/dashboard/${id}`} className="flex items-center gap-2 text-[#0F2A44] hover:text-[#C9A24D] transition-colors">
                         <ChevronLeft className="w-5 h-5" />
                         <span>Retour au mémorial</span>
                     </Link>
@@ -213,13 +215,13 @@ export default function ContributorsPage() {
                 {/* Bottom Action */}
                 <div className="flex justify-between mt-8">
                     <button
-                        onClick={() => router.push('/dashboard/1')}
+                        onClick={() => router.push(`/dashboard/${id}`)}
                         className="px-6 py-3 text-gray-600 hover:text-[#0F2A44] transition-colors"
                     >
                         Retour
                     </button>
                     <button
-                        onClick={() => router.push('/dashboard/1/generate')}
+                        onClick={() => router.push(`/dashboard/${id}/generate`)}
                         className="px-8 py-3 bg-[#C9A24D] text-[#0F2A44] rounded-xl hover:bg-[#E1C97A] transition-colors font-medium text-lg"
                     >
                         Générer le mémorial

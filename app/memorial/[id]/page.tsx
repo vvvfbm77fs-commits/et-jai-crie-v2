@@ -157,7 +157,7 @@ export default function MemorialPage() {
   const isLightBg = ['sepia-terre', 'encre-manuscrit'].includes(template || '');
   const memorialId = params?.id as string;
   const finalLayout = layout || 'classic';
-  const defaultBlockOrder: BlockType[] = ['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links'];
+  const defaultBlockOrder: BlockType[] = ['profile', 'quote', 'text', 'family', 'location', 'gallery', 'gouts', 'messages', 'candle', 'contribute', 'links'];
   const finalBlockOrder: BlockType[] = blockOrder || defaultBlockOrder;
 
   const blocks = {
@@ -169,6 +169,7 @@ export default function MemorialPage() {
         dateDeces={identite?.dateDeces}
         photoUrl={profilePhotoUrl || undefined}
         template={currentTemplate}
+        photoFilter={photoFilter}
       />
     ),
     text: (

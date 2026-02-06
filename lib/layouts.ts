@@ -76,18 +76,6 @@ export const PRESET_LAYOUTS: LayoutConfig[] = [
       right: ['profile', 'quote', 'family', 'location', 'gouts', 'candle', 'contribute', 'links'],
     },
   },
-  {
-    id: 'triptych',
-    name: 'Triptyque',
-    description: 'Trois colonnes (desktop uniquement)',
-    columns: 3,
-    blocks: ['profile', 'quote', 'text', 'family', 'location', 'gallery', 'gouts', 'messages', 'candle', 'contribute', 'links'],
-    columnBlocks: {
-      left: ['profile', 'family', 'location', 'candle', 'contribute'],
-      center: ['quote', 'text', 'gallery'],
-      right: ['gouts', 'messages', 'links'],
-    },
-  },
 ];
 
 export function getLayout(id: string): LayoutConfig {

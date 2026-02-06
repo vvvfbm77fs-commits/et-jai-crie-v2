@@ -11,85 +11,92 @@ interface GoutsBlockProps {
 }
 
 export default function GoutsBlock({ gouts, audioUrl, template, isLightBg }: GoutsBlockProps) {
-  if (!gouts || (!gouts.musique && !gouts.lieu && !gouts.phrase && !audioUrl)) return null;
-  
+  // If we have an audioUrl, we display at least the music player.
+  // Otherwise, we check if gouts has content.
+  if (!audioUrl && (!gouts || (!gouts.musique && !gouts.lieu && !gouts.phrase))) return null;
+
+  // Safe access to gouts fields
+  const musiqueTitle = gouts?.musique;
+  const lieu = gouts?.lieu;
+  const phrase = gouts?.phrase;
+
   return (
-    <div 
+    <div
       className="rounded-xl shadow p-6"
-      style={{ 
+      style={{
         backgroundColor: isLightBg ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.05)'
       }}
     >
-      <h3 
+      <h3
         className="text-2xl font-bold mb-6"
         style={{ color: template.colors.text }}
       >
         Moments et goûts
       </h3>
       <div className="space-y-4">
-        {gouts.musique && (
+        {musiqueTitle && (
           <div className="flex items-start gap-3">
-            <Music 
+            <Music
               className="w-5 h-5 flex-shrink-0 mt-1"
               style={{ color: template.colors.accent }}
             />
             <div className="flex-1">
-              <p 
+              <p
                 className="font-semibold"
                 style={{ color: template.colors.text }}
               >
                 Musique
               </p>
               <p style={{ color: template.colors.text, opacity: 0.7 }}>
-                {gouts.musique}
+                {musiqueTitle}
               </p>
             </div>
           </div>
         )}
-        
+
         {audioUrl && (
           <div>
             <MusicPlayer
               audioUrl={audioUrl}
-              title={gouts?.musique}
+              title={musiqueTitle}
               accentColor={template.colors.accent}
               textColor={template.colors.text}
               bgColor={template.colors.bg}
-              autoPlay={true}
+              autoPlay={false} // Default to false to avoid sudden noise
             />
           </div>
         )}
-        
-        {gouts.lieu && (
+
+        {lieu && (
           <div className="flex items-start gap-3">
-            <MapPin 
+            <MapPin
               className="w-5 h-5 flex-shrink-0 mt-1"
               style={{ color: template.colors.accent }}
             />
             <div>
-              <p 
+              <p
                 className="font-semibold"
                 style={{ color: template.colors.text }}
               >
                 Lieu
               </p>
               <p style={{ color: template.colors.text, opacity: 0.7 }}>
-                {gouts.lieu}
+                {lieu}
               </p>
             </div>
           </div>
         )}
-        
-        {gouts.phrase && (
-          <blockquote 
+
+        {phrase && (
+          <blockquote
             className="border-l-4 pl-4 italic"
-            style={{ 
+            style={{
               borderColor: template.colors.accent,
               color: template.colors.text,
               opacity: 0.8
             }}
           >
-            {gouts.phrase}
+            {phrase}
           </blockquote>
         )}
       </div>

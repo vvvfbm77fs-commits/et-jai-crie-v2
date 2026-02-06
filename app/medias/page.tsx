@@ -46,7 +46,7 @@ export default function MediasPage() {
     localStorage.setItem('mediaData', JSON.stringify(mediaData));
 
     // Rediriger vers la génération du texte
-    router.push('/dashboard/1/generate');
+    router.push(`/dashboard/${memorialId}/generate`);
   };
 
   const canContinue = profilePhotoId !== undefined; // Au minimum la photo de profil

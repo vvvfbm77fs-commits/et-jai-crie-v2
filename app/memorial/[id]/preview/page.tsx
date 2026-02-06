@@ -47,7 +47,7 @@ export default function MemorialPreviewPage() {
                     gouts: { musiqueFileId: mData.audioFile } // approximated
                 });
             } else {
-                router.push('/dashboard/1/validate');
+                router.push(`/dashboard/${params.id}/validate`);
             }
             return;
         }
@@ -108,13 +108,13 @@ export default function MemorialPreviewPage() {
         );
     }
 
-    const { identite, gouts, texteGenere, template, photoFilter, message, layout, blockOrder, liensWeb } = memorial;
-    const currentTemplate = getTemplate(template || 'bleu-dore');
+    const { identite, gouts, texteGenere, template, customColors, photoFilter, message, layout, blockOrder, liensWeb } = memorial;
+    const currentTemplate = getTemplate(template || 'bleu-dore', customColors);
     const isLightBg = ['sepia-terre', 'encre-manuscrit'].includes(template || '');
     const memorialId = (params?.id as string) || 'preview';
     const finalLayout = layout || 'classic';
     // Use TributeBlock instead of CandleBlock
-    const defaultBlockOrder: BlockType[] = ['profile', 'text', 'messages', 'gallery', 'gouts', 'candle', 'links'];
+    const defaultBlockOrder: BlockType[] = ['profile', 'quote', 'text', 'family', 'location', 'gallery', 'gouts', 'messages', 'candle', 'contribute', 'links'];
     const finalBlockOrder: BlockType[] = blockOrder || defaultBlockOrder;
 
     const blocks = {
@@ -126,6 +126,7 @@ export default function MemorialPreviewPage() {
                 dateDeces={identite?.dateDeces}
                 photoUrl={profilePhotoUrl || undefined}
                 template={currentTemplate}
+                photoFilter={photoFilter}
             />
         ),
         text: (
@@ -210,7 +211,7 @@ export default function MemorialPreviewPage() {
                     {/* Header avec retour et partage */}
                     <div className="flex items-center justify-between mb-12">
                         <Link
-                            href="/dashboard/1/validate"
+                            href={`/dashboard/${params.id}/validate`}
                             className="inline-flex items-center gap-2 transition-colors"
                             style={{ color: currentTemplate.colors.accent }}
                         >
