@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles, FileText } from 'lucide-react';
 
 const LITERARY_STYLES = [
     {
@@ -431,7 +431,7 @@ function NewMemorialContent() {
                                 onClick={handleStartQuestionnaire}
                                 className="bg-white border border-memoir-gold/10 rounded-[40px] p-10 hover:border-memoir-gold hover:shadow-2xl hover:shadow-memoir-gold/10 transition-all duration-500 text-left group relative overflow-hidden"
                             >
-                                 <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-[0.05] transition-opacity duration-700 scale-150">
+                                <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-[0.05] transition-opacity duration-700 scale-150">
                                     <FileText className="w-32 h-32 text-memoir-gold" />
                                 </div>
                                 <div className="flex items-center justify-center mb-8 bg-memoir-bg w-24 h-24 rounded-3xl group-hover:bg-memoir-gold/10 transition-colors mx-auto">
