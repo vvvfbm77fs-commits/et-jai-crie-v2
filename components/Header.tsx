@@ -20,15 +20,18 @@ export default function Header() {
 
                     {/* Partie Gauche : Socials + Menu */}
                     <div className="flex items-center gap-12">
-                        <Link href="/" className="cursor-pointer hover:opacity-90 transition-opacity">
-                            <Image
-                                src="/logo.png"
-                                alt="Commun Vivant"
-                                width={120}
-                                height={120}
-                                className="w-28 h-28 rounded-full shadow-lg border border-white/10 bg-memoir-bg"
-                            />
+                        <Link href="/" className="relative block h-full w-auto hover:opacity-90 transition-opacity z-50">
+                            <div className="absolute top-1/2 -translate-y-1/2 left-0 w-32 h-32 md:w-40 md:h-40 bg-memoir-bg rounded-full p-1 shadow-xl border-4 border-white/10 transform hover:scale-105 transition-transform duration-300">
+                                <Image
+                                    src="/logo.png"
+                                    alt="Commun Vivant"
+                                    fill
+                                    className="object-cover rounded-full"
+                                />
+                            </div>
                         </Link>
+                        {/* Spacer for the logo since it's absolute now */}
+                        <div className="w-32 hidden md:block"></div>
 
                         <nav className="flex gap-8 text-white/90 text-base font-light tracking-wide" style={{ fontFamily: 'Manrope, sans-serif' }}>
                             <Link href="/" className="hover:text-memoir-gold transition-colors">Accueil</Link>
