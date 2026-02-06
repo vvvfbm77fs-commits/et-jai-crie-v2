@@ -208,9 +208,8 @@ export default function TarifsPage() {
                     </Link>
                 </div>
 
-        </div>
 
-            </main >
-        </div >
+            </main>
+        </div>
     );
 }
