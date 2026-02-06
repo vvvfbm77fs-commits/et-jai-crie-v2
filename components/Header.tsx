@@ -13,7 +13,7 @@ export default function Header() {
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     return (
-        <header className="sticky top-0 z-50 w-full bg-memoir-blue/95 backdrop-blur-xl py-4 transition-all duration-300 shadow-sm border-b border-white/10">
+        <header className="sticky top-0 z-50 w-full bg-memoir-blue/95 backdrop-blur-xl py-6 transition-all duration-300 shadow-sm border-b border-white/10">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Desktop Header Layout */}
                 <div className="hidden md:flex items-center justify-between">
