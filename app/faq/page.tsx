@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
-import { Search, ChevronDown, ChevronUp, Mail, Plus, Minus } from 'lucide-react';
+import { Search, Plus, Mail } from 'lucide-react';
 
 const FAQ_DATA = [
     {
@@ -180,6 +180,59 @@ const FAQ_DATA = [
     }
 ];
 
+// 🔥 FONCTION DE NORMALISATION AMÉLIORÉE
+const normalizeText = (text: string): string => {
+    return text
+        .toLowerCase()
+        .normalize("NFD") // Décompose les caractères accentués
+        .replace(/[\u0300-\u036f]/g, "") // Enlève les accents
+        .replace(/['']/g, "'") // Normalise les apostrophes
+        .trim();
+};
+
+// 🔥 DICTIONNAIRE DE SYNONYMES
+const SYNONYMS: Record<string, string[]> = {
+    'prix': ['tarif', 'cout', 'coute', 'combien', 'euros', '€'],
+    'photo': ['image', 'photos', 'images'],
+    'puce': ['nfc', 'tag', 'pastille', 'chip'],
+    'plaque': ['qr', 'code', 'support'],
+    'memoire': ['memorial', 'souvenir', 'hommage'],
+    'objet': ['meuble', 'chose', 'bien'],
+    'personne': ['defunt', 'vivant', 'proche'],
+    'alma': ['ia', 'intelligence', 'artificielle', 'assistant', 'assistante'],
+    'hebergement': ['duree', 'temps', 'conservation'],
+    'securite': ['securise', 'protege', 'rgpd', 'donnees'],
+};
+
+// 🔥 FONCTION POUR ÉTENDRE LES SYNONYMES
+const expandSearchTerms = (query: string): string[] => {
+    const normalized = normalizeText(query);
+    const terms = [normalized];
+
+    // Ajoute les synonymes si trouvés
+    for (const [key, values] of Object.entries(SYNONYMS)) {
+        if (key === normalized || values.includes(normalized)) {
+            terms.push(key, ...values);
+            break;
+        }
+    }
+
+    return terms;
+};
+
+// 🔥 FONCTION DE RECHERCHE INTELLIGENTE
+const searchInText = (text: string, searchTerms: string[]): boolean => {
+    const normalizedText = normalizeText(text);
+
+    return searchTerms.some(term => {
+        // Gère les pluriels : enlève le 's' final si présent
+        const singularTerm = term.endsWith('s') ? term.slice(0, -1) : term;
+
+        // Cherche le terme OU sa version singulière
+        return normalizedText.includes(term) || normalizedText.includes(singularTerm);
+    });
+};
+
 export default function FAQPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [openItem, setOpenItem] = useState<string | null>(null);
@@ -189,16 +242,24 @@ export default function FAQPage() {
         setOpenItem(openItem === id ? null : id);
     };
 
-    const filteredData = FAQ_DATA.map(section => {
-        const filteredQuestions = section.questions.filter(q =>
-            q.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            q.a.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        return {
-            ...section,
-            questions: filteredQuestions
-        };
-    }).filter(section => section.questions.length > 0);
+    // 🔥 FILTRAGE AMÉLIORÉ AVEC useMemo POUR LA PERFORMANCE
+    const filteredData = useMemo(() => {
+        if (!searchQuery.trim()) {
+            return FAQ_DATA; // Si pas de recherche, retourne tout
+        }
+
+        const searchTerms = expandSearchTerms(searchQuery);
+
+        return FAQ_DATA.map(section => {
+            const filteredQuestions = section.questions.filter(q =>
+                searchInText(q.q, searchTerms) || searchInText(q.a, searchTerms)
+            );
+            return {
+                ...section,
+                questions: filteredQuestions
+            };
+        }).filter(section => section.questions.length > 0);
+    }, [searchQuery]);
 
     const displayData = activeCategory
         ? filteredData.filter(section => section.category === activeCategory)
@@ -224,6 +285,14 @@ export default function FAQPage() {
                             className="w-full pl-12 pr-6 py-4 rounded-full border border-memoir-gold/20 focus:border-memoir-gold focus:ring-2 focus:ring-memoir-gold/20 outline-none shadow-sm transition-all"
                         />
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-memoir-blue/40 w-5 h-5" />
+                        {searchQuery && (
+                            <button
+                                onClick={() => setSearchQuery('')}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-memoir-blue/40 hover:text-memoir-blue text-sm"
+                            >
+                                ✕
+                            </button>
+                        )}
                     </div>
                 </div>
 
@@ -297,8 +366,13 @@ export default function FAQPage() {
 
                     {displayData.length === 0 && (
                         <div className="text-center py-20 text-memoir-blue/40">
-                            <p>Aucun résultat pour "{searchQuery}"</p>
-                            <button onClick={() => setSearchQuery('')} className="text-memoir-gold underline mt-2">Effacer la recherche</button>
+                            <p className="text-lg mb-2">Aucun résultat pour « {searchQuery} »</p>
+                            <button
+                                onClick={() => setSearchQuery('')}
+                                className="text-memoir-gold hover:text-memoir-gold/80 underline mt-2 transition-colors"
+                            >
+                                Effacer la recherche
+                            </button>
                         </div>
                     )}
                 </div>
