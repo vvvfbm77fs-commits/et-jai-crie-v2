@@ -104,45 +104,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Accompagnement / Comment ça marche */}
-      <section className="bg-white py-20 px-6 relative overflow-hidden" id="comment-ca-marche">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-memoir-neon/20 to-transparent" />
-
-        <div className="max-w-7xl mx-auto">
-          {/* Header Section */}
-          <div className="text-center mb-20 space-y-4">
-            <h2 className="text-memoir-blue text-3xl md:text-5xl font-serif italic uppercase tracking-wider">
-              Un accompagnement <br /> <span className="text-memoir-gold">en toute simplicité</span><span className="text-memoir-neon">.</span>
-            </h2>
-            <p className="text-memoir-blue/50 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-              Laissez-vous guider par un parcours clair, intuitif et sécurisé.
-              Pensé pour vous permettre d’écrire, de rassembler et de transmettre, en toute sérénité.
-            </p>
-          </div>
-
-          {/* Steps Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24">
-            {[
-              { step: '1', title: 'Quel est votre projet ?', desc: 'Honorer une personne disparue, célébrer un vivant ou raconter un objet. Sélectionnez le format adapté à votre intention.', icon: null },
-              { step: '2', title: 'Racontez avec Alma', desc: <>Répondez à quelques questions simples. <strong className="text-memoir-blue font-bold">Alma, notre assistante IA</strong>, transforme vos réponses en un récit au ton juste : sobre, narratif ou poétique. Vous choisissez le style. Vous validez le résultat.<br /><br />Aucune invention, seulement votre vérité.</>, icon: <PenTool className="w-6 h-6" /> },
-              { step: '3', title: 'Partagez', desc: 'Invitez vos proches à enrichir cet espace avec leurs souvenirs, leurs mots, leurs images.', icon: <Share2 className="w-6 h-6" /> },
-              { step: '4', title: 'Ancrez', desc: 'Reliez le numérique au monde physique grâce à des supports discrets : puce NFC ou plaque QR personnalisée.', icon: <Box className="w-6 h-6" /> },
-            ].map((item, idx) => (
-              <div key={idx} className="relative group text-center md:text-left p-6 rounded-3xl hover:bg-memoir-bg/50 transition-colors duration-500">
-                <div className="w-16 h-16 mb-6 bg-memoir-bg rounded-2xl flex items-center justify-center text-memoir-gold shadow-sm group-hover:bg-memoir-gold group-hover:text-white transition-all duration-500 scale-105 group-hover:-rotate-6 mx-auto md:mx-0">
-                  {item.icon ? item.icon : <span className="font-serif text-2xl font-bold">{item.step}</span>}
-                </div>
-                <h3 className="text-memoir-blue text-xl font-bold mb-3">{item.step} — {item.title}</h3>
-                <p className="text-memoir-blue/60 text-base leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* En Confiance Merged Block */}
-
-
-        </div>
-      </section>
 
       {/* Usages / Quel lien souhaitez-vous préserver */}
       <section className="relative bg-memoir-bg py-32 px-6 text-center" id="usages">
@@ -274,6 +235,43 @@ export default function HomePage() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* Accompagnement / Comment ça marche */}
+      <section className="bg-white py-20 px-6 relative overflow-hidden" id="comment-ca-marche">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-memoir-neon/20 to-transparent" />
+
+        <div className="max-w-7xl mx-auto">
+          {/* Header Section */}
+          <div className="text-center mb-20 space-y-4">
+            <h2 className="text-memoir-blue text-3xl md:text-5xl font-serif italic uppercase tracking-wider">
+              Un accompagnement <br /> <span className="text-memoir-gold">en toute simplicité</span><span className="text-memoir-neon">.</span>
+            </h2>
+            <p className="text-memoir-blue/50 text-lg max-w-2xl mx-auto font-light leading-relaxed">
+              Laissez-vous guider par un parcours clair, intuitif et sécurisé.
+              Pensé pour vous permettre d’écrire, de rassembler et de transmettre, en toute sérénité.
+            </p>
+          </div>
+
+          {/* Steps Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24">
+            {[
+              { step: '1', title: 'Quel est votre projet ?', desc: 'Honorer une personne disparue, célébrer un vivant ou raconter un objet. Sélectionnez le format adapté à votre intention.', icon: null },
+              { step: '2', title: 'Racontez avec Alma', desc: <>Répondez à quelques questions simples. <strong className="text-memoir-blue font-bold">Alma, notre assistante IA</strong>, transforme vos réponses en un récit au ton juste : sobre, narratif ou poétique. Vous choisissez le style. Vous validez le résultat.<br /><br />Aucune invention, seulement votre vérité.</>, icon: <PenTool className="w-6 h-6" /> },
+              { step: '3', title: 'Partagez', desc: 'Invitez vos proches à enrichir cet espace avec leurs souvenirs, leurs mots, leurs images.', icon: <Share2 className="w-6 h-6" /> },
+              { step: '4', title: 'Ancrez', desc: 'Reliez le numérique au monde physique grâce à des supports discrets : puce NFC ou plaque QR personnalisée.', icon: <Box className="w-6 h-6" /> },
+            ].map((item, idx) => (
+              <div key={idx} className="relative group text-center md:text-left p-6 rounded-3xl hover:bg-memoir-bg/50 transition-colors duration-500">
+                <div className="w-16 h-16 mb-6 bg-memoir-bg rounded-2xl flex items-center justify-center text-memoir-gold shadow-sm group-hover:bg-memoir-gold group-hover:text-white transition-all duration-500 scale-105 group-hover:-rotate-6 mx-auto md:mx-0">
+                  {item.icon ? item.icon : <span className="font-serif text-2xl font-bold">{item.step}</span>}
+                </div>
+                <h3 className="text-memoir-blue text-xl font-bold mb-3">{item.step} — {item.title}</h3>
+                <p className="text-memoir-blue/60 text-base leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 
