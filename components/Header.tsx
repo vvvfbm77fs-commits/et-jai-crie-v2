@@ -71,22 +71,24 @@ export default function Header() {
                 </div>
 
                 {/* Mobile Header Layout */}
-                <div className="md:hidden flex items-center justify-between py-2">
-                    <Link href="/" className="relative w-12 h-12 cursor-pointer hover:opacity-90 transition-opacity">
-                        <Image
-                            src="/logo.png"
-                            alt="Commun Vivant"
-                            fill
-                            className="object-cover rounded-full border border-memoir-gold/20 shadow-sm"
-                        />
+                <div className="md:hidden flex items-center justify-between h-14 relative">
+                    <Link href="/" className="relative z-50">
+                        <div className="absolute top-1/2 -translate-y-1/2 left-0 mt-2 w-24 h-24 bg-memoir-bg rounded-full p-1 shadow-[0_5px_15px_rgba(28,84,98,0.5)] border-2 border-white/10">
+                            <Image
+                                src="/logo.png"
+                                alt="Commun Vivant"
+                                fill
+                                className="object-cover rounded-full"
+                            />
+                        </div>
                     </Link>
 
                     <button
                         onClick={toggleMenu}
-                        className="text-memoir-gold p-2 focus:outline-none"
+                        className="text-memoir-gold p-2 focus:outline-none relative z-50"
                         aria-label="Toggle menu"
                     >
-                        {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                        {isMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
                     </button>
                 </div>
             </div>
