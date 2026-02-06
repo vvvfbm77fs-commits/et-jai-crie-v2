@@ -195,16 +195,22 @@ export default function TarifsPage() {
                         </table>
                     </div>
 
-                    <div className="text-center mt-12">
-                        <p className="text-memoir-blue/60 mb-4">Vous avez une question spécifique ?</p>
-                        <Link href="/faq" className="inline-flex items-center gap-2 text-memoir-gold font-bold hover:underline">
-                            Consulter la FAQ complète <ArrowRight className="w-4 h-4" />
-                        </Link>
-                    </div>
-
                 </div>
 
-            </main>
+                <div className="mt-16 bg-memoir-blue/5 rounded-3xl p-8 text-center border border-memoir-blue/10">
+                    <h3 className="text-xl font-serif italic text-memoir-blue mb-2">Du sur mesure</h3>
+                    <p className="text-memoir-blue/60 mb-6 max-w-xl mx-auto">
+                        Besoin d’une offre sur mesure ?<br />
+                        Contactez-nous pour ajuster au plus près de vos besoins et de vos envies.
+                    </p>
+                    <Link href="mailto:contact@etjaicrie.fr" className="inline-block bg-white text-memoir-blue px-8 py-3 rounded-full font-bold shadow-sm hover:shadow-md transition-all border border-memoir-blue/10">
+                        Nous contacter
+                    </Link>
+                </div>
+
         </div>
+
+            </main >
+        </div >
     );
 }

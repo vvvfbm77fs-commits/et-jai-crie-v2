@@ -105,7 +105,7 @@ export default function HomePage() {
       </section>
 
       {/* Accompagnement / Comment ça marche */}
-      <section className="bg-white py-32 px-6 relative overflow-hidden" id="comment-ca-marche">
+      <section className="bg-white py-20 px-6 relative overflow-hidden" id="comment-ca-marche">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-memoir-neon/20 to-transparent" />
 
         <div className="max-w-7xl mx-auto">
@@ -240,60 +240,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Pack Transmission */}
-      <section className="bg-white py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-memoir-blue rounded-[40px] p-10 md:p-20 relative overflow-hidden text-center text-white">
-            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
 
-            <div className="relative z-10 max-w-3xl mx-auto space-y-8">
-              <span className="inline-block px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold tracking-widest uppercase border border-white/20">Offre Spéciale</span>
-              <h2 className="text-4xl md:text-6xl font-serif italic">Pack Transmission</h2>
-              <p className="text-xl text-white/80 font-light leading-relaxed">
-                Racontez l'histoire d'une personne <strong className="text-memoir-gold">ET</strong> de ses objets précieux dans un récit unifié.
-                <br />Idéal pour héritage familial, déménagement ou transmission anticipée.
-              </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8 text-left max-w-2xl mx-auto">
-                <div className="bg-white/10 p-6 rounded-2xl border border-white/10 hover:bg-white/20 transition-colors">
-                  <h3 className="text-xl font-bold mb-2">Pack Essentiel</h3>
-                  <p className="text-3xl font-serif italic mb-4">109€ <span className="text-sm font-sans opacity-60 line-through">129€</span></p>
-                  <ul className="space-y-2 text-sm opacity-80 mb-6">
-                    <li>✓ 1 Mémoire de Personne</li>
-                    <li>✓ 5 Mémoires d'Objets</li>
-                    <li>✓ Plaque QR + 5 Puces NFC</li>
-                  </ul>
-                  <Link href="/create?context=transmission" className="block w-full py-3 text-center bg-white text-memoir-blue font-bold rounded-full hover:scale-105 transition-transform">Choisir ce pack</Link>
-                </div>
-                <div className="bg-memoir-gold/20 p-6 rounded-2xl border border-memoir-gold/30 hover:bg-memoir-gold/30 transition-colors relative overflow-hidden">
-                  <div className="absolute top-0 right-0 bg-memoir-gold text-memoir-blue text-[10px] font-bold px-3 py-1 rounded-bl-xl">Best Seller</div>
-                  <h3 className="text-xl font-bold mb-2 text-memoir-gold">Pack Étendu</h3>
-                  <p className="text-3xl font-serif italic mb-4 text-white">139€ <span className="text-sm font-sans opacity-60 line-through">179€</span></p>
-                  <ul className="space-y-2 text-sm opacity-80 mb-6">
-                    <li>✓ 1 Mémoire de Personne</li>
-                    <li>✓ 10 Mémoires d'Objets</li>
-                    <li>✓ Plaque QR + 10 Puces NFC</li>
-                  </ul>
-                  <Link href="/create?context=transmission_extended" className="block w-full py-3 text-center bg-memoir-gold text-memoir-blue font-bold rounded-full hover:scale-105 transition-transform">Choisir ce pack</Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Numérique Seul */}
-      <section className="bg-memoir-bg py-20 px-6 text-center">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <h2 className="text-memoir-blue text-2xl font-serif italic">Vous n'avez pas besoin de support physique ?</h2>
-          <div className="bg-white p-8 rounded-3xl border border-memoir-blue/5 shadow-sm inline-block max-w-xl w-full">
-            <h3 className="text-xl font-bold text-memoir-blue mb-2">Mémoire Numérique Seule</h3>
-            <p className="text-4xl font-serif text-memoir-blue mb-4">69€ <span className="text-xl text-memoir-blue/40 line-through">79€</span></p>
-            <p className="text-memoir-blue/60 mb-6 text-sm">Tout le contenu complet, accessible par lien partageable.<br />Sans plaque ni puce.</p>
-            <Link href="/create?context=digital_only" className="inline-block px-8 py-3 rounded-full border border-memoir-blue text-memoir-blue font-bold hover:bg-memoir-blue hover:text-white transition-all">Créer une mémoire numérique</Link>
-          </div>
-        </div>
-      </section>
 
       {/* IA Alma */}
       <section className="bg-white py-32 px-6">
