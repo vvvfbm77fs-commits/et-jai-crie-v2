@@ -50,8 +50,9 @@ const EXAMPLES_CONFIG: Record<string, {
     }
 };
 
-export default function GenericExamplePage({ params }: { params: { slug: string } }) {
-    const slug = params.slug as ExampleType;
+export default async function GenericExamplePage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug: rawSlug } = await params;
+    const slug = rawSlug as ExampleType;
 
     if (!['funeraire', 'vivant', 'objet'].includes(slug)) {
         return notFound();
