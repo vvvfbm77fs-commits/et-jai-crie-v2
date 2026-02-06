@@ -279,57 +279,6 @@ export default function HomePage() {
 
 
 
-      {/* IA Alma */}
-      <section className="bg-white py-32 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-tr from-memoir-gold/20 to-memoir-neon/20 rounded-full blur-[100px]" />
-            <div className="relative z-10 bg-white/80 backdrop-blur-xl p-8 rounded-[40px] border border-white/50 shadow-2xl skew-y-3">
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-memoir-blue text-white rounded-full flex items-center justify-center font-serif italic text-xl">A</div>
-                  <div>
-                    <p className="text-sm uppercase tracking-widest text-memoir-blue/40 font-bold">L'Assistant</p>
-                    <p className="font-serif text-xl text-memoir-blue">Alma</p>
-                  </div>
-                </div>
-                <p className="text-lg font-serif italic text-memoir-blue/80">"Racontez-moi simplement ce qui vous vient. Je me charge de trouver les mots justes."</p>
-                <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
-                  <div className="h-full w-2/3 bg-memoir-gold rounded-full animate-pulse" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-8">
-            <span className="inline-block px-4 py-1.5 bg-memoir-blue/5 text-memoir-blue rounded-full text-xs font-bold tracking-widest uppercase">Intelligence Artificielle</span>
-            <h2 className="text-4xl md:text-5xl font-serif italic text-memoir-blue">Une IA au service de <br /><span className="text-memoir-gold">votre mémoire</span>.</h2>
-            <p className="text-memoir-blue/60 text-lg leading-relaxed">
-              Pas de page blanche intimidante. <strong>Alma</strong> vous guide pas à pas et compose un récit digne à partir de vos réponses.
-              L'intelligence artificielle au service de l'authenticité humaine.
-            </p>
-
-            <div className="space-y-6">
-              {[
-                { title: "Trois tonalités possibles", desc: "Sobre et factuel, narratif et humain, ou poétique et sensible." },
-                { title: "Respect absolu de vos mots", desc: "Aucune invention, aucun artifice. Seule votre vérité compte." },
-                { title: "Vous validez avant publication", desc: "Relisez, ajustez, modifiez jusqu'à ce que ce soit juste." }
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-memoir-gold/10 flex items-center justify-center text-memoir-gold shrink-0">
-                    <CheckCircle className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-memoir-blue">{item.title}</h4>
-                    <p className="text-memoir-blue/60 text-sm">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Du numérique au physique */}
       <section className="bg-memoir-bg py-32 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -386,6 +335,57 @@ export default function HomePage() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* IA Alma */}
+      <section className="bg-white py-32 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-tr from-memoir-gold/20 to-memoir-neon/20 rounded-full blur-[100px]" />
+            <div className="relative z-10 bg-white/80 backdrop-blur-xl p-8 rounded-[40px] border border-white/50 shadow-2xl skew-y-3">
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-memoir-blue text-white rounded-full flex items-center justify-center font-serif italic text-xl">A</div>
+                  <div>
+                    <p className="text-sm uppercase tracking-widest text-memoir-blue/40 font-bold">L'Assistant</p>
+                    <p className="font-serif text-xl text-memoir-blue">Alma</p>
+                  </div>
+                </div>
+                <p className="text-lg font-serif italic text-memoir-blue/80">"Racontez-moi simplement ce qui vous vient. Je me charge de trouver les mots justes."</p>
+                <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
+                  <div className="h-full w-2/3 bg-memoir-gold rounded-full animate-pulse" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-8">
+            <span className="inline-block px-4 py-1.5 bg-memoir-blue/5 text-memoir-blue rounded-full text-xs font-bold tracking-widest uppercase">Intelligence Artificielle</span>
+            <h2 className="text-4xl md:text-5xl font-serif italic text-memoir-blue">Une IA au service de <br /><span className="text-memoir-gold">votre mémoire</span>.</h2>
+            <p className="text-memoir-blue/60 text-lg leading-relaxed">
+              Pas de page blanche intimidante. <strong>Alma</strong> vous guide pas à pas et compose un récit digne à partir de vos réponses.
+              L'intelligence artificielle au service de l'authenticité humaine.
+            </p>
+
+            <div className="space-y-6">
+              {[
+                { title: "Trois tonalités possibles", desc: "Sobre et factuel, narratif et humain, ou poétique et sensible." },
+                { title: "Respect absolu de vos mots", desc: "Aucune invention, aucun artifice. Seule votre vérité compte." },
+                { title: "Vous validez avant publication", desc: "Relisez, ajustez, modifiez jusqu'à ce que ce soit juste." }
+              ].map((item, i) => (
+                <div key={i} className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-memoir-gold/10 flex items-center justify-center text-memoir-gold shrink-0">
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-memoir-blue">{item.title}</h4>
+                    <p className="text-memoir-blue/60 text-sm">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
