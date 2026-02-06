@@ -161,79 +161,116 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {/* Carte 1 : Funéraire */}
-            <div className="bg-white rounded-[32px] p-8 flex flex-col items-center text-left shadow-lg border border-white/20 relative group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-              <div className="w-16 h-16 mb-6 bg-memoir-blue/5 rounded-2xl flex items-center justify-center text-memoir-blue group-hover:bg-memoir-blue group-hover:text-white transition-colors">
-                <Flower2 className="w-8 h-8" />
+            <div className="bg-white rounded-[32px] overflow-hidden flex flex-col text-left shadow-lg border border-white/20 relative group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-52 w-full overflow-hidden">
+                <Image
+                  src="/rodion-kutsaiev-87-wtPtg6Pg-unsplash.jpg"
+                  alt="Hommage funéraire"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-memoir-blue/20 group-hover:bg-transparent transition-colors duration-500" />
+                <div className="absolute bottom-4 left-6 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-sm">
+                  <Flower2 className="w-6 h-6 text-memoir-blue" />
+                </div>
               </div>
-              <h3 className="text-2xl font-serif italic text-memoir-blue mb-2">Hommage funéraire</h3>
-              <p className="text-memoir-blue/60 text-sm mb-6 min-h-[60px]">Un espace de mémoire partagé pour honorer une personne disparue.</p>
 
-              <div className="mb-6 w-full pt-6 border-t border-memoir-blue/5">
-                <p className="text-4xl font-bold text-memoir-blue mb-1">79€</p>
-                <p className="text-xs text-memoir-blue/40 uppercase tracking-wide">Plaque QR incluse • Hébergement 5 ans</p>
+              <div className="p-8 flex flex-col flex-grow pt-6">
+                <h3 className="text-2xl font-serif italic text-memoir-blue mb-2">Hommage funéraire</h3>
+                <p className="text-memoir-blue/60 text-sm mb-6 min-h-[40px]">Un espace de mémoire partagé pour honorer une personne disparue.</p>
+
+                <div className="mb-6 w-full pt-6 border-t border-memoir-blue/5">
+                  <p className="text-4xl font-bold text-memoir-blue mb-1">79€</p>
+                  <p className="text-xs text-memoir-blue/40 uppercase tracking-wide">Plaque QR incluse • Hébergement 5 ans</p>
+                </div>
+
+                <ul className="w-full space-y-3 mb-8 flex-grow">
+                  {["Questionnaire guidé (9 étapes)", "Génération IA personnalisée", "Jusqu'à 15 photos + musique", "Livre d'or illimité", "Contributions (5 personnes)", "Plaque QR élégante incluse"].map((feat, i) => (
+                    <li key={i} className="flex gap-3 text-sm text-memoir-blue/70">
+                      <CheckCircle className="w-4 h-4 text-memoir-gold flex-shrink-0" />
+                      <span className="text-left">{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link href="/create?context=funeral" className="w-full py-4 text-center rounded-full bg-memoir-blue text-white font-bold shadow-lg hover:bg-memoir-blue/90 transition-all">Créer un hommage</Link>
               </div>
-
-              <ul className="w-full space-y-3 mb-8 flex-grow">
-                {["Questionnaire guidé (9 étapes)", "Génération IA personnalisée", "Jusqu'à 15 photos + musique", "Livre d'or illimité", "Contributions (5 personnes)", "Plaque QR élégante incluse"].map((feat, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-memoir-blue/70">
-                    <CheckCircle className="w-4 h-4 text-memoir-gold flex-shrink-0" />
-                    <span className="text-left">{feat}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Link href="/create?context=funeral" className="w-full py-4 text-center rounded-full bg-memoir-blue text-white font-bold shadow-lg hover:bg-memoir-blue/90 transition-all">Créer un hommage</Link>
             </div>
 
             {/* Carte 2 : Vivant */}
-            <div className="bg-gradient-to-br from-white to-memoir-gold/5 rounded-[32px] p-8 flex flex-col items-center text-left shadow-lg border border-memoir-gold/20 relative group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-              <div className="absolute top-0 right-0 bg-memoir-gold text-white text-[10px] uppercase font-bold px-3 py-1 rounded-bl-xl">Nouveau</div>
-              <div className="w-16 h-16 mb-6 bg-memoir-gold/10 rounded-2xl flex items-center justify-center text-memoir-gold group-hover:bg-memoir-gold group-hover:text-white transition-colors">
-                <BookOpen className="w-8 h-8" />
+            <div className="bg-white rounded-[32px] overflow-hidden flex flex-col text-left shadow-lg border border-memoir-gold/20 relative group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="absolute top-4 right-4 z-10 bg-memoir-gold text-white text-[10px] uppercase font-bold px-3 py-1 rounded-full shadow-md">Nouveau</div>
+
+              <div className="relative h-52 w-full overflow-hidden">
+                <Image
+                  src="/apollo-photography-jukKJSr9FcA-unsplash.jpg"
+                  alt="Récit de vie"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-memoir-gold/10 group-hover:bg-transparent transition-colors duration-500" />
+                <div className="absolute bottom-4 left-6 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-sm">
+                  <BookOpen className="w-6 h-6 text-memoir-gold" />
+                </div>
               </div>
-              <h3 className="text-2xl font-serif italic text-memoir-blue mb-2">Récit de vie vivant</h3>
-              <p className="text-memoir-blue/60 text-sm mb-6 min-h-[60px]">Célébrer un parcours de vie dès maintenant, en famille ou entre ami·es.</p>
 
-              <div className="mb-6 w-full pt-6 border-t border-memoir-gold/10">
-                <p className="text-4xl font-bold text-memoir-blue mb-1">79€</p>
-                <p className="text-xs text-memoir-blue/40 uppercase tracking-wide">Plaque QR incluse • Hébergement 5 ans</p>
+              <div className="p-8 flex flex-col flex-grow pt-6">
+                <h3 className="text-2xl font-serif italic text-memoir-blue mb-2">Récit de vie vivant</h3>
+                <p className="text-memoir-blue/60 text-sm mb-6 min-h-[40px]">Célébrer un parcours de vie dès maintenant, en famille ou entre ami·es.</p>
+
+                <div className="mb-6 w-full pt-6 border-t border-memoir-gold/10">
+                  <p className="text-4xl font-bold text-memoir-blue mb-1">79€</p>
+                  <p className="text-xs text-memoir-blue/40 uppercase tracking-wide">Plaque QR incluse • Hébergement 5 ans</p>
+                </div>
+
+                <ul className="w-full space-y-3 mb-8 flex-grow">
+                  {["Questionnaire guidé (9 étapes)", "Génération IA personnalisée", "Jusqu'à 15 photos + musique", "Cœurs et encouragements", "Contributions (5 personnes)", "Plaque QR pour cadre/lieu"].map((feat, i) => (
+                    <li key={i} className="flex gap-3 text-sm text-memoir-blue/70">
+                      <CheckCircle className="w-4 h-4 text-memoir-gold flex-shrink-0" />
+                      <span className="text-left">{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link href="/create?context=living_story" className="w-full py-4 text-center rounded-full bg-memoir-gold text-white font-bold shadow-lg hover:bg-memoir-gold/90 transition-all">Démarrer un récit</Link>
               </div>
-
-              <ul className="w-full space-y-3 mb-8 flex-grow">
-                {["Questionnaire guidé (9 étapes)", "Génération IA personnalisée", "Jusqu'à 15 photos + musique", "Cœurs et encouragements", "Contributions (5 personnes)", "Plaque QR pour cadre/lieu"].map((feat, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-memoir-blue/70">
-                    <CheckCircle className="w-4 h-4 text-memoir-gold flex-shrink-0" />
-                    <span className="text-left">{feat}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Link href="/create?context=living_story" className="w-full py-4 text-center rounded-full bg-memoir-gold text-white font-bold shadow-lg hover:bg-memoir-gold/90 transition-all">Démarrer un récit</Link>
             </div>
 
             {/* Carte 3 : Objet */}
-            <div className="bg-white rounded-[32px] p-8 flex flex-col items-center text-left shadow-lg border border-white/20 relative group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-              <div className="w-16 h-16 mb-6 bg-memoir-neon/5 rounded-2xl flex items-center justify-center text-memoir-neon group-hover:bg-memoir-neon group-hover:text-white transition-colors">
-                <Armchair className="w-8 h-8" />
+            <div className="bg-white rounded-[32px] overflow-hidden flex flex-col text-left shadow-lg border border-white/20 relative group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div className="relative h-52 w-full overflow-hidden">
+                <Image
+                  src="/photo-roman-kraft-unsplash.jpg"
+                  alt="Mémoire d'objet"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-memoir-blue/10 group-hover:bg-transparent transition-colors duration-500" />
+                <div className="absolute bottom-4 left-6 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-sm">
+                  <Armchair className="w-6 h-6 text-memoir-neon" />
+                </div>
               </div>
-              <h3 className="text-2xl font-serif italic text-memoir-blue mb-2">Mémoire d'objet</h3>
-              <p className="text-memoir-blue/60 text-sm mb-6 min-h-[60px]">Révélez ce qu’il représente, conservez son origine, transmettez son héritage.</p>
 
-              <div className="mb-6 w-full pt-6 border-t border-memoir-blue/5">
-                <p className="text-4xl font-bold text-memoir-blue mb-1">15€</p>
-                <p className="text-xs text-memoir-blue/40 uppercase tracking-wide">Puce NFC incluse • Hébergement 5 ans</p>
+              <div className="p-8 flex flex-col flex-grow pt-6">
+                <h3 className="text-2xl font-serif italic text-memoir-blue mb-2">Mémoire d'objet</h3>
+                <p className="text-memoir-blue/60 text-sm mb-6 min-h-[40px]">Révélez ce qu’il représente, conservez son origine, transmettez son héritage.</p>
+
+                <div className="mb-6 w-full pt-6 border-t border-memoir-blue/5">
+                  <p className="text-4xl font-bold text-memoir-blue mb-1">15€</p>
+                  <p className="text-xs text-memoir-blue/40 uppercase tracking-wide">Puce NFC incluse • Hébergement 5 ans</p>
+                </div>
+
+                <ul className="w-full space-y-3 mb-8 flex-grow">
+                  {["Questionnaire simplifié", "Génération IA (sobre/narratif)", "Jusqu'à 5 photos", "Livre d'or pour témoignages", "Puce NFC anti-métal incluse", "Tarifs dégressifs (dès 3 objets)"].map((feat, i) => (
+                    <li key={i} className="flex gap-3 text-sm text-memoir-blue/70">
+                      <CheckCircle className="w-4 h-4 text-memoir-neon flex-shrink-0" />
+                      <span className="text-left">{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link href="/create?context=object_memory" className="w-full py-4 text-center rounded-full bg-memoir-neon text-white font-bold shadow-lg hover:bg-white hover:text-memoir-neon border border-transparent hover:border-memoir-neon transition-all">Immortaliser un objet</Link>
               </div>
-
-              <ul className="w-full space-y-3 mb-8 flex-grow">
-                {["Questionnaire simplifié", "Génération IA (sobre/narratif)", "Jusqu'à 5 photos", "Livre d'or pour témoignages", "Puce NFC anti-métal incluse", "Tarifs dégressifs (dès 3 objets)"].map((feat, i) => (
-                  <li key={i} className="flex gap-3 text-sm text-memoir-blue/70">
-                    <CheckCircle className="w-4 h-4 text-memoir-neon flex-shrink-0" />
-                    <span className="text-left">{feat}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Link href="/create?context=object_memory" className="w-full py-4 text-center rounded-full bg-memoir-neon text-white font-bold shadow-lg hover:bg-white hover:text-memoir-neon border border-transparent hover:border-memoir-neon transition-all">Immortaliser un objet</Link>
             </div>
 
           </div>
