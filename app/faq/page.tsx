@@ -218,7 +218,7 @@ export default function FAQPage() {
                     <div className="max-w-xl mx-auto relative">
                         <input
                             type="text"
-                            placeholder="Rechercher une réponse..."
+                            placeholder="Rechercher votre question..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full pl-12 pr-6 py-4 rounded-full border border-memoir-gold/20 focus:border-memoir-gold focus:ring-2 focus:ring-memoir-gold/20 outline-none shadow-sm transition-all"
@@ -232,8 +232,8 @@ export default function FAQPage() {
                     <button
                         onClick={() => setActiveCategory(null)}
                         className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === null
-                                ? 'bg-memoir-blue text-white shadow-md'
-                                : 'bg-white text-memoir-blue/60 hover:bg-memoir-blue/5'
+                            ? 'bg-memoir-blue text-white shadow-md'
+                            : 'bg-white text-memoir-blue/60 hover:bg-memoir-blue/5'
                             }`}
                     >
                         Tout voir
@@ -243,8 +243,8 @@ export default function FAQPage() {
                             key={section.category}
                             onClick={() => setActiveCategory(section.category)}
                             className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === section.category
-                                    ? 'bg-memoir-blue text-white shadow-md'
-                                    : 'bg-white text-memoir-blue/60 hover:bg-memoir-blue/5'
+                                ? 'bg-memoir-blue text-white shadow-md'
+                                : 'bg-white text-memoir-blue/60 hover:bg-memoir-blue/5'
                                 }`}
                         >
                             {section.category}
