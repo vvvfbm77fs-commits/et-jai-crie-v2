@@ -74,7 +74,7 @@ export default function TarifsPage() {
                                 Le plus populaire
                             </div>
 
-                            <h2 className="text-2xl font-serif italic mb-2">Mémoire de Personne</h2>
+                            <h2 className="text-2xl font-serif italic mb-2 pr-32">Mémoire de Personne</h2>
                             <div className="flex items-baseline gap-1 my-6">
                                 <span className="text-5xl font-bold text-white">79€</span>
                                 <span className="text-white/40">/ unique</span>
