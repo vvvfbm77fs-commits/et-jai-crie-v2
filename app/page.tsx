@@ -123,7 +123,7 @@ export default function HomePage() {
           {/* Steps Grid */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24">
             {[
-              { step: '1', title: 'Choisissez l’usage', desc: 'Funéraire, vivant ou objet : commencez là où vous êtes.', icon: null },
+              { step: '1', title: 'Quel est votre projet ?', desc: 'Honorer une personne disparue, célébrer un vivant ou raconter un objet. Sélectionnez le format adapté à votre intention.', icon: null },
               { step: '2', title: 'Racontez avec Alma', desc: <>Répondez à quelques questions simples. <strong className="text-memoir-blue font-bold">Alma, notre assistante IA</strong>, transforme vos réponses en un récit au ton juste : sobre, narratif ou poétique. Vous choisissez le style. Vous validez le résultat.<br /><br />Aucune invention, seulement votre vérité.</>, icon: <PenTool className="w-6 h-6" /> },
               { step: '3', title: 'Partagez', desc: 'Invitez vos proches à enrichir cet espace avec leurs souvenirs, leurs mots, leurs images.', icon: <Share2 className="w-6 h-6" /> },
               { step: '4', title: 'Ancrez', desc: 'Reliez le numérique au monde physique grâce à des supports discrets : puce NFC ou plaque QR personnalisée.', icon: <Box className="w-6 h-6" /> },
