@@ -22,8 +22,8 @@ export default function Header() {
                     <div className="flex items-center gap-12">
                         <Link href="/" className="cursor-pointer hover:opacity-90 transition-opacity">
                             <Image
-                                src="/logo.jpg"
-                                alt="Et j'ai crié"
+                                src="/logo.png"
+                                alt="Commun Vivant"
                                 width={100}
                                 height={100}
                                 className="w-20 h-20 rounded-full shadow-lg border border-memoir-gold/20"
@@ -70,8 +70,8 @@ export default function Header() {
                 <div className="md:hidden flex items-center justify-between py-2">
                     <Link href="/" className="relative w-12 h-12 cursor-pointer hover:opacity-90 transition-opacity">
                         <Image
-                            src="/logo.jpg"
-                            alt="Et j'ai crié"
+                            src="/logo.png"
+                            alt="Commun Vivant"
                             fill
                             className="object-cover rounded-full border border-memoir-gold/20 shadow-sm"
                         />

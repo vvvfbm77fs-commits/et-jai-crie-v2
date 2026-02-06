@@ -129,8 +129,8 @@ function LoginContent() {
         <div className="text-center mb-10">
           <Link href="/" className="inline-block transition-transform hover:scale-105">
             <Image
-              src="/logo.jpg"
-              alt="Et j'ai crié"
+              src="/logo.png"
+              alt="Commun Vivant"
               width={100}
               height={100}
               className="w-24 h-24 mx-auto mb-6 rounded-full shadow-xl border-2 border-white"

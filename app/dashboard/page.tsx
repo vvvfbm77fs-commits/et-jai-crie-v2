@@ -47,7 +47,7 @@ export default function DashboardPage() {
             <header className="bg-white border-b border-[#C9A24D]/20 sticky top-0 z-40 shadow-sm">
                 <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
                     <Link href="/" className="flex items-center gap-3">
-                        <img src="/logo.jpg" alt="Commun Vivant" className="w-12 h-12 rounded-full" />
+                        <img src="/logo.png" alt="Commun Vivant" className="w-12 h-12 rounded-full" />
                         <span className="text-xl text-[#0F2A44] font-medium" style={{ fontFamily: 'var(--font-calli), cursive', fontStyle: 'italic' }}>
                             Commun Vivant
                         </span>

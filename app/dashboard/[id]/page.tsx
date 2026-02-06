@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import Link from 'next/link';
 import {
     Users,
     Palette,
@@ -12,6 +13,7 @@ import {
     Share2,
     ExternalLink,
     ChevronRight,
+    ChevronLeft,
     Clock,
     Eye,
     CheckCircle2,
@@ -173,8 +175,8 @@ export default function MemorialDashboard() {
                             key={step.id}
                             onClick={() => router.push(step.href)}
                             className={`bg-white p-8 rounded-3xl border transition-all duration-300 cursor-pointer group relative overflow-hidden flex flex-col h-full ${step.important
-                                    ? 'border-memoir-gold/40 shadow-xl shadow-memoir-gold/5'
-                                    : 'border-memoir-blue/5 shadow-sm hover:shadow-xl hover:border-memoir-gold/30'
+                                ? 'border-memoir-gold/40 shadow-xl shadow-memoir-gold/5'
+                                : 'border-memoir-blue/5 shadow-sm hover:shadow-xl hover:border-memoir-gold/30'
                                 }`}
                         >
                             <div className="flex justify-between items-start mb-6">

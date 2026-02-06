@@ -5,11 +5,11 @@ import PhotoGallery from '@/components/PhotoGallery';
 interface GalleryBlockProps {
   medias: any[];
   template: any;
-  photoFilter: string;
+  photoFilter?: string; // Made optional
   isLightBg: boolean;
 }
 
-export default function GalleryBlock({ medias, template, photoFilter, isLightBg }: GalleryBlockProps) {
+export default function GalleryBlock({ medias, template, photoFilter = 'original', isLightBg }: GalleryBlockProps) {
   if (!medias || medias.length === 0) return null;
 
   return (
