@@ -164,7 +164,7 @@ export default function HomePage() {
             <div className="bg-white rounded-[32px] overflow-hidden flex flex-col text-left shadow-lg border border-white/20 relative group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-52 w-full overflow-hidden">
                 <Image
-                  src="/rodion-kutsaiev-87-wtPtg6Pg-unsplash.jpg"
+                  src="/image-site4.png"
                   alt="Hommage funéraire"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -203,7 +203,7 @@ export default function HomePage() {
 
               <div className="relative h-52 w-full overflow-hidden">
                 <Image
-                  src="/apollo-photography-jukKJSr9FcA-unsplash.jpg"
+                  src="/photo-roman-kraft-unsplash.jpg"
                   alt="Récit de vie"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -240,7 +240,7 @@ export default function HomePage() {
             <div className="bg-white rounded-[32px] overflow-hidden flex flex-col text-left shadow-lg border border-white/20 relative group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-52 w-full overflow-hidden">
                 <Image
-                  src="/photo-roman-kraft-unsplash.jpg"
+                  src="/marlon-corona-1tMc27CFUbA-unsplash.jpg"
                   alt="Mémoire d'objet"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
