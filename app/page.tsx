@@ -67,6 +67,13 @@ export default function HomePage() {
               </Link>
             </div>
 
+            <div className="flex items-center gap-3 pt-6 animate-fade-in delay-200">
+              <span className="text-2xl">💡</span>
+              <p className="text-memoir-blue/60 text-sm font-medium italic max-w-md text-left">
+                Accompagné·e par <strong className="text-memoir-gold">Alma</strong>, une IA respectueuse qui transforme vos réponses en récit au ton juste.
+              </p>
+            </div>
+
 
           </div>
 
@@ -117,9 +124,9 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24">
             {[
               { step: '1', title: 'Choisissez l’usage', desc: 'Funéraire, vivant ou objet : commencez là où vous êtes.', icon: null },
-              { step: '2', title: 'Racontez', desc: 'Écrivez librement ou laissez-vous accompagner pas à pas.', icon: <PenTool className="w-6 h-6" /> },
+              { step: '2', title: 'Racontez avec Alma', desc: <>Répondez à quelques questions simples. <strong className="text-memoir-blue font-bold">Alma, notre assistante IA</strong>, transforme vos réponses en un récit au ton juste : sobre, narratif ou poétique. Vous choisissez le style. Vous validez le résultat.<br /><br />Aucune invention, seulement votre vérité.</>, icon: <PenTool className="w-6 h-6" /> },
               { step: '3', title: 'Partagez', desc: 'Invitez vos proches à enrichir cet espace avec leurs souvenirs, leurs mots, leurs images.', icon: <Share2 className="w-6 h-6" /> },
-              { step: '4', title: 'Ancrez', desc: 'Reliez le numérique au monde physique grâce à des supports gravés, QR ou NFC.', icon: <Box className="w-6 h-6" /> },
+              { step: '4', title: 'Ancrez', desc: 'Reliez le numérique au monde physique grâce à des supports discrets : puce NFC ou plaque QR personnalisée.', icon: <Box className="w-6 h-6" /> },
             ].map((item, idx) => (
               <div key={idx} className="relative group text-center md:text-left p-6 rounded-3xl hover:bg-memoir-bg/50 transition-colors duration-500">
                 <div className="w-16 h-16 mb-6 bg-memoir-bg rounded-2xl flex items-center justify-center text-memoir-gold shadow-sm group-hover:bg-memoir-gold group-hover:text-white transition-all duration-500 scale-105 group-hover:-rotate-6 mx-auto md:mx-0">
