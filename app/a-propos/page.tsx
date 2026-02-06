@@ -13,16 +13,18 @@ export default function AproposPage() {
 
                 {/* Hero Section */}
                 <section className="relative py-24 px-6 overflow-hidden">
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-memoir-gold/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+                    {/* Pink/Neon Blob added for 'gai' effect */}
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-memoir-neon/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 animate-pulse" />
                     <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-memoir-blue/5 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2" />
 
                     <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
                         <span className="inline-block px-4 py-1.5 bg-memoir-gold/10 text-memoir-gold rounded-full text-xs font-bold tracking-widest uppercase border border-memoir-gold/20">
-                            Notre Mission
+                            L'histoire de commun vivant
                         </span>
                         <h1 className="text-4xl md:text-6xl font-serif italic text-memoir-blue">
                             Pour ceux qui veulent <br />
                             <span className="text-memoir-gold">transmettre ce qui compte</span>
+                            <span className="text-memoir-neon">.</span>
                         </h1>
                     </div>
                 </section>
@@ -52,7 +54,7 @@ export default function AproposPage() {
                                 color: "text-memoir-blue"
                             }
                         ].map((item, i) => (
-                            <div key={i} className="bg-white p-8 rounded-2xl shadow-sm border border-memoir-blue/5 hover:shadow-md transition-all">
+                            <div key={i} className="bg-white p-8 rounded-2xl shadow-sm border border-memoir-blue/5 hover:shadow-md transition-all group hover:border-memoir-neon/20">
                                 <item.icon className={`w-8 h-8 mb-4 ${item.color}`} />
                                 <p className="text-memoir-blue/80 leading-relaxed font-medium">
                                     {item.text}
@@ -61,14 +63,20 @@ export default function AproposPage() {
                         ))}
                     </div>
                     <div className="text-center mt-12">
-                        <h3 className="text-2xl font-serif italic text-memoir-blue">Commun Vivant existe pour vous.</h3>
+                        <h3 className="text-2xl font-serif italic text-memoir-blue">
+                            Commun Vivant existe pour vous
+                            <span className="text-memoir-neon">.</span>
+                        </h3>
                     </div>
                 </section>
 
                 {/* Comment c'est né */}
                 <section className="py-20 px-6 bg-white relative">
                     <div className="max-w-3xl mx-auto space-y-8">
-                        <h2 className="text-3xl font-serif italic text-memoir-blue mb-8">Comment c'est né</h2>
+                        <h2 className="text-3xl font-serif italic text-memoir-blue mb-8">
+                            Comment c'est né
+                            <span className="text-memoir-neon">.</span>
+                        </h2>
 
                         <div className="prose prose-lg text-memoir-blue/70">
                             <p>
@@ -87,9 +95,12 @@ export default function AproposPage() {
                             <p>
                                 Un ami m'a dit : "Tu devrais écrire ces histoires."
                             </p>
-                            <div className="bg-memoir-bg p-8 rounded-2xl border-l-4 border-memoir-gold my-8 italic text-memoir-blue font-serif text-xl border-y border-r border-memoir-blue/5">
-                                "J'ai compris que les objets ont une mémoire, les personnes aussi.
-                                Et que cette mémoire mérite mieux qu'un post Facebook qui disparaît dans le flux."
+                            <div className="bg-memoir-bg p-8 rounded-2xl border-l-4 border-memoir-gold my-8 italic text-memoir-blue font-serif text-xl border-y border-r border-memoir-blue/5 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-memoir-neon/5 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2" />
+                                <span className="relative z-10">
+                                    "J'ai compris que les objets ont une mémoire, les personnes aussi.
+                                    Et que cette mémoire mérite mieux qu'un post Facebook qui disparaît dans le flux."
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -101,18 +112,24 @@ export default function AproposPage() {
 
                     <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
                         <div>
-                            <h2 className="text-3xl md:text-5xl font-serif italic mb-6">Ce que Commun Vivant vous offre</h2>
+                            <h2 className="text-3xl md:text-5xl font-serif italic mb-6">
+                                Ce que Commun Vivant vous offre
+                                <span className="text-memoir-neon">.</span>
+                            </h2>
                             <p className="text-xl text-white/80 mb-8 font-light">Un espace digne pour transmettre ce qui compte.</p>
 
                             <div className="space-y-4 mb-8">
-                                <div className="flex items-center gap-3 text-white/40 line-through decoration-white/40">
-                                    <XCircle className="w-5 h-5 flex-shrink-0" /> Pas un CV
+                                <div className="flex items-center gap-3 text-white/40 line-through decoration-white/40 px-4 py-2 bg-white/5 rounded-full w-fit">
+                                    <XCircle className="w-5 h-5 flex-shrink-0 text-memoir-neon opacity-70" />
+                                    <span>Pas un CV</span>
                                 </div>
-                                <div className="flex items-center gap-3 text-white/40 line-through decoration-white/40">
-                                    <XCircle className="w-5 h-5 flex-shrink-0" /> Pas un faire-part numérique
+                                <div className="flex items-center gap-3 text-white/40 line-through decoration-white/40 px-4 py-2 bg-white/5 rounded-full w-fit">
+                                    <XCircle className="w-5 h-5 flex-shrink-0 text-memoir-neon opacity-70" />
+                                    <span>Pas un faire-part numérique</span>
                                 </div>
-                                <div className="flex items-center gap-3 text-white/40 line-through decoration-white/40">
-                                    <XCircle className="w-5 h-5 flex-shrink-0" /> Pas un réseau social
+                                <div className="flex items-center gap-3 text-white/40 line-through decoration-white/40 px-4 py-2 bg-white/5 rounded-full w-fit">
+                                    <XCircle className="w-5 h-5 flex-shrink-0 text-memoir-neon opacity-70" />
+                                    <span>Pas un réseau social</span>
                                 </div>
                             </div>
 
@@ -152,24 +169,26 @@ export default function AproposPage() {
                 {/* Pourquoi le nom */}
                 <section className="py-24 px-6 bg-memoir-bg">
                     <div className="max-w-4xl mx-auto text-center space-y-12">
-                        <h2 className="text-3xl font-serif italic text-memoir-blue">Pourquoi "Commun Vivant" ?</h2>
+                        <h2 className="text-3xl font-serif italic text-memoir-blue">
+                            Pourquoi "Commun Vivant" <span className="text-memoir-neon">?</span>
+                        </h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <div className="space-y-4">
-                                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-memoir-gold">
+                                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-memoir-gold hover:text-memoir-neon transition-colors">
                                     <Share2 className="w-8 h-8" />
                                 </div>
                                 <h3 className="font-bold text-memoir-blue">La mémoire se partage</h3>
                                 <p className="text-sm text-memoir-blue/60">Elle n'appartient pas qu'à une seule personne. Elle vit entre nous.</p>
                             </div>
                             <div className="space-y-4">
-                                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-memoir-gold">
+                                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-memoir-gold hover:text-memoir-neon transition-colors">
                                     <Heart className="w-8 h-8" />
                                 </div>
                                 <h3 className="font-bold text-memoir-blue">Les disparus restent vivants</h3>
                                 <p className="text-sm text-memoir-blue/60">Ils continuent d'exister dans les histoires qu'on raconte d'eux.</p>
                             </div>
                             <div className="space-y-4">
-                                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-memoir-gold">
+                                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm text-memoir-gold hover:text-memoir-neon transition-colors">
                                     <Anchor className="w-8 h-8" />
                                 </div>
                                 <h3 className="font-bold text-memoir-blue">Ce qui nous relie</h3>
@@ -182,7 +201,9 @@ export default function AproposPage() {
                 {/* À qui s'adresse... */}
                 <section className="py-20 px-6 bg-white">
                     <div className="max-w-5xl mx-auto">
-                        <h2 className="text-3xl font-serif italic text-memoir-blue mb-12 text-center">À qui s'adresse Commun Vivant ?</h2>
+                        <h2 className="text-3xl font-serif italic text-memoir-blue mb-12 text-center">
+                            À qui s'adresse Commun Vivant <span className="text-memoir-neon">?</span>
+                        </h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {[
@@ -192,7 +213,7 @@ export default function AproposPage() {
                                 { title: "Aux entreprises & collectivités", desc: "Pour honorer les parcours, valoriser les métiers invisibilisés et la mémoire collective." },
                                 { title: "Aux artisan·e·s", desc: "Qui fabriquent des objets avec leurs mains et veulent leur donner une histoire à transmettre." }
                             ].map((item, i) => (
-                                <div key={i} className="p-6 bg-memoir-bg rounded-2xl border border-memoir-blue/5">
+                                <div key={i} className="p-6 bg-memoir-bg rounded-2xl border border-memoir-blue/5 hover:border-memoir-neon/30 transition-all hover:bg-memoir-neon/5">
                                     <h3 className="font-bold text-memoir-blue mb-2">{item.title}</h3>
                                     <p className="text-sm text-memoir-blue/70">{item.desc}</p>
                                 </div>
@@ -209,16 +230,16 @@ export default function AproposPage() {
                         <div className="space-y-8">
                             <h2 className="text-2xl font-serif italic text-memoir-blue">Ce que Commun Vivant n'est pas</h2>
                             <ul className="space-y-4">
-                                <li className="flex gap-3 text-memoir-blue/70 bg-white p-4 rounded-xl">
-                                    <XCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
+                                <li className="flex gap-3 text-memoir-blue/70 bg-white p-4 rounded-xl border border-transparent hover:border-memoir-neon/30 transition-colors">
+                                    <XCircle className="w-5 h-5 text-memoir-neon flex-shrink-0" />
                                     Pas une plateforme impersonnelle.
                                 </li>
-                                <li className="flex gap-3 text-memoir-blue/70 bg-white p-4 rounded-xl">
-                                    <XCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
+                                <li className="flex gap-3 text-memoir-blue/70 bg-white p-4 rounded-xl border border-transparent hover:border-memoir-neon/30 transition-colors">
+                                    <XCircle className="w-5 h-5 text-memoir-neon flex-shrink-0" />
                                     Pas un algorithme qui génère du contenu creux.
                                 </li>
-                                <li className="flex gap-3 text-memoir-blue/70 bg-white p-4 rounded-xl">
-                                    <XCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
+                                <li className="flex gap-3 text-memoir-blue/70 bg-white p-4 rounded-xl border border-transparent hover:border-memoir-neon/30 transition-colors">
+                                    <XCircle className="w-5 h-5 text-memoir-neon flex-shrink-0" />
                                     Pas un service qui vous prend en otage avec un abonnement.
                                 </li>
                             </ul>
@@ -235,7 +256,9 @@ export default function AproposPage() {
 
                         {/* Qui suis-je */}
                         <div className="space-y-8 lg:pl-8 lg:border-l border-memoir-blue/10">
-                            <h2 className="text-2xl font-serif italic text-memoir-blue">Qui suis-je ?</h2>
+                            <h2 className="text-2xl font-serif italic text-memoir-blue">
+                                Qui suis-je <span className="text-memoir-neon">?</span>
+                            </h2>
                             <div className="prose text-memoir-blue/80">
                                 <p><strong>Je m'appelle Aline.</strong></p>
                                 <p>
@@ -260,7 +283,9 @@ export default function AproposPage() {
                         <div className="absolute top-0 left-0 w-full h-full bg-[url('/bg-grain.png')] opacity-20 mix-blend-overlay" />
 
                         <div className="relative z-10">
-                            <h2 className="text-3xl md:text-4xl font-serif italic text-white mb-6">Une histoire à transmettre ?</h2>
+                            <h2 className="text-3xl md:text-4xl font-serif italic text-white mb-6">
+                                Une histoire à transmettre <span className="text-memoir-neon">?</span>
+                            </h2>
                             <p className="text-white/70 mb-10 max-w-xl mx-auto">
                                 Une question, un témoignage, ou simplement envie de discuter du projet ? Écrivez-moi.
                             </p>
@@ -269,7 +294,7 @@ export default function AproposPage() {
                                 <div>
                                     <label className="block text-xs uppercase tracking-widest text-white/50 mb-2 font-bold">Votre message</label>
                                     <textarea
-                                        className="w-full bg-white/10 border border-white/20 rounded-xl p-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-memoir-gold resize-none h-32 backdrop-blur-sm"
+                                        className="w-full bg-white/10 border border-white/20 rounded-xl p-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-memoir-neon resize-none h-32 backdrop-blur-sm transition-all"
                                         placeholder="Bonjour Aline..."
                                     ></textarea>
                                 </div>
@@ -277,12 +302,12 @@ export default function AproposPage() {
                                     <input
                                         type="text"
                                         placeholder="Votre Nom"
-                                        className="w-full bg-white/10 border border-white/20 rounded-xl p-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-memoir-gold backdrop-blur-sm"
+                                        className="w-full bg-white/10 border border-white/20 rounded-xl p-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-memoir-neon backdrop-blur-sm transition-all"
                                     />
                                     <input
                                         type="email"
                                         placeholder="Votre Email"
-                                        className="w-full bg-white/10 border border-white/20 rounded-xl p-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-memoir-gold backdrop-blur-sm"
+                                        className="w-full bg-white/10 border border-white/20 rounded-xl p-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-memoir-neon backdrop-blur-sm transition-all"
                                     />
                                 </div>
                                 <button className="w-full bg-memoir-gold text-memoir-blue font-bold py-4 rounded-xl hover:bg-white transition-all shadow-lg flex items-center justify-center gap-2 mt-4 group">
