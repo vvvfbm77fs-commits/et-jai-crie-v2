@@ -1,48 +1,34 @@
 # Et j'ai crié - Mémoire
 
-Application Next.js pour créer des textes de mémoire avec dignité et humanité.
+Application Next.js pour créer des mémoriaux numériques et récits de vie avec dignité, esthétisme et humanité.
 
 ## 🎯 Description
 
-"Et j'ai crié - Mémoire" est un questionnaire guidé permettant de transmettre l'essence d'une vie à travers un texte respectueux et personnel. L'application propose trois styles d'écriture (sobre, narratif, poétique) et collecte les informations essentielles pour créer un hommage digne.
+"Et j'ai crié - Mémoire" est une plateforme permettant de capturer et transmettre l'essence d'une vie, d'une histoire ou d'un objet précieux. L'application accompagne l'utilisateur via un questionnaire sensible pour générer, grâce à l'IA, un récit structuré et émouvant, présenté sur une page mémorial haut de gamme.
 
-## ✨ Fonctionnalités
+## ✨ Fonctionnalités Clés
 
-- **Questionnaire complet en 9 étapes** : Identité, style, caractère, valeurs, liens, talents, réalisations, goûts, message
-- **3 styles d'écriture** : Sobre/factuel, Narratif/humain, Poétique/sensible
-- **Sauvegarde automatique** : Les réponses sont sauvegardées dans le navigateur
-- **Interface soignée** : Design épuré avec palette de couleurs douce (beige, marron, bleu, noir)
-- **Navigation fluide** : Progression par étapes avec barre de progression visuelle
-- **Responsive** : Fonctionne sur mobile, tablette et desktop
+### 🏛️ Trois Types de Mémoriaux
+1.  **Funéraire** : Pour honorer la mémoire d'un défunt (biographie, hommages, bougies/fleurs).
+2.  **Vivant** : Pour raconter une vie, célébrer un départ en retraite ou un anniversaire (biographie, anecdotes, soutiens/cœurs).
+3.  **Objet** : Pour transmettre l'histoire d'un meuble, d'un lieu ou d'un objet de famille (histoire, caractéristiques, "J'adore").
 
-## 📋 Structure du questionnaire
+### 💎 Expérience Utilisateur
+-   **Questionnaire Guidé** : Parcours étape par étape (Identité, Liens, Passions, Souvenirs...) pour collecter la matière narrative.
+-   **Génération IA au ton juste** : Création de biographies riches et respectueuses (styles : Sobre, Narratif, Poétique).
+-   **Design Premium & Templating** :
+    -   Système de **thèmes visuels** (Bleu Nuit & Doré, Sépia & Terre, Encre & Manuscrit).
+    -   Mise en page éditoriale automatique.
+-   **Interactivité & Rituels** :
+    -   **Espace Hommage** : Allumage de bougies virtuelles et dépôt de fleurs (Funéraire) ou "Likes/Cœurs" de soutien (Vivant/Objet).
+    -   **Livre d'or** : Messages personnels des proches.
+    -   **Musique** : Lecteur audio intégré pour une ambiance immersive.
+    -   **Galerie Photo** : Diaporama élégant.
 
-### Bloc A - Repères essentiels
-Prénom, nom, dates de naissance/décès, lieux importants
-
-### Bloc B - Style d'écriture
-Choix entre 3 exemples de textes avec tonalités différentes
-
-### Bloc C - Caractère et tempérament
-Sélection parmi 22 adjectifs (discret·e, généreux·se, drôle, etc.)
-
-### Bloc D - Valeurs
-Sélection des valeurs importantes (liberté, transmission, justice, etc.)
-
-### Bloc E - Liens et relations
-Description des personnes importantes dans la vie
-
-### Bloc F - Talents et passions
-Talents particuliers et passions
-
-### Bloc G - Réalisation ou fierté
-Un accomplissement dont la personne était fière
-
-### Bloc H - Goûts et signes de vie
-Musique, phrase, lieu, habitude, saison préférée
-
-### Bloc I - Message libre
-Possibilité de laisser un message personnel
+### 💼 Pour les Professionnels (Pompes Funèbres)
+-   **Dashboard Pro** : Gestion des dossiers clients, suivi des statuts (Brouillon, En attente, Publié).
+-   **QR Codes** : Génération de QR codes (Marbre/Laiton/Plexi) pour lier le physique au numérique.
+-   **Suivi des commissions** : Interface dédiée à l'apport d'affaires.
 
 ## 🚀 Installation
 
@@ -54,101 +40,58 @@ cd et-jai-crie
 # Installer les dépendances
 npm install
 
+# Configurer les variables d'environnement
+# Créer un fichier .env.local avec les clés Supabase et OpenAI/Claude
+cp .env.example .env.local
+
 # Lancer le serveur de développement
 npm run dev
 ```
 
 Ouvrir [http://localhost:3000](http://localhost:3000) dans votre navigateur.
 
-## 🛠️ Technologies utilisées
+## 🛠️ Technologies
 
-- **Next.js 15** (App Router)
-- **React 18**
-- **TypeScript**
-- **Tailwind CSS**
-- **Lucide React** (icônes)
+-   **Frontend** : Next.js 15 (App Router), React 18, TypeScript, Tailwind CSS.
+-   **Backend / Data** : Supabase (PostgreSQL, Auth, Storage).
+-   **IA** : Intégration pour la génération de texte (OpenAI / Anthropic).
+-   **UI/UX** : Lucide React (Icônes), Framer Motion (Animations), Composants "Glassmorphism".
+-   **Déploiement** : Vercel.
 
-## 📁 Structure du projet
+## 📁 Structure du Projet
 
 ```
 et-jai-crie/
 ├── app/
-│   ├── page.tsx                 # Page d'accueil
-│   ├── layout.tsx               # Layout principal
-│   ├── globals.css              # Styles globaux
-│   ├── questionnaire/
-│   │   ├── page.tsx            # Page du questionnaire
-│   │   └── steps.ts            # Définition des étapes
-│   └── api/
-│       └── generate/
-│           └── route.ts        # API de génération (à venir)
+│   ├── dashboard/          # Espace client et pro
+│   ├── memorial/[id]/      # Page publique du mémorial (Production)
+│   ├── exemple/            # Pages de démonstration (Funéraire, Vivant, Objet)
+│   ├── questionnaire/      # Parcours de création
+│   └── api/                # Routes API (Webhooks, Génération)
 ├── components/
-│   ├── Step.tsx                # Composant étape
-│   ├── Question.tsx            # Composant question
-│   ├── StylePicker.tsx         # Sélecteur de style
-│   └── Progress.tsx            # Barre de progression
-└── lib/
-    ├── schema.ts               # Types et constantes
-    └── prompt.ts               # Prompts pour l'IA
+│   ├── memorial-blocks/    # Briques du mémorial (Profile, Text, Gallery, Tribute...)
+│   └── ...                 # Composants UI partagés
+├── lib/
+│   ├── templates.ts        # Configuration des thèmes visuels
+│   ├── layouts.ts          # Gestion des structures de page
+│   └── supabase.ts         # Client Supabase
+└── public/                 # Assets statiques
 ```
 
-## 🎨 Design
+## 🎨 Design System
 
-### Palette de couleurs
-- **Beige** (`#F5F1E8`) : Fond principal, douceur
-- **Marron** (`#8B7355`) : Accent, boutons
-- **Noir** (`#2C2C2C`) : Texte, contraste
+L'application repose sur une identité visuelle forte :
+-   **Typographie** : Combinaisons élégantes (Serif pour l'émotion, Sans-serif pour la clarté).
+-   **Couleurs** : Palettes douces et respectueuses (Or, Bleu profond, Sable, Noir profonds).
+-   **Architecture** : Système de blocs modulaires (`MemorialLayout`) permettant une grande flexibilité de mise en page tout en garantissant une harmonie visuelle.
 
-### Typographie
-- Police serif (Georgia) pour le corps de texte
-- Interface soignée et épurée
-- Hiérarchie visuelle claire
+## 📝 Principes Éditoriaux
 
-## 🔮 Développements futurs
-
-1. **Génération IA du texte**
-   - Intégration de l'API Anthropic Claude
-   - Génération selon le style choisi
-   - Respect strict du prompt éditorial
-
-2. **Fonctionnalités avancées**
-   - Export PDF du texte généré
-   - Upload audio/vidéo pour le message libre
-   - Partage sécurisé du questionnaire
-   - Édition et régénération du texte
-
-3. **Améliorations UX**
-   - Animation entre les étapes
-   - Validation des champs
-   - Suggestions intelligentes
-   - Mode sombre
-
-## 📝 Principes éditoriaux
-
-### Règles absolues du prompt IA
-- Aucun propos insultant, violent, haineux ou diffamatoire
-- Respect des silences et non-dits
-- Aucune invention de faits
-- Écriture avec dignité, sobriété et humanité
-- Pas de clichés (« ange », « étoile », etc.)
-
-### Les trois styles
-- **Sobre** : clair, factuel, sans lyrisme
-- **Narratif** : incarné, humain, anecdotique
-- **Poétique** : lent, imagé, symbolique
-
-## 🤝 Contribution
-
-Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou soumettre une pull request.
+L'IA est instruite pour respecter des règles strictes :
+-   **Dignité** : Pas de familiarité excessive ni de pathétique.
+-   **Vérité** : Pas d'invention de faits, respect des silences.
+-   **Style** : Une plume adaptée au sujet (solennelle pour le deuil, pétillante pour le vivant).
 
 ## 📄 Licence
 
-Projet personnel - Tous droits réservés
-
-## 👤 Auteur
-
-Projet créé dans le cadre de "Et j'ai crié - Mémoire"
-
----
-
-**Note** : Cette application est conçue avec respect et sensibilité pour honorer la mémoire de ceux qui nous ont quittés ou pour transmettre l'héritage de ceux qui nous sont chers.
+Propriété exclusive - Tous droits réservés.
