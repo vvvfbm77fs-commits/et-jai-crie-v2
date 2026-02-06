@@ -32,10 +32,9 @@ export default function Header() {
 
                         <nav className="flex gap-8 text-memoir-blue text-base font-light tracking-wide" style={{ fontFamily: 'Manrope, sans-serif' }}>
                             <Link href="/" className="hover:text-memoir-gold transition-colors">Accueil</Link>
-                            <Link href="/tarifs" className="hover:text-memoir-gold transition-colors">Tarifs</Link>
-                            <Link href="/#usages" className="hover:text-memoir-gold transition-colors">Usages</Link>
                             <Link href="/#comment-ca-marche" className="hover:text-memoir-gold transition-colors">Comment ça marche</Link>
                             <Link href="/supports-physiques" className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
+                            <Link href="/tarifs" className="hover:text-memoir-gold transition-colors font-medium">TARIFS</Link>
                             <Link href="/faq" className="hover:text-memoir-gold transition-colors">FAQ</Link>
                             <Link href="/a-propos" className="hover:text-memoir-gold transition-colors">À propos</Link>
                         </nav>
@@ -94,10 +93,9 @@ export default function Header() {
                 <div className="md:hidden absolute top-full left-0 w-full bg-white border-t border-memoir-gold/20 shadow-xl px-6 py-8 flex flex-col gap-6 animate-in slide-in-from-top-5 duration-200 h-screen">
                     <nav className="flex flex-col items-center gap-6 text-memoir-blue text-xl font-light" style={{ fontFamily: 'Manrope, sans-serif' }}>
                         <Link href="/" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Accueil</Link>
-                        <Link href="/tarifs" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Tarifs</Link>
-                        <Link href="/#usages" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Usages</Link>
                         <Link href="/#comment-ca-marche" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Comment ça marche</Link>
                         <Link href="/supports-physiques" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
+                        <Link href="/tarifs" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors font-medium">TARIFS</Link>
                         <Link href="/faq" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">FAQ</Link>
                         <Link href="/a-propos" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">À propos</Link>
                     </nav>
