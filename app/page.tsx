@@ -233,7 +233,7 @@ export default function HomePage() {
                 ))}
               </ul>
 
-              <Link href="/create?context=object_memory" className="w-full py-4 text-center rounded-full border border-memoir-neon text-memoir-neon font-bold hover:bg-memoir-neon hover:text-white transition-all">Immortaliser un objet</Link>
+              <Link href="/create?context=object_memory" className="w-full py-4 text-center rounded-full bg-memoir-neon text-white font-bold shadow-lg hover:bg-white hover:text-memoir-neon border border-transparent hover:border-memoir-neon transition-all">Immortaliser un objet</Link>
             </div>
 
           </div>
