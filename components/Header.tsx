@@ -34,7 +34,7 @@ export default function Header() {
                             <Link href="/" className="hover:text-memoir-gold transition-colors">Accueil</Link>
                             <Link href="/#comment-ca-marche" className="hover:text-memoir-gold transition-colors">Comment ça marche</Link>
                             <Link href="/supports-physiques" className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
-                            <Link href="/tarifs" className="hover:text-memoir-gold transition-colors font-medium">TARIFS</Link>
+                            <Link href="/tarifs" className="hover:text-memoir-gold transition-colors font-medium">Tarifs</Link>
                             <Link href="/faq" className="hover:text-memoir-gold transition-colors">FAQ</Link>
                             <Link href="/a-propos" className="hover:text-memoir-gold transition-colors">À propos</Link>
                         </nav>
