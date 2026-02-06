@@ -21,7 +21,7 @@ export default function Header() {
                     {/* Partie Gauche : Socials + Menu */}
                     <div className="flex items-center gap-12">
                         <Link href="/" className="relative block h-full w-auto hover:opacity-90 transition-opacity z-50">
-                            <div className="absolute top-0 mt-[-0.5rem] left-0 w-32 h-32 md:w-40 md:h-40 bg-memoir-bg rounded-full p-1 shadow-xl border-4 border-white/10 transform hover:scale-105 transition-transform duration-300">
+                            <div className="absolute top-0 mt-[-1.25rem] left-0 w-32 h-32 md:w-40 md:h-40 bg-memoir-bg rounded-full p-1 shadow-xl border-4 border-white/10 transform hover:scale-105 transition-transform duration-300">
                                 <Image
                                     src="/logo.png"
                                     alt="Commun Vivant"
