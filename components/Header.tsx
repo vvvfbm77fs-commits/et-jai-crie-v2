@@ -13,7 +13,7 @@ export default function Header() {
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     return (
-        <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl py-4 transition-all duration-300 shadow-sm border-b border-memoir-gold/20">
+        <header className="sticky top-0 z-50 w-full bg-memoir-blue/95 backdrop-blur-xl py-4 transition-all duration-300 shadow-sm border-b border-white/10">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Desktop Header Layout */}
                 <div className="hidden md:flex items-center justify-between">
@@ -26,11 +26,11 @@ export default function Header() {
                                 alt="Commun Vivant"
                                 width={120}
                                 height={120}
-                                className="w-28 h-28 rounded-full shadow-lg border border-memoir-gold/20"
+                                className="w-28 h-28 rounded-full shadow-lg border border-white/10"
                             />
                         </Link>
 
-                        <nav className="flex gap-8 text-memoir-blue text-base font-light tracking-wide" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                        <nav className="flex gap-8 text-white/90 text-base font-light tracking-wide" style={{ fontFamily: 'Manrope, sans-serif' }}>
                             <Link href="/" className="hover:text-memoir-gold transition-colors">Accueil</Link>
                             <Link href="/#comment-ca-marche" className="hover:text-memoir-gold transition-colors">Comment ça marche</Link>
                             <Link href="/supports-physiques" className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
@@ -43,22 +43,22 @@ export default function Header() {
                     {/* Partie Droite : Actions */}
                     <div className="flex items-center gap-6">
                         {/* Socials discrets */}
-                        <div className="flex gap-4 text-memoir-gold border-r border-memoir-gold/20 pr-6">
-                            <Instagram className="w-4 h-4 hover:text-memoir-blue transition-colors cursor-pointer" />
-                            <Facebook className="w-4 h-4 hover:text-memoir-blue transition-colors cursor-pointer" />
+                        <div className="flex gap-4 text-memoir-gold border-r border-white/10 pr-6">
+                            <Instagram className="w-4 h-4 hover:text-white transition-colors cursor-pointer" />
+                            <Facebook className="w-4 h-4 hover:text-white transition-colors cursor-pointer" />
                         </div>
 
                         <div className="flex gap-3">
                             <Link
                                 href="/login"
-                                className="text-memoir-blue/70 hover:text-memoir-gold transition-colors text-sm font-medium px-4 flex items-center"
+                                className="text-white/70 hover:text-memoir-gold transition-colors text-sm font-medium px-4 flex items-center"
                                 style={{ fontFamily: 'Manrope, sans-serif' }}
                             >
                                 Espace Pro
                             </Link>
                             <button
                                 onClick={() => router.push('/login')}
-                                className="text-memoir-blue hover:text-white transition-all text-sm font-medium px-6 border border-memoir-blue/20 rounded-full py-2 hover:bg-memoir-blue"
+                                className="text-white hover:text-memoir-blue transition-all text-sm font-medium px-6 border border-white/20 rounded-full py-2 hover:bg-white"
                                 style={{ fontFamily: 'Manrope, sans-serif' }}
                             >
                                 Se connecter
