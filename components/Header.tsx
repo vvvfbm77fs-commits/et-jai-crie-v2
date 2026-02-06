@@ -26,7 +26,7 @@ export default function Header() {
                                 alt="Commun Vivant"
                                 width={120}
                                 height={120}
-                                className="w-28 h-28 rounded-full shadow-lg border border-white/10"
+                                className="w-28 h-28 rounded-full shadow-lg border border-white/10 bg-memoir-bg"
                             />
                         </Link>
 
