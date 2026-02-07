@@ -13,6 +13,7 @@ function QuestionnaireContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const context = (searchParams.get('context') as string) || 'funeral';
+  const isPremium = searchParams.get('premium') === 'true';
 
   const [stepIndex, setStepIndex] = useState(0);
   const [data, setData] = useState<Partial<QuestionnaireData>>({
@@ -32,7 +33,8 @@ function QuestionnaireContent() {
   });
 
   // Pass data to getSteps to allow dynamic steps (e.g. based on heritageType)
-  const steps = getSteps(context, data);
+  // If NOT premium, use teaser mode (true)
+  const steps = getSteps(context, data, !isPremium);
 
   const currentStep = steps[stepIndex];
   const isFirstStep = stepIndex === 0;
@@ -97,8 +99,14 @@ function QuestionnaireContent() {
   const handleSubmit = () => {
     // Sauvegarder les données du questionnaire
     localStorage.setItem('questionnaireData', JSON.stringify(data));
-    // Rediriger vers la page médias
-    router.push('/medias');
+
+    if (!isPremium) {
+      // Rediriger vers la page Teaser pour payer
+      router.push(`/create/teaser?context=${context}`);
+    } else {
+      // Mode premium : Rediriger vers la page médias (ou suite)
+      router.push('/medias');
+    }
   };
 
   return (
@@ -119,10 +127,10 @@ function QuestionnaireContent() {
               <span className="text-sm font-medium">Retour à l'accueil</span>
             </button>
             <h1 className="text-3xl md:text-5xl font-bold text-memoir-blue mb-2 md:mb-4">
-              {context === 'object_memory' ? 'Mémoire d\'Objet' : 'Et j\'ai crié – Mémoire'}
+              {context === 'object_memory' ? 'Transmettre l\'histoire' : 'Raconter une vie'}
             </h1>
             <p className="text-memoir-blue/70 text-base md:text-lg">
-              {context === 'object_memory' ? 'Raconter son histoire' : 'Création de votre mémorial'}
+              {context === 'object_memory' ? 'Préserver ce qui compte' : 'Honorer ceux qu\'on aime'}
             </p>
           </div>
 
@@ -159,7 +167,7 @@ function QuestionnaireContent() {
                 onClick={handleSubmit}
                 className="btn-primary flex items-center justify-center gap-2 order-2 md:order-3"
               >
-                <span>Continuer vers les médias</span>
+                <span>{isPremium ? 'Continuer vers les médias' : 'Voir un aperçu'}</span>
                 <ChevronRight className="w-5 h-5" />
               </button>
             ) : (

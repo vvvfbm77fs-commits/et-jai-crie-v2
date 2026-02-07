@@ -27,12 +27,69 @@ function MethodSelectionContent() {
         }
     }
 
+    // If no context is selected (generic /create), show selection screen
+    if (!searchParams.get('context')) {
+        return (
+            <div className="min-h-screen bg-memoir-bg py-12 px-6">
+                <div className="max-w-5xl mx-auto">
+                    <div className="mb-12 text-center">
+                        <Link href="/" className="inline-flex items-center text-memoir-blue/40 hover:text-memoir-blue transition-colors mb-6 text-sm font-bold uppercase tracking-widest relative z-50 p-2">
+                            <ChevronLeft className="w-4 h-4 mr-1" />
+                            Retour à l'accueil
+                        </Link>
+                        <h1 className="text-3xl md:text-5xl font-serif italic text-memoir-blue leading-tight mb-4">
+                            Quel est votre projet ?
+                        </h1>
+                        <p className="text-memoir-blue/60 text-lg font-light">
+                            Pour commencer, dites-nous ce que vous souhaitez réaliser.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                        {/* Option celebration */}
+                        <Link href="/create?context=celebration" className="group bg-white rounded-[32px] p-8 border border-memoir-neon/20 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
+                            <div className="w-16 h-16 bg-memoir-bg rounded-2xl flex items-center justify-center text-memoir-neon mb-6 group-hover:bg-memoir-neon group-hover:text-white transition-colors">
+                                <span className="text-3xl">🎉</span>
+                            </div>
+                            <h3 className="text-2xl font-serif italic text-memoir-blue mb-3">Fêter un vivant</h3>
+                            <p className="text-memoir-blue/60 text-sm leading-relaxed">
+                                Anniversaire, départ, ou simplement dire "je t'aime". Créez une vague d'amour collective.
+                            </p>
+                        </Link>
+
+                        {/* Option heritage */}
+                        <Link href="/create?context=heritage" className="group bg-white rounded-[32px] p-8 border border-memoir-gold/20 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
+                            <div className="w-16 h-16 bg-memoir-bg rounded-2xl flex items-center justify-center text-memoir-gold mb-6 group-hover:bg-memoir-gold group-hover:text-white transition-colors">
+                                <span className="text-3xl">🏺</span>
+                            </div>
+                            <h3 className="text-2xl font-serif italic text-memoir-blue mb-3">Transmettre une histoire</h3>
+                            <p className="text-memoir-blue/60 text-sm leading-relaxed">
+                                Objets, lieux, recettes ou récits de famille. Sauvez ce patrimoine de l'oubli.
+                            </p>
+                        </Link>
+
+                        {/* Option funeral */}
+                        <Link href="/create?context=funeral" className="group bg-white rounded-[32px] p-8 border border-white/20 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
+                            <div className="w-16 h-16 bg-memoir-bg rounded-2xl flex items-center justify-center text-memoir-blue mb-6 group-hover:bg-memoir-blue group-hover:text-white transition-colors">
+                                <span className="text-3xl">🕯️</span>
+                            </div>
+                            <h3 className="text-2xl font-serif italic text-memoir-blue mb-3">Honorer une mémoire</h3>
+                            <p className="text-memoir-blue/60 text-sm leading-relaxed">
+                                Un espace digne et apaisé pour rassembler les souvenirs d'un être cher disparu.
+                            </p>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-memoir-bg py-12 px-6">
             <div className="max-w-5xl mx-auto">
                 {/* Header */}
                 <div className="mb-12">
-                    <Link href="/" className="inline-flex items-center text-memoir-blue/40 hover:text-memoir-blue transition-colors mb-6 text-sm font-bold uppercase tracking-widest">
+                    <Link href="/" className="inline-flex items-center text-memoir-blue/40 hover:text-memoir-blue transition-colors mb-6 text-sm font-bold uppercase tracking-widest relative z-50 p-2 -ml-2">
                         <ChevronLeft className="w-4 h-4 mr-1" />
                         Retour à l'accueil
                     </Link>

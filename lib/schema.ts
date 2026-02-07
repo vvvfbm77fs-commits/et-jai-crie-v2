@@ -64,15 +64,25 @@ export interface QuestionnaireData {
     passions?: string;
   };
 
-  // Bloc G - Réalisation
+  // Bloc G - Réalisation / Fierté
   realisation?: string;
+  fierte?: string; // Alias pour le questionnaire
+
+  // Nouveau - Arbre Généalogique
+  famille?: {
+    parents?: string;
+    conjoint?: string;
+    enfants?: string;
+  };
 
   // Bloc H - Goûts et signes de vie
   gouts: {
     musique?: string;
     phrase?: string;
+    citation?: string; // Alias pour phrase/citation
     lieu?: string;
     habitude?: string;
+    plat?: string; // Nouveau
     saison?: string;
   };
 
@@ -82,12 +92,12 @@ export interface QuestionnaireData {
     type?: 'text' | 'audio' | 'video';
     content?: string;
   };
+  messageLibre?: string; // Champ simple pour le questionnaire
 
   // Médias et liens
-  // Nouveaux champs médias
   photoProfil?: { photoProfilId?: string };
   musiqueAudio?: { musiqueFileId?: string };
-  galerie?: { photos?: any[] };
+  galerie?: string | { photos?: any[] } | any; // Flexible pour l'upload
   medias?: any[];
   liensWeb?: any[];
 };

@@ -21,11 +21,13 @@ export default function Header() {
                     {/* Partie Gauche : Socials + Menu */}
                     <div className="flex items-center gap-12">
                         <Link href="/" className="relative block h-full w-auto hover:opacity-90 transition-opacity z-50">
-                            <div className="absolute top-0 mt-[-1.25rem] left-0 w-32 h-32 md:w-40 md:h-40 bg-memoir-bg rounded-full p-1 shadow-[0_10px_25px_rgba(28,84,98,0.6)] border-4 border-white/10 transform hover:scale-105 transition-transform duration-300">
+                            <div className="absolute top-0 mt-[-1.25rem] left-0 w-32 h-32 md:w-40 md:h-40 bg-memoir-bg rounded-full p-1 shadow-[0_10px_25px_rgba(28,84,98,0.6)] border-4 border-white/10">
                                 <Image
                                     src="/logo.png"
                                     alt="Commun Vivant"
                                     fill
+                                    sizes="(max-width: 768px) 128px, 160px"
+                                    priority
                                     className="object-cover rounded-full"
                                 />
                             </div>
@@ -37,7 +39,6 @@ export default function Header() {
                             <Link href="/" className="hover:text-memoir-gold transition-colors">Accueil</Link>
                             <Link href="/#comment-ca-marche" className="hover:text-memoir-gold transition-colors">Comment ça marche</Link>
                             <Link href="/supports-physiques" className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
-                            <Link href="/tarifs" className="hover:text-memoir-gold transition-colors font-medium">Tarifs</Link>
                             <Link href="/faq" className="hover:text-memoir-gold transition-colors">FAQ</Link>
                             <Link href="/a-propos" className="hover:text-memoir-gold transition-colors">À propos</Link>
                         </nav>
@@ -100,7 +101,6 @@ export default function Header() {
                         <Link href="/" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Accueil</Link>
                         <Link href="/#comment-ca-marche" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Comment ça marche</Link>
                         <Link href="/supports-physiques" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">Objets & supports</Link>
-                        <Link href="/tarifs" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors font-medium">TARIFS</Link>
                         <Link href="/faq" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">FAQ</Link>
                         <Link href="/a-propos" onClick={toggleMenu} className="hover:text-memoir-gold transition-colors">À propos</Link>
                     </nav>

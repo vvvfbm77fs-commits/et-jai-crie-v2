@@ -7,26 +7,7 @@ import Header from '@/components/Header';
 import { Flower2, BookOpen, Armchair, ArrowRight, PenTool, Share2, Box, CheckCircle, PartyPopper, Scroll, History } from 'lucide-react';
 
 export default function HomePage() {
-  const [activeCard, setActiveCard] = useState<string | null>(null);
-
-  // Helper function for card styles
-  const getCardStyle = (id: string) => {
-    const isActive = activeCard === id;
-    const baseStyle = "flex flex-col p-8 rounded-2xl transition-all duration-500 group relative overflow-hidden cursor-pointer h-full";
-
-    if (isActive) {
-      if (id === 'funeral') return `${baseStyle} bg-gradient-to-br from-[#1a1a2e] to-[#16213e] shadow-[0_0_30px_rgba(100,100,255,0.2)] scale-105 border-white/20`;
-      if (id === 'heritage') return `${baseStyle} bg-gradient-to-br from-[#C9A24D] to-[#E1C97A] text-memoir-blue shadow-[0_0_30px_rgba(201,162,77,0.4)] scale-105 border-white/20`;
-      if (id === 'celebration') return `${baseStyle} bg-gradient-to-br from-[#EE135D] to-[#C90F4D] shadow-[0_0_30px_rgba(238,19,93,0.4)] scale-105 border-white/20`;
-    }
-
-    // Default Glassmorphism with Theme-specific Hover Border
-    let hoverBorder = "hover:border-memoir-blue/30";
-    if (id === 'heritage') hoverBorder = "hover:border-memoir-gold/30";
-    if (id === 'celebration') hoverBorder = "hover:border-memoir-neon/30";
-
-    return `${baseStyle} bg-white/5 backdrop-blur-sm border border-white/10 ${hoverBorder} hover:bg-white/10`;
-  };
+  // Removed unused state activeCard
 
   return (
     <div className="min-h-screen bg-memoir-bg flex flex-col font-sans">
@@ -34,10 +15,10 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-memoir-bg">
-        {/* Animated Background Gradients */}
+        {/* Animated Background Gradients - Simplified to avoid GPU crash */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-memoir-gold/10 rounded-full blur-[120px] mix-blend-multiply animate-pulse" />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-200/20 rounded-full blur-[100px] mix-blend-multiply animate-pulse" />
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-memoir-gold/5 rounded-full blur-[100px]" />
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-200/10 rounded-full blur-[80px]" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
@@ -58,7 +39,7 @@ export default function HomePage() {
             </p>
 
             <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-8">
-              <Link href="#start" className="bg-memoir-blue text-white px-8 py-4 rounded-full font-medium shadow-xl hover:bg-memoir-blue/90 hover:scale-105 transition-all">
+              <Link href="/create" className="bg-memoir-blue text-white px-8 py-4 rounded-full font-medium shadow-xl hover:bg-memoir-blue/90 hover:scale-105 transition-all">
                 Commencer
               </Link>
             </div>
@@ -85,16 +66,17 @@ export default function HomePage() {
               />
 
               {/* Floating Card Detail */}
-              <div className="absolute bottom-10 left-10 right-10 bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl shadow-lg transform translate-y-4 hover:translate-y-0 transition-transform">
-                <p className="font-serif italic text-white text-lg drop-shadow-md">
+              {/* Floating Card Detail */}
+              <div className="absolute bottom-10 left-10 right-10 bg-white/90 border border-white/20 p-6 rounded-2xl shadow-lg transform translate-y-4 hover:translate-y-0 transition-transform">
+                <p className="font-serif italic text-memoir-blue text-lg drop-shadow-md">
                   "C'est dans ces petits détails que réside l'éternité."
                 </p>
               </div>
             </div>
 
-            {/* Decorative Elements */}
-            <div className="absolute -top-10 -right-10 w-24 h-24 bg-memoir-neon/20 rounded-full blur-2xl animate-pulse" />
-            <div className="absolute -bottom-5 -left-5 w-32 h-32 bg-memoir-gold/20 rounded-full blur-2xl animate-pulse delay-700" />
+            {/* Decorative Elements - Simplified */}
+            <div className="absolute -top-10 -right-10 w-24 h-24 bg-memoir-neon/10 rounded-full blur-2xl" />
+            <div className="absolute -bottom-5 -left-5 w-32 h-32 bg-memoir-gold/10 rounded-full blur-2xl" />
           </div>
 
         </div>
@@ -109,24 +91,26 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
 
             {/* BLOC 1 - FÊTER */}
-            <div className="bg-white rounded-[32px] overflow-hidden flex flex-col text-left shadow-lg border border-memoir-neon/20 relative group hover:shadow-xl transition-all duration-300">
+            <div className="bg-white rounded-[32px] overflow-hidden flex flex-col text-left shadow-lg border border-memoir-neon/20 relative group hover:shadow-xl transition-shadow duration-300">
               <div className="relative h-48 w-full overflow-hidden">
                 <Image
-                  src="/photo-roman-kraft-unsplash.jpg"
+                  src="/bave-pictures-eQhaGaMBIg8-unsplash.jpg"
                   alt="Célébration"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-memoir-neon/10 group-hover:bg-transparent transition-colors duration-500" />
-                <div className="absolute bottom-4 left-6 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-sm">
+                <div className="absolute bottom-4 left-6 bg-white/95 p-3 rounded-xl shadow-sm">
                   <PartyPopper className="w-6 h-6 text-memoir-neon" />
                 </div>
               </div>
 
               <div className="p-8 flex flex-col flex-grow">
-                <h3 className="text-2xl font-serif italic text-memoir-blue mb-4">Raconter une histoire pour fêter quelqu'un</h3>
+                <h3 className="text-2xl font-serif italic text-memoir-blue mb-4">Fêter quelqu'un</h3>
                 <p className="text-memoir-blue/60 text-base leading-relaxed mb-8 flex-grow">
-                  Anniversaire, départ en retraite, réussite... Offrez un hommage vivant et participatif. Créez une cagnotte de souvenirs joyeux où chacun dépose photos et messages pour célébrer l'instant présent.
+                  Parce qu'il y a des personnes qu'on a envie de célébrer de leur vivant.
+                  Un anniversaire, un départ, une étape importante... Créez un espace où famille et amis déposent leurs mots, leurs photos, leurs souvenirs.
+                  Offrez-lui un récit vivant qui dit : "tu comptes".
                 </p>
 
                 <Link href="/create?context=celebration" className="w-full py-4 text-center rounded-full bg-memoir-neon text-white font-bold shadow-md hover:bg-white hover:text-memoir-neon border border-transparent hover:border-memoir-neon transition-all">
@@ -136,24 +120,26 @@ export default function HomePage() {
             </div>
 
             {/* BLOC 2 - TRANSMETTRE */}
-            <div className="bg-white rounded-[32px] overflow-hidden flex flex-col text-left shadow-lg border border-memoir-gold/20 relative group hover:shadow-xl transition-all duration-300">
+            <div className="bg-white rounded-[32px] overflow-hidden flex flex-col text-left shadow-lg border border-memoir-gold/20 relative group hover:shadow-xl transition-shadow duration-300">
               <div className="relative h-48 w-full overflow-hidden">
                 <Image
-                  src="/marlon-corona-1tMc27CFUbA-unsplash.jpg"
+                  src="/sofatutor-4syO0fP1Bf0-unsplash.jpg"
                   alt="Transmission"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-memoir-gold/10 group-hover:bg-transparent transition-colors duration-500" />
-                <div className="absolute bottom-4 left-6 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-sm">
+                <div className="absolute bottom-4 left-6 bg-white/95 p-3 rounded-xl shadow-sm">
                   <History className="w-6 h-6 text-memoir-gold" />
                 </div>
               </div>
 
               <div className="p-8 flex flex-col flex-grow">
-                <h3 className="text-2xl font-serif italic text-memoir-blue mb-4">Transmettre vos mémoires</h3>
+                <h3 className="text-2xl font-serif italic text-memoir-blue mb-4">Transmettre une histoire</h3>
                 <p className="text-memoir-blue/60 text-base leading-relaxed mb-8 flex-grow">
-                  Objets précieux, maisons de famille ou récits d'ancêtres... Ne laissez pas ces histoires s'effacer. Capturez l'essence de votre patrimoine et ancrez-le pour les générations futures.
+                  Parce que certaines histoires ne doivent pas s'effacer avec le temps.
+                  Un objet de famille, une maison, un ancêtre... Racontez ce qui a traversé les générations.
+                  Ancrez ces mémoires pour que vos enfants, et les leurs, sachent d'où ils viennent.
                 </p>
 
                 <Link href="/create?context=heritage" className="w-full py-4 text-center rounded-full bg-memoir-gold text-white font-bold shadow-md hover:bg-memoir-gold/90 transition-all">
@@ -163,16 +149,16 @@ export default function HomePage() {
             </div>
 
             {/* BLOC 3 - HONORER */}
-            <div className="bg-white rounded-[32px] overflow-hidden flex flex-col text-left shadow-lg border border-white/20 relative group hover:shadow-xl transition-all duration-300">
+            <div className="bg-white rounded-[32px] overflow-hidden flex flex-col text-left shadow-lg border border-white/20 relative group hover:shadow-xl transition-shadow duration-300">
               <div className="relative h-48 w-full overflow-hidden">
                 <Image
-                  src="/image-site4.png"
-                  alt="Hommage funéraire"
+                  src="/photo-roman-kraft-unsplash.jpg"
+                  alt="Honorer une mémoire"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-memoir-blue/20 group-hover:bg-transparent transition-colors duration-500" />
-                <div className="absolute bottom-4 left-6 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-sm">
+                <div className="absolute bottom-4 left-6 bg-white/95 p-3 rounded-xl shadow-sm">
                   <Flower2 className="w-6 h-6 text-memoir-blue" />
                 </div>
               </div>
@@ -180,7 +166,9 @@ export default function HomePage() {
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="text-2xl font-serif italic text-memoir-blue mb-4">Honorer une mémoire</h3>
                 <p className="text-memoir-blue/60 text-base leading-relaxed mb-8 flex-grow">
-                  Un espace de recueillement digne, apaisant et pérenne. Rassemblez les témoignages, les photos et les pensées de tous ceux qui l'ont aimé pour faire vivre son souvenir.
+                  Parce qu'on a besoin d'un lieu pour dire au revoir, ensemble.
+                  Un espace digne et apaisant où rassembler les photos, les témoignages, les bougies.
+                  Un refuge numérique qui garde vivant ce qui ne peut pas partir.
                 </p>
 
                 <Link href="/create?context=funeral" className="w-full py-4 text-center rounded-full bg-memoir-blue text-white font-bold shadow-md hover:bg-memoir-blue/90 transition-all">
@@ -212,10 +200,10 @@ export default function HomePage() {
           {/* Steps Grid */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24">
             {[
-              { step: '1', title: 'Quel est votre projet ?', desc: 'Honorer une personne disparue, célébrer un vivant ou raconter un objet. Sélectionnez le format adapté à votre intention.', icon: null },
-              { step: '2', title: 'Racontez avec Alma', desc: <>Répondez à quelques questions simples. <strong className="text-memoir-blue font-bold">Alma, notre assistante IA</strong>, transforme vos réponses en un récit au ton juste : sobre, narratif ou poétique. Vous choisissez le style. Vous validez le résultat.<br /><br />Aucune invention, seulement votre vérité.</>, icon: <PenTool className="w-6 h-6" /> },
-              { step: '3', title: 'Partagez', desc: 'Invitez vos proches à enrichir cet espace avec leurs souvenirs, leurs mots, leurs images.', icon: <Share2 className="w-6 h-6" /> },
-              { step: '4', title: 'Ancrez', desc: 'Reliez le numérique au monde physique grâce à des supports discrets : puce NFC ou plaque QR personnalisée.', icon: <Box className="w-6 h-6" /> },
+              { step: '1', title: 'Lancez votre récit', desc: 'Démarrez simplement un espace dédié. Pour célébrer, pour honorer, pour ne pas oublier. Tout commence par une intention.', icon: null },
+              { step: '2', title: 'Laissez-vous guider', desc: <>Répondez aux questions d'<strong className="text-memoir-blue font-bold">Alma</strong>. Elle vous écoute et compose pour vous un récit fidèle, sensible et juste. Pas de page blanche, juste votre voix.</>, icon: <PenTool className="w-6 h-6" /> },
+              { step: '3', title: 'Enrichissez', desc: 'Un souvenir est plus beau quand il est partagé. Invitez vos proches à déposer leurs photos, leurs anecdotes et leurs messages.', icon: <Share2 className="w-6 h-6" /> },
+              { step: '4', title: 'Ancrez le souvenir', desc: 'Faites vivre cette mémoire dans le réel. Un lien discret (QR ou NFC) permet de retrouver l\'histoire là où elle a du sens.', icon: <Box className="w-6 h-6" /> },
             ].map((item, idx) => (
               <div key={idx} className="relative group text-center md:text-left p-6 rounded-3xl hover:bg-memoir-bg/50 transition-colors duration-500">
                 <div className="w-16 h-16 mb-6 bg-memoir-bg rounded-2xl flex items-center justify-center text-memoir-gold shadow-sm group-hover:bg-memoir-gold group-hover:text-white transition-all duration-500 scale-105 group-hover:-rotate-6 mx-auto md:mx-0">
@@ -239,9 +227,9 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
           {/* Image Side */}
-          <div className="relative h-[600px] w-full rounded-[40px] overflow-hidden shadow-2xl skew-y-1 lg:order-2">
+          <div className="relative h-[600px] w-full rounded-[40px] overflow-hidden shadow-2xl lg:order-2">
             <Image
-              src="/marielle-ursua-wRrhYoqYIvM-unsplash.jpg"
+              src="/image-plaque.png"
               alt="Souvenir physique"
               fill
               className="object-cover hover:scale-105 transition-transform duration-1000"
@@ -298,7 +286,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-memoir-gold/20 to-memoir-neon/20 rounded-full blur-[100px]" />
-            <div className="relative z-10 bg-white/80 backdrop-blur-xl p-8 rounded-[40px] border border-white/50 shadow-2xl skew-y-3">
+            <div className="relative z-10 bg-white/95 p-8 rounded-[40px] border border-memoir-blue/10 shadow-xl">
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-memoir-blue text-white rounded-full flex items-center justify-center font-serif italic text-xl">A</div>
