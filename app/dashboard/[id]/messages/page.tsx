@@ -16,8 +16,9 @@ interface Message {
     approved: boolean; // synced from prompt
 }
 
-export default function ModerationPage({ params }: { params: { id: string } }) {
-    const memoryId = params.id;
+export default function ModerationPage() {
+    const params = useParams();
+    const memoryId = params?.id as string;
     const [messages, setMessages] = useState<Message[]>([]);
     const [filter, setFilter] = useState<'all' | 'pending' | 'flagged'>('all');
     const [loading, setLoading] = useState(true);

@@ -1,14 +1,15 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Check, Edit2, RotateCw, Save, X } from 'lucide-react';
 
-export default function TextEditorPage({ params }: { params: { id: string } }) {
-    const memoryId = params.id;
+export default function TextEditorPage() {
+    const params = useParams();
+    const memoryId = params?.id as string;
     const router = useRouter();
     const supabase = createClient();
 

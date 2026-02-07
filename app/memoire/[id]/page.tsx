@@ -8,14 +8,15 @@ import TemplateGalerie from '@/components/templates/TemplateGalerie';
 // Force dynamic revalidation occasionally
 export const revalidate = 60;
 
-export default async function MemorialPage({ params }: { params: { id: string } }) {
+export default async function MemorialPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     // Use Service Role to fetch public data securely without RLS issues 
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
     const { data: memory } = await supabase
         .from('memories')
         .select('*')
-        .eq('id', params.id)
+        .eq('id', id)
         .single();
 
     if (!memory) return notFound();
