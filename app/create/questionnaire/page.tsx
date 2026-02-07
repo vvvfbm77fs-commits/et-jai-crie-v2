@@ -12,9 +12,7 @@ import AlmaChatBubble from '@/components/AlmaChatBubble';
 function QuestionnaireContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const context = (searchParams.get('context') as 'funeral' | 'living_story' | 'object_memory') || 'funeral';
-
-  const steps = useMemo(() => getSteps(context), [context]);
+  const context = (searchParams.get('context') as string) || 'funeral';
 
   const [stepIndex, setStepIndex] = useState(0);
   const [data, setData] = useState<Partial<QuestionnaireData>>({
@@ -32,6 +30,9 @@ function QuestionnaireContent() {
     medias: [],
     liensWeb: [],
   });
+
+  // Pass data to getSteps to allow dynamic steps (e.g. based on heritageType)
+  const steps = getSteps(context, data);
 
   const currentStep = steps[stepIndex];
   const isFirstStep = stepIndex === 0;

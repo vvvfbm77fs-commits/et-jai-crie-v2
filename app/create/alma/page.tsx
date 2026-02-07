@@ -8,7 +8,17 @@ import { Home } from 'lucide-react';
 function AlmaContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const context = (searchParams.get('context') as 'funeral' | 'living_story' | 'object_memory') || 'funeral';
+  const rawContext = searchParams.get('context') || 'funeral';
+  const heritageType = searchParams.get('heritageType');
+
+  // Map new contexts to Alma contexts
+  let context: 'funeral' | 'living_story' | 'object_memory' = 'funeral';
+  if (rawContext === 'celebration') context = 'living_story';
+  else if (rawContext === 'heritage') {
+    context = heritageType === 'object' ? 'object_memory' : 'living_story';
+  } else if (['funeral', 'living_story', 'object_memory'].includes(rawContext)) {
+    context = rawContext as any;
+  }
   const name = searchParams.get('name') || undefined;
   const birthDate = searchParams.get('birthDate');
   const deathDate = searchParams.get('deathDate');

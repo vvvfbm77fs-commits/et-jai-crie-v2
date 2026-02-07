@@ -18,6 +18,12 @@ export interface QuestionnaireData {
   // Nouveau - Type d'hommage
   typeHommage?: 'personnel' | 'professionnel' | 'mixte';
 
+  // Heritage Type
+  heritageType?: 'person' | 'object';
+
+  // Resume (En une phrase)
+  resume?: string;
+
   // Nouveau - Lien avec la personne
   lienPersonne?: {
     type: 'pere-mere' | 'fils-fille' | 'frere-soeur' | 'conjoint' | 'ami' | 'collegue' | 'autre' | 'inconnu';
@@ -114,49 +120,27 @@ export interface Step {
 }
 
 export const ADJECTIFS = [
-  'discret·e',
-  'généreux·se',
-  'drôle',
-  'engagé·e',
-  'réservé·e',
-  'passionné·e',
-  'libre',
-  'protecteur·rice',
-  'créatif·ve',
-  'pragmatique',
-  'curieux·se',
-  'patient·e',
-  'exigeant·e',
-  'tendre',
-  'entier·e',
-  'solaire',
-  'pudique',
-  'audacieux·se',
-  'calme',
-  'énergique',
-  'rassurant·e',
-  'indépendant·e',
+  'Généreux·se',
+  'Drôle',
+  'Passionné·e',
+  'Libre',
+  'Protecteur·rice',
+  'Créatif·ve',
+  'Calme',
+  'Solaire',
+  'Tendre',
+  'Audacieux·se',
 ];
 
 export const VALEURS = [
-  'liberté',
-  'transmission',
-  'justice',
-  'loyauté',
-  'solidarité',
-  'travail bien fait',
-  'respect',
-  'créativité',
-  'engagement',
-  'discrétion',
-  'famille',
-  'amitié',
-  'courage',
-  'humour',
-  'curiosité',
-  'simplicité',
-  'honnêteté',
-  'bienveillance',
+  'Liberté',
+  'Famille',
+  'Transmission',
+  'Créativité',
+  'Justice',
+  'Loyauté',
+  'Simplicité',
+  'Courage',
 ];
 
 export const SAISONS = [

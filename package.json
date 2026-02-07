@@ -10,8 +10,15 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.89.0",
+    "@tiptap/extension-typography": "^2.11.2",
+    "@tiptap/pm": "^2.11.2",
+    "@tiptap/react": "^2.11.2",
+    "@tiptap/starter-kit": "^2.11.2",
+    "html2pdf.js": "^0.10.1",
+    "jspdf": "^4.1.0",
     "lucide-react": "^0.263.1",
     "next": "^15.1.0",
+    "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-easy-crop": "^5.5.6"
