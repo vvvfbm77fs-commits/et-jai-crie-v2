@@ -39,15 +39,24 @@ export default function TextEditorPage() {
             if (data) {
                 setMemory(data);
                 setCurrentStyle(data.style || 'narratif');
-                const content = data.generated_text_edited || data.generated_text_original || data.bio || '';
-                if (editor && !editor.isDestroyed) {
-                    editor.commands.setContent(content);
-                }
             }
             setLoading(false);
         };
-        fetchMemory();
-    }, [memoryId, editor]);
+        if (memoryId) fetchMemory();
+    }, [memoryId]);
+
+    // Update Editor Content when memory load finishes
+    useEffect(() => {
+        if (memory && editor && !editor.isDestroyed) {
+            const content = memory.generated_text_edited || memory.generated_text_original || memory.bio || '';
+            // Only set content if empty to avoid overwriting user while typing? 
+            // Or only on initial load.
+            // Check if content matches to avoid loop
+            if (editor.getHTML() !== content && editor.getText() === '') {
+                editor.commands.setContent(content);
+            }
+        }
+    }, [memory, editor]);
 
     // Handle Save (Edit Mode)
     const handleSaveEdit = async () => {
