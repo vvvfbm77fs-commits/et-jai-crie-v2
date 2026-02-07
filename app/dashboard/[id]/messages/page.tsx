@@ -38,7 +38,7 @@ export default function ModerationPage({ params }: { params: { id: string } }) {
 
             // Fetch messages
             const { data, error } = await supabase
-                .from('memory_messages') // Ensure this matches user table name 'memory_messages' from prompt 2
+                .from('messages') // Correct table name used in Guestbook
                 .select('*')
                 .eq('memory_id', memoryId)
                 .order('created_at', { ascending: false });

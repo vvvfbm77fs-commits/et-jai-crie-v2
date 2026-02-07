@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import StepComponent from '@/components/Step';
 import Progress from '@/components/Progress';
 import { ChevronRight, ChevronLeft, Home } from 'lucide-react';
-import { getCompleteSteps } from './completeSteps';
+import { getCompleteSteps } from '../questionnaire/completeSteps';
 import { QuestionnaireData } from '@/lib/schema';
 
 function CompleteQuestionnaireContent() {
