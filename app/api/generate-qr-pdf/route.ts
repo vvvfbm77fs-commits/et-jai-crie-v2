@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+// @ts-ignore
 import QRCode from 'qrcode';
 import { jsPDF } from 'jspdf';
 import { createClient } from '@supabase/supabase-js';
