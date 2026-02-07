@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     // Récupérer infos mémoire from DB to personalize PDF
     const { data: memory } = await supabase
         .from('memories')
-        .select('firstname, lastname') // Adjust column names if stored differently (e.g. data->identite->prenom)
+        .select('firstname, lastname, data') // Adjust column names if stored differently (e.g. data->identite->prenom)
         .eq('id', memoryId)
         .single();
 
