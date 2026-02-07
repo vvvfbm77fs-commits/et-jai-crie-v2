@@ -65,4 +65,6 @@ const FAQ_DATA = [
             },
             {
                 q: "Pourquoi les objets sont-ils moins chers que les personnes ?",
-                a: "Les mémoires d'objets sont plus courtes et moins complexes (questionnaire simplifié, moins de photos, pas de fonctionnalités comme les bougies virtuelles). Elles sont pensées comme une porte d'entrée accessible pour découvrir Commun Vivant, notamment lors de transmissions familiales, ventes d'antiquités ou cadeaux accompagnant d
+                a: "Les mémoires d'objets sont plus courtes et moins complexes (questionnaire simplifié, moins de photos, pas de fonctionnalités comme les bougies virtuelles). Elles sont pensées comme une porte d'entrée accessible pour découvrir Commun Vivant, notamment lors de transmissions familiales, ventes d'antiquités ou cadeaux accompagnant des objets."
+            },
+            ```
