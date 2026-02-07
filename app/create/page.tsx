@@ -33,7 +33,7 @@ function MethodSelectionContent() {
             <div className="min-h-screen bg-memoir-bg py-12 px-6">
                 <div className="max-w-5xl mx-auto">
                     <div className="mb-12 text-center">
-                        <Link href="/" className="inline-flex items-center text-memoir-blue/40 hover:text-memoir-blue transition-colors mb-6 text-sm font-bold uppercase tracking-widest relative z-50 p-2">
+                        <Link href="/" className="inline-flex items-center text-memoir-blue/40 hover:text-memoir-blue transition-colors mb-6 text-sm font-bold uppercase tracking-widest">
                             <ChevronLeft className="w-4 h-4 mr-1" />
                             Retour à l'accueil
                         </Link>
@@ -89,7 +89,7 @@ function MethodSelectionContent() {
             <div className="max-w-5xl mx-auto">
                 {/* Header */}
                 <div className="mb-12">
-                    <Link href="/" className="inline-flex items-center text-memoir-blue/40 hover:text-memoir-blue transition-colors mb-6 text-sm font-bold uppercase tracking-widest relative z-50 p-2 -ml-2">
+                    <Link href="/" className="inline-flex items-center text-memoir-blue/40 hover:text-memoir-blue transition-colors mb-6 text-sm font-bold uppercase tracking-widest">
                         <ChevronLeft className="w-4 h-4 mr-1" />
                         Retour à l'accueil
                     </Link>
